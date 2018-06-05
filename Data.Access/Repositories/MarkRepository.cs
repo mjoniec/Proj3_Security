@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace Data.Access.Repositories
 {
-    internal class MarkRepository : IMarkRepository
+    /*internal*/public class MarkRepository : IMarkRepository
     {
+        public MarkRepository(/*TODO config*/) { }
+
         public MarkModel GetById(string id)
         {
             return new MarkModel { X = 3, Y = 4 };

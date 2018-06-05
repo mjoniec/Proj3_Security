@@ -7,23 +7,25 @@ using LightInject;
 using LightInject.WebApi;
 using Owin;
 
-namespace WebApp.App_Start
+namespace WebApp
 {
-    public class Startup
+    public partial class Startup
     {
-        public void Configuration(IAppBuilder app)
+        public static void ConfigureWebApp(IAppBuilder app)
         {
-            // Configure Web API for self-host. 
-            var config = new HttpConfiguration();
+            var httpConfiguration = new HttpConfiguration();
             var container = new ServiceContainer();
-            container.RegisterApiControllers();
-            container.EnableWebApi(config);
-            config.Routes.MapHttpRoute(
+
+            httpConfiguration.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional });
 
-            app.Use(config);
+            container.RegisterApiControllers();
+            container.EnableWebApi(httpConfiguration);
+
+            app.Use(httpConfiguration);
+            //swagger config
         }
     }
 }

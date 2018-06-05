@@ -12,11 +12,26 @@ namespace WebApp
     {
         protected void Application_Start()
         {
+            var httpConfiguration = new HttpConfiguration();
             var container = new ServiceContainer();
-            container.RegisterApiControllers();
-            //register other services
 
-            container.EnableWebApi(GlobalConfiguration.Configuration);
+            httpConfiguration.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional });
+
+            container.RegisterApiControllers();
+            container.EnableWebApi(httpConfiguration);
+
+
+
+            //var container = new ServiceContainer();
+            //container.RegisterApiControllers();
+            //container.EnableWebApi(GlobalConfiguration.Configuration);
+
+
+
+
 
             //GlobalConfiguration.Configure(WebApiConfig.Register);
         }
