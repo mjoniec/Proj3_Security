@@ -3,15 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{E3BA4F52-B75B-4941-80FD-78473620E80C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Services", "Data.Services\Data.Services.csproj", "{BF845A04-802F-444A-B0EE-E0CA0D04EF48}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Access", "Data.Access\Data.Access.csproj", "{B2C00868-F98A-4EC8-81BC-0632D499CCB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp3", "WebApp3\WebApp3.csproj", "{1158D8A7-739B-49E2-802F-8DA709D24877}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp4", "WebApp4\WebApp4.csproj", "{C0BEF32C-AADD-4E88-BB59-B59CE0ED3E02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppMobile", "WebApp3\WebAppMobile.csproj", "{1158D8A7-739B-49E2-802F-8DA709D24877}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E3BA4F52-B75B-4941-80FD-78473620E80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3BA4F52-B75B-4941-80FD-78473620E80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3BA4F52-B75B-4941-80FD-78473620E80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3BA4F52-B75B-4941-80FD-78473620E80C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF845A04-802F-444A-B0EE-E0CA0D04EF48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF845A04-802F-444A-B0EE-E0CA0D04EF48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF845A04-802F-444A-B0EE-E0CA0D04EF48}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,10 +27,6 @@ Global
 		{1158D8A7-739B-49E2-802F-8DA709D24877}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1158D8A7-739B-49E2-802F-8DA709D24877}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1158D8A7-739B-49E2-802F-8DA709D24877}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0BEF32C-AADD-4E88-BB59-B59CE0ED3E02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0BEF32C-AADD-4E88-BB59-B59CE0ED3E02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0BEF32C-AADD-4E88-BB59-B59CE0ED3E02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0BEF32C-AADD-4E88-BB59-B59CE0ED3E02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

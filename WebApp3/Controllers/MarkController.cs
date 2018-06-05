@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace WebApp3.Controllers
+namespace WebAppMobile.Controllers
 {
     [MobileAppController]
     public class MarkController : ApiController
@@ -16,20 +16,24 @@ namespace WebApp3.Controllers
             _markService = markService;
         }
 
-        // GET 
         //http://localhost:57158/api/mark
-        //[HttpGet]
-        public /*IHttpActionResult*/ IEnumerable<string> Get()
+        [HttpGet]
+        public IHttpActionResult Get()
         {
-            var list = _markService.GetAll();
+            var list = _markService.GetAll().Select(l => l.X).ToList();
+            var list2 = new List<string>();
 
-            return list.Select(l => l.X).Cast<string>();
+            foreach(var l in list)
+            {
+                list2.Add(l.ToString());
+            }
+
+            return Ok(list2);
         }
 
-        // GET 
         //http://localhost:57158/api/mark/3
-        //[HttpGet]
-        public string Get(int id)
+        [HttpGet]
+        public IHttpActionResult Get(int id)
         {
             var s = "no value";
             var list = _markService.GetAll();
@@ -40,10 +44,10 @@ namespace WebApp3.Controllers
             }
             catch
             {
-
+                return BadRequest(s);
             }
 
-            return s;
+            return Ok(s);
         }
     }
 }

@@ -4,7 +4,7 @@ using Owin;
 using LightInject;
 using System.Web.Http.Cors;
 
-namespace WebApp3
+namespace WebAppMobile
 {
     public partial class Startup
     {
