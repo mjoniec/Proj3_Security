@@ -1,4 +1,5 @@
-﻿using Data.Access.Repositories;
+﻿using Data.Access.Contexts;
+using Data.Access.Repositories;
 using LightInject;
 
 namespace Data.Services
@@ -7,7 +8,7 @@ namespace Data.Services
     {
         public void Compose(IServiceRegistry serviceRegistry)
         {
-            serviceRegistry.Register<IMarkRepository>(factory => new MarkRepository(), new PerRequestLifeTime());
+            serviceRegistry.Register<IMarkRepository>(factory => new MarkRepository(new MarkContext()), new PerRequestLifeTime());
             serviceRegistry.Register<IMarkService, MarkService>(new PerRequestLifeTime());
         }
     }
