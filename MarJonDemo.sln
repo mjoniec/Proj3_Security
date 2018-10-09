@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppMobile", "WebApp3\Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Init", "Data.Init\Data.Init.csproj", "{59C0461F-9B23-4276-8D88-E57A0406A944}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactApp", "ReactApp\ReactApp.csproj", "{8E1B5A36-67AB-44B9-95E9-BF1A9121D73F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactApp", "ReactApp\ReactApp.csproj", "{8E1B5A36-67AB-44B9-95E9-BF1A9121D73F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldMap", "WorldMap\WorldMap.csproj", "{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{8E1B5A36-67AB-44B9-95E9-BF1A9121D73F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E1B5A36-67AB-44B9-95E9-BF1A9121D73F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E1B5A36-67AB-44B9-95E9-BF1A9121D73F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
