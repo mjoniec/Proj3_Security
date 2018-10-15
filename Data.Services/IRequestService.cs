@@ -5,7 +5,7 @@ namespace Data.Services
 {
     public interface IRequestService
     {
-        string SaveRequests(IEnumerable<Request> requests);
+        string SaveRequests(object requests);
         IEnumerable<Request> GetRequests();
     }
 }

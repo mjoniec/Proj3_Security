@@ -27,20 +27,21 @@ namespace Data.Access.Repositories
 
             stringBuilder.AppendLine();
 
+            var ids = new List<int>();
+
+            foreach (var row in _requestContext.Requests)
+            {
+                ids.Add(row.Index);
+            }
+
             foreach (var request in requests)
             {
                 try
                 {
-                    var ids = new List<int>();
-
-                    foreach (var row in _requestContext.Requests)
-                    {
-                        ids.Add(row.Index);
-                    }
-
                     if (!ids.Any(id => id == request.Index))
                     {
                         _requestContext.Requests.Add(request);
+                        ids.Add(request.Index);
 
                         stringBuilder.AppendLine("added request with id=" + request.Index);
                     }

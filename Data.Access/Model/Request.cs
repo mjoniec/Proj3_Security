@@ -8,10 +8,10 @@ namespace Data.Access.Model
     [Table("request")]
     public class Request
     {
+        //Can not switch auto EF db generator to use Index as primary key and at the same time not to automatically overwrite it with generated value
         //[JsonIgnore]
         [JsonProperty("id")]
         public int Id { get; set; }
-
 
         //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         //[System.ComponentModel.DataAnnotations.Key/*, DatabaseGenerated(DatabaseGeneratedOption.None), JsonProperty("ix")*/]
