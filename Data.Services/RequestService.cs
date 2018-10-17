@@ -15,7 +15,7 @@ namespace Data.Services
     /// <summary>
     /// This service converts JSON into db model
     /// </summary>
-    internal class RequestService : IRequestService
+    public class RequestService : IRequestService
     {
         IRequestRepository _requestRepository;
 

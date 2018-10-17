@@ -7,6 +7,6 @@ namespace Data.Access.Repositories
     public interface IRequestRepository
     {
         string SaveRequests(IEnumerable<Request> requests);
-        IQueryable<Request> GetRequests();
+        IEnumerable<Request> GetRequests();
     }
 }

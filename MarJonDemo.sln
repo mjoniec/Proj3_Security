@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Init", "Data.Init\Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldMap", "WorldMap\WorldMap.csproj", "{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{249E06A9-76A3-4D84-95F9-68D7298811C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Services.Test", "Data.Services.Test\Data.Services.Test.csproj", "{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +43,16 @@ Global
 		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6} = {249E06A9-76A3-4D84-95F9-68D7298811C0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E1E544F-0A5F-400C-81F4-A53A3D05F873}
