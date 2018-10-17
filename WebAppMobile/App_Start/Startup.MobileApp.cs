@@ -3,7 +3,7 @@ using Microsoft.Azure.Mobile.Server.Config;
 using Owin;
 using LightInject;
 using System.Web.Http.Cors;
-using WebApp3.Swagger;
+using WebAppMobile.Swagger;
 using System;
 using Swashbuckle.Application;
 

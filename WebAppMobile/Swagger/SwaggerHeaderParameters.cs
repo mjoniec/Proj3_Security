@@ -3,7 +3,7 @@ using System.Web.Http.Description;
 using Swashbuckle.Application;
 using Swashbuckle.Swagger;
 
-namespace WebApp3.Swagger
+namespace WebAppMobile.Swagger
 {
     public class SwaggerHeaderParameters : IOperationFilter
     {
