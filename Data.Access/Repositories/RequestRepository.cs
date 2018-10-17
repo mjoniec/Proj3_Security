@@ -16,9 +16,9 @@ namespace Data.Access.Repositories
             _requestContext = requestContext;
         }
 
-        public IEnumerable<Request> GetRequests()
+        public IQueryable<Request> GetRequests()
         {
-            return new List<Request>();
+            return _requestContext.Requests;
         }
 
         public string SaveRequests(IEnumerable<Request> requests)

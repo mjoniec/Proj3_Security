@@ -1,8 +1,8 @@
 ﻿using Data.Services;
 using Microsoft.Azure.Mobile.Server.Config;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 
 namespace WebApp3.Controllers
@@ -17,11 +17,17 @@ namespace WebApp3.Controllers
             _requestService = requestService;
         }
 
+        //TODO routing in azure mobile web api
         //[HttpGet("jobs/saveFiles")]
         [HttpGet]
         public IHttpActionResult Get()
         {
-            return Ok();
+            string XML = _requestService.GetRequests();
+
+            return ResponseMessage(new HttpResponseMessage()
+            {
+                Content = new StringContent(XML, Encoding.UTF8, "application/xml")
+            });
         }
 
         [HttpPost]
@@ -36,19 +42,6 @@ namespace WebApp3.Controllers
             catch (Exception e)
             {
                 return BadRequest("Incorrect requests in body parameter" + e);
-            }
-        }
-
-        private static IEnumerable<JToken> AllChildren(JToken json)
-        {
-            foreach (var c in json.Children())
-            {
-                yield return c;
-
-                foreach (var cc in AllChildren(c))
-                {
-                    yield return cc;
-                }
             }
         }
     }

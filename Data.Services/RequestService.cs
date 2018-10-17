@@ -3,7 +3,12 @@ using Data.Access.Repositories;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Data.Services
 {
@@ -19,6 +24,11 @@ namespace Data.Services
             _requestRepository = requestRepository;
         }
 
+        /// <summary>
+        /// Stores requests into database
+        /// </summary>
+        /// <param name="requests">JSON for deserialization</param>
+        /// <returns></returns>
         public string SaveRequests(object requests)
         {
             //TODO: improve deserialization
@@ -54,9 +64,37 @@ namespace Data.Services
             return _requestRepository.SaveRequests(requestsModels);
         }
 
-        public IEnumerable<Request> GetRequests()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>Serialized XML with requests</returns>
+        public string GetRequests()
         {
-            return _requestRepository.GetRequests();
+            //var requests = _requestRepository.GetRequests();
+            //var xmlSerializer = new XmlSerializer(typeof(Request));
+            //string s = string.Empty;
+
+            //using (StringWriter stringWriter = new StringWriter())
+            //{
+            //    foreach (var r in requests)
+            //    {
+            //        xmlSerializer.Serialize(stringWriter, r);
+            //    }
+
+            //    s = stringWriter.ToString();
+            //}
+
+            //return s;
+
+            var requests = _requestRepository.GetRequests();
+            var stringBuilder = new StringBuilder();
+
+            foreach (var r in requests)
+            {
+                stringBuilder.Append(r.ToXML());
+            }
+
+            return stringBuilder.ToString();
         }
 
         private static IEnumerable<JToken> AllChildren(JToken json)
