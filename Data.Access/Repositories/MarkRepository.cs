@@ -31,7 +31,7 @@ namespace Data.Access.Repositories
         /// <returns></returns>
         public IEnumerable<MarkModel> GetAllDemo()
         {
-            if (_markContext.Marks.Any())
+            if (!_markContext.Marks.Any())
             {
                 var marks = new List<MarkModel>
                 {

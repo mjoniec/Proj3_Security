@@ -20,9 +20,7 @@ namespace WebAppMobile.Controllers
         [HttpGet]
         public IHttpActionResult Get()
         {
-            var tmp = _markService.GetAll();
-
-            var list = _markService.GetAll().Select(l => l.X).ToList();
+            var list = _markService.GetAllDemo().Select(l => l.X).ToList();
             var list2 = new List<string>();
 
             foreach(var l in list)
@@ -37,22 +35,9 @@ namespace WebAppMobile.Controllers
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
-            var s = "no value";
-            //var list = _markService.GetAll();
             var value = _markService.GetById(id.ToString());
 
             return Ok(value);
-
-            //try
-            //{
-            //    s = list.ToList()[id].X.ToString();
-            //}
-            //catch
-            //{
-            //    return BadRequest(s);
-            //}
-
-            //return Ok(s);
         }
     }
 }

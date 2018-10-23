@@ -22,5 +22,10 @@ namespace Data.Services
         {
             return _markRepository.GetAll();
         }
+
+        public IEnumerable<MarkModel> GetAllDemo()
+        {
+            return _markRepository.GetAllDemo();
+        }
     }
 }

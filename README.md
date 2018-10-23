@@ -6,8 +6,8 @@ https://github.com/mjoniec/MarJonDemo/blob/master/README.md
 - Controllers
 - Swagger
 
-#GET
-http://localhost:54871/api/Request?ZUMO-API-VERSION=2.0.0
+#GET some Demo data
+http://localhost:54871/api/Mark?ZUMO-API-VERSION=2.0.0
 
 #SWAGGER
 http://localhost:54871/swagger
@@ -32,5 +32,5 @@ http://localhost:54871/swagger
 
 --------------------------------------------------------
 
-*WorldMap* - Doesn't do anything yet.
-Angular HelloWorld Project. Doesn't do anything yet.
+*WorldMap* - Angular HelloWorld Project.
+- Doesn't do anything yet.
