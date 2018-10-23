@@ -1,4 +1,6 @@
-# MarJonDemo - best view this readme with Code Writer
+# MarJonDemo
+best view this readme with Code Writer or GitHub
+https://github.com/mjoniec/MarJonDemo/blob/master/README.md
 
 *WebAppMobile* - Azure Mobile App Project 
 - Controllers
