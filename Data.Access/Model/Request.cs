@@ -8,6 +8,10 @@ using System.Xml;
 
 namespace Data.Access.Model
 {
+    /// <summary>
+    /// TODO: refactor
+    /// https://github.com/mjoniec/MarJonDemo/issues/4
+    /// </summary>
     [Table("request")]
     public class Request
     {

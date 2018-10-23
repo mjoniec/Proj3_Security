@@ -13,7 +13,9 @@ using System.Xml.Serialization;
 namespace Data.Services
 {
     /// <summary>
-    /// This service converts JSON into db model
+    /// This service converts JSON into db model and returns XML based on db model
+    /// TODO: Refactor and export parsing functionality
+    /// https://github.com/mjoniec/MarJonDemo/issues/3
     /// </summary>
     public class RequestService : IRequestService
     {
