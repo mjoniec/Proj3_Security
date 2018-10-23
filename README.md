@@ -34,8 +34,3 @@ http://localhost:54871/swagger
 
 *WorldMap* - Doesn't do anything yet.
 Angular HelloWorld Project. Doesn't do anything yet.
-
-*Data.Init* - Doesn't do anything yet.
-Test and placeholder for DB auto migration
-
-

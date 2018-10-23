@@ -7,5 +7,6 @@ namespace Data.Access.Repositories
     {
         MarkModel GetById(string id);
         IEnumerable<MarkModel> GetAll();
+        IEnumerable<MarkModel> GetAllDemo();
     }
 }
