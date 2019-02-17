@@ -29,8 +29,3 @@ http://localhost:54871/swagger
 - EntityFramework
 - LINQ
 - Model with properties and attributes for XML / JSON / DB
-
---------------------------------------------------------
-
-*WorldMap* - Angular HelloWorld Project.
-- Doesn't do anything yet.
