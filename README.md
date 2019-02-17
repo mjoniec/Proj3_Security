@@ -1,6 +1,4 @@
 # MarJonDemo
-best view this readme with Code Writer or GitHub
-https://github.com/mjoniec/MarJonDemo/blob/master/README.md
 
 *WebAppMobile* - Azure Mobile App Project 
 - Controllers
@@ -29,8 +27,3 @@ http://localhost:54871/swagger
 - EntityFramework
 - LINQ
 - Model with properties and attributes for XML / JSON / DB
-
---------------------------------------------------------
-
-*WorldMap* - Angular HelloWorld Project.
-- Doesn't do anything yet.
