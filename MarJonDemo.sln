@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Services", "Data.Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Access", "Data.Access\Data.Access.csproj", "{B2C00868-F98A-4EC8-81BC-0632D499CCB3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldMap", "WorldMap\WorldMap.csproj", "{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{249E06A9-76A3-4D84-95F9-68D7298811C0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Services.Test", "Data.Services.Test\Data.Services.Test.csproj", "{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}"
@@ -17,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppMobile", "WebAppMobil
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MQTT", "MQTT", "{3D523A67-0E14-406A-86E1-1CD900DF43BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTService", "MQTTService\MQTTService.csproj", "{63E8DE61-4B6F-41F6-94E5-8AB170A607E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTService", "MQTTService\MQTTService.csproj", "{63E8DE61-4B6F-41F6-94E5-8AB170A607E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{B2C00868-F98A-4EC8-81BC-0632D499CCB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2C00868-F98A-4EC8-81BC-0632D499CCB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2C00868-F98A-4EC8-81BC-0632D499CCB3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D212DE49-3D8D-4ABC-A4C0-C7E9C7FD27D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
