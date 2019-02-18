@@ -7,14 +7,14 @@ using Microsoft.Extensions.Options;
 using MQTTnet;
 using MQTTnet.Server;
 
-namespace MQTTService
+namespace Mqtt.Service
 {
-    public class MQTTService : IHostedService, IDisposable
+    public class MqttService : IHostedService, IDisposable
     {
         private readonly ILogger _logger;
-        private readonly IOptions<MQTTConfig> _config;
+        private readonly IOptions<MqttConfig> _config;
         private IMqttServer _mqttServer;
-        public MQTTService(ILogger<MQTTService> logger, IOptions<MQTTConfig> config)
+        public MqttService(ILogger<MqttService> logger, IOptions<MqttConfig> config)
         {
             _logger = logger;
             _config = config;

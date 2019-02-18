@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace MQTTService
+namespace Mqtt.Service
 {
     class Program
     {
@@ -22,8 +22,8 @@ namespace MQTTService
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddOptions();
-                    services.Configure<MQTTConfig>(hostContext.Configuration.GetSection("MQTT"));
-                    services.AddSingleton<IHostedService, MQTTService>();
+                    services.Configure<MqttConfig>(hostContext.Configuration.GetSection("MQTT"));
+                    services.AddSingleton<IHostedService, MqttService>();
                 })
                 .ConfigureLogging((hostingContext, logging) => {
                     logging.AddConsole();

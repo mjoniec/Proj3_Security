@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Mqtt.CommonLib;
 
 namespace MqttTestClient2.Controllers
 {
@@ -21,7 +19,7 @@ namespace MqttTestClient2.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            var r = MQTTClientLib.MQTTClientLib.GetMessages("localhost", 1883, "t");
+            var r = MqttDoubleChannelClient.GetMessages("localhost", 1883, "t");
 
             return r;
         }

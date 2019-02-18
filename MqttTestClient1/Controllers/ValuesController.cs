@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Mqtt.CommonLib;
 
 namespace MqttTestClient1.Controllers
 {
@@ -28,7 +26,7 @@ namespace MqttTestClient1.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            MQTTClientLib.MQTTClientLib.SendMessage("localhost", 1883, "t", value);
+            MqttDoubleChannelClient.SendMessage("localhost", 1883, "t", value);
         }
 
         // PUT api/values/5

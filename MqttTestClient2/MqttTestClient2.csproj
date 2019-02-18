@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MQTTClientLib\MQTTClientLib.csproj" />
+    <ProjectReference Include="..\MQTTClientLib\Mqtt.CommonLib.csproj" />
   </ItemGroup>
 
 </Project>

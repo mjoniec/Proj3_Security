@@ -1,6 +1,6 @@
-﻿namespace MQTTService
+﻿namespace Mqtt.Service
 {
-    public class MQTTConfig
+    public class MqttConfig
     {
         public int Port { get; set; }
     }

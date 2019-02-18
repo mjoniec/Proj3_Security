@@ -5,45 +5,48 @@ using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Extensions.ManagedClient;
 
-namespace MQTTClientLib
+namespace Mqtt.CommonLib
 {
-    public class MQTTClientAsyncLib
+    public class MqttDoubleChannelClient
     {
+        private readonly string _ip;
+        private readonly int _port;
+        private readonly string _topic;
         private readonly IMqttClient _client = new MqttFactory().CreateMqttClient();
         private readonly List<string> _messages = new List<string>();
 
-        public MQTTClientAsyncLib()
+        public MqttDoubleChannelClient(string ip, int port, string topic)
         {
             _client.ApplicationMessageReceived += (s, e) =>
             {
                 _messages.Add(Encoding.UTF8.GetString(e.ApplicationMessage.Payload) + " | " + e.ApplicationMessage.Topic);
             };
-            
-            //TODO maybe put automatic sub to an opposing channel for receiving while publishing on another channel (2channels total)
-            //_client.Connected += async (s, e) =>
-            //{
-            //    await _client.SubscribeAsync(new TopicFilterBuilder().WithTopic("t").Build());
-            //};
+
+            _ip = ip;
+            _port = port;
+            _topic = topic;
+
+            Connect().Wait();
         }
 
-        private async Task<MqttClientConnectResult> Connect(string ip, int port)
+        private async Task<MqttClientConnectResult> Connect()
         {
             var options = new MqttClientOptionsBuilder()
-                .WithTcpServer(ip, port)
+                .WithTcpServer(_ip, _port)
                 .Build();
 
             return await _client.ConnectAsync(options);
         }
 
-        private async void Subscribe(string topic)
+        private async void Subscribe()
         {
-            await _client.SubscribeAsync(new TopicFilterBuilder().WithTopic(topic).Build());
+            await _client.SubscribeAsync(new TopicFilterBuilder().WithTopic(_topic).Build());
         }
 
-        private async void Publish(string topic, string message)
+        private async void Publish(string message)
         {
             var mqttApplicationMessageBuilder = new MqttApplicationMessageBuilder()
-                .WithTopic(topic)
+                .WithTopic(_topic)
                 .WithPayload(message)
                 .WithExactlyOnceQoS()
                 .WithRetainFlag()
@@ -65,20 +68,18 @@ namespace MQTTClientLib
             return stringBuilder.ToString();
         }
 
-        public static async void SendMessage(string ip, int port, string topic, string message)
+        public static void SendMessage(string ip, int port, string topic, string message)
         {
-            var client = new MQTTClientAsyncLib();
+            var client = new MqttDoubleChannelClient(ip, port, topic);
 
-            await client.Connect(ip, port);
-            client.Publish(topic, message);
+            client.Publish(message);
         }
 
-        public static async Task<string> GetMessages(string ip, int port, string topic)
+        public static string GetMessages(string ip, int port, string topic)
         {
-            var client = new MQTTClientAsyncLib();
+            var client = new MqttDoubleChannelClient(ip, port, topic);
 
-            await client.Connect(ip, port);
-            client.Subscribe(topic);
+            client.Subscribe();
 
             return client.GetAllMessages();
         }

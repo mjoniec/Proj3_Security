@@ -15,13 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppMobile", "WebAppMobil
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MQTT", "MQTT", "{3D523A67-0E14-406A-86E1-1CD900DF43BD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTService", "MQTTService\MQTTService.csproj", "{63E8DE61-4B6F-41F6-94E5-8AB170A607E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mqtt.Service", "MQTTService\Mqtt.Service.csproj", "{63E8DE61-4B6F-41F6-94E5-8AB170A607E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTClientLib", "MQTTClientLib\MQTTClientLib.csproj", "{23334FA2-D2C3-47D8-9337-11FFC21FA793}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mqtt.CommonLib", "MQTTClientLib\Mqtt.CommonLib.csproj", "{23334FA2-D2C3-47D8-9337-11FFC21FA793}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttTestClient1", "MqttTestClient1\MqttTestClient1.csproj", "{FA9781BD-7F4F-42BB-9727-A513534F6F9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MqttTestClient1", "MqttTestClient1\MqttTestClient1.csproj", "{FA9781BD-7F4F-42BB-9727-A513534F6F9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MqttTestClient2", "MqttTestClient2\MqttTestClient2.csproj", "{CA906E70-F6BF-4D03-A2E7-E0CBD8A85487}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MqttTestClient2", "MqttTestClient2\MqttTestClient2.csproj", "{CA906E70-F6BF-4D03-A2E7-E0CBD8A85487}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
