@@ -27,3 +27,12 @@ http://localhost:54871/swagger
 - EntityFramework
 - LINQ
 - Model with properties and attributes for XML / JSON / DB
+
+--------------------------------------------------------
+
+*Mqtt.Service* - Logic between controllers and repositories
+- .net core general host custom application type
+- mqtt protocol client only nuget dependent (no 3rd party software installation on host)
+
+*Mqtt.Commonlib* - stores client to communicate between components
+- sync and async versions
