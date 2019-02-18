@@ -18,6 +18,12 @@ namespace MQTTClientLib
             {
                 _messages.Add(Encoding.UTF8.GetString(e.ApplicationMessage.Payload) + " | " + e.ApplicationMessage.Topic);
             };
+            
+            //TODO maybe put automatic sub to an opposing channel for receiving while publishing on another channel (2channels total)
+            //_client.Connected += async (s, e) =>
+            //{
+            //    await _client.SubscribeAsync(new TopicFilterBuilder().WithTopic("t").Build());
+            //};
         }
 
         private async Task<MqttClientConnectResult> Connect(string ip, int port)
