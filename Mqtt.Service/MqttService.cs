@@ -22,7 +22,7 @@ namespace Mqtt.Service
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Starting MQTT Daemon on port " + _config.Value.Port);
+            _logger.LogInformation("Starting MQTT Service on port " + _config.Value.Port);
 
             //Building the config
             var optionsBuilder = new MqttServerOptionsBuilder()
@@ -72,7 +72,7 @@ namespace Mqtt.Service
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Stopping MQTT Daemon.");
+            _logger.LogInformation("Stopping MQTT Service.");
 
             return _mqttServer.StopAsync();
         }
