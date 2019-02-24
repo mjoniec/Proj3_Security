@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Net.Http;
 
 namespace ExternalGoldDataApiClient.Service
 {
@@ -22,7 +23,23 @@ namespace ExternalGoldDataApiClient.Service
         {
             _logger.LogInformation("Starting external gold data api client service: " + _config.Value.Name);
 
+            GetGoldData();
+
             return Task.CompletedTask;
+        }
+
+        private void GetGoldData()
+        {
+            var goldPricesClient = new GoldPricesClient();
+            string s = string.Empty;
+
+            goldPricesClient.Get().ContinueWith(t =>
+            {
+                s = t.Result;
+            })
+            .Wait();
+
+            _logger.LogInformation(s);
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -35,6 +52,18 @@ namespace ExternalGoldDataApiClient.Service
         public void Dispose()
         {
             _logger.LogInformation("Disposing....");
+        }
+    }
+
+    public class GoldPricesClient
+    {
+        public async Task<string> Get()
+        {
+            var client = HttpClientFactory.Create();
+            var httpResponse = await client.GetAsync("https://www.quandl.com/api/v3/datasets/WGC/GOLD_DAILY_AUD.json");
+            var body = await httpResponse.Content.ReadAsStringAsync();
+
+            return body;
         }
     }
 
