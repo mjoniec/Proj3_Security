@@ -79,14 +79,14 @@ namespace Mqtt.CommonLib
             client.Publish(topic, message);
         }
 
-        public static async Task<string> GetMessages(string ip, int port, string topic, Func<string, int> messageReceivedHandler)
-        {
-            var client = new MqttDoubleChannelClientAsync(messageReceivedHandler);
+        //public static async Task<string> GetMessages(string ip, int port, string topic, Func<string, int> messageReceivedHandler)
+        //{
+        //    var client = new MqttDoubleChannelClientAsync(messageReceivedHandler);
 
-            await client.Connect(ip, port);
-            client.Subscribe(topic);
+        //    await client.Connect(ip, port);
+        //    client.Subscribe(topic);
 
-            return client.GetAllMessages();
-        }
+        //    return client.GetAllMessages();
+        //}
     }
 }

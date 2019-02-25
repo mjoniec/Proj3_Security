@@ -26,7 +26,7 @@ namespace MqttTestClient1.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            MqttDoubleChannelClient.SendMessage("localhost", 1883, "t", value);
+            MqttDoubleChannelClient.SendMessage("localhost", 1883, "RequestMqttTopic", value);
         }
 
         // PUT api/values/5
