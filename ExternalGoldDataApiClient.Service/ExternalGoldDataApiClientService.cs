@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
+using Mqtt.CommonLib;
 
 namespace ExternalGoldDataApiClient.Service
 {
@@ -12,20 +13,35 @@ namespace ExternalGoldDataApiClient.Service
     {
         private readonly ILogger _logger;
         private readonly IOptions<ExternalGoldDataApiClientConfig> _config;
+        private readonly MqttDoubleChannelClientAsync _mqttDoubleChannelClientAsync;
 
         public ExternalGoldDataApiClientService(ILogger<ExternalGoldDataApiClientConfig> logger, IOptions<ExternalGoldDataApiClientConfig> config)
         {
             _logger = logger;
             _config = config;
+
+            //field initializer can not reference non static - replace with interface and DI
+            _mqttDoubleChannelClientAsync = new MqttDoubleChannelClientAsync(MessageReceivedHandler);
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Starting external gold data api client service: " + _config.Value.Name);
 
-            GetGoldData();
+            //gets requests, sends responses
+            _mqttDoubleChannelClientAsync.Start("localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic", "ResponseMqttTopic opened.");
+
+            //MqttDoubleChannelClient.SendMessage("localhost", 1883, "ResponseMqttTopic", "ResponseMqttTopic opened.");
+            //GetGoldData();
 
             return Task.CompletedTask;
+        }
+
+        public int MessageReceivedHandler(string message)
+        {
+            _logger.LogInformation(message);
+
+            return 0;
         }
 
         private void GetGoldData()

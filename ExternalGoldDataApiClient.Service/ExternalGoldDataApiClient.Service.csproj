@@ -27,5 +27,9 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mqtt.CommonLib\Mqtt.CommonLib.csproj" />
+  </ItemGroup>
   
 </Project>
