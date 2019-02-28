@@ -36,3 +36,10 @@ http://localhost:54871/swagger
 
 *Mqtt.Commonlib* - stores client to communicate between components
 - sync and async versions
+
+--------------------------------------------------------
+
+ExternalGoldDataApiClient.Service
+- .net core general host custom application type
+- sends http request to external service with gold info and receives JSON response
+- client of internal mqtt service
