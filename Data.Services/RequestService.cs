@@ -99,6 +99,7 @@ namespace Data.Services
             return stringBuilder.ToString();
         }
 
+        //TODO: extension method or sth...
         private static IEnumerable<JToken> AllChildren(JToken json)
         {
             foreach (var c in json.Children())
