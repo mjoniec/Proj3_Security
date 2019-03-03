@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Net.Http;
 using Mqtt.CommonLib;
 
 namespace ExternalGoldDataApiClient.Service
@@ -21,41 +20,42 @@ namespace ExternalGoldDataApiClient.Service
             _config = config;
 
             //field initializer can not reference non static - replace with interface and DI
-            _mqttDoubleChannelClientAsync = new MqttDoubleChannelClientAsync(MessageReceivedHandler);
+            _mqttDoubleChannelClientAsync = new MqttDoubleChannelClientAsync(
+                "localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic", RequestReceivedHandler);
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Starting external gold data api client service: " + _config.Value.Name);
 
-            //gets requests, sends responses
-            _mqttDoubleChannelClientAsync.Start("localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic", "ResponseMqttTopic opened.");
-
-            //MqttDoubleChannelClient.SendMessage("localhost", 1883, "ResponseMqttTopic", "ResponseMqttTopic opened.");
-            //GetGoldData();
-
             return Task.CompletedTask;
         }
 
-        public int MessageReceivedHandler(string message)
+        public string RequestReceivedHandler(string message)
         {
             _logger.LogInformation(message);
 
-            return 0;
+            var goldData = GetGoldData();
+
+            _mqttDoubleChannelClientAsync.Send(goldData);
+
+            return goldData;
         }
 
-        private void GetGoldData()
+        private string GetGoldData()
         {
             var goldPricesClient = new GoldPricesClient();
-            string s = string.Empty;
+            var goldData = string.Empty;
 
             goldPricesClient.Get().ContinueWith(t =>
             {
-                s = t.Result;
+                goldData = t.Result;
             })
             .Wait();
 
-            _logger.LogInformation(s);
+            _logger.LogInformation(goldData);
+
+            return goldData;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -68,18 +68,6 @@ namespace ExternalGoldDataApiClient.Service
         public void Dispose()
         {
             _logger.LogInformation("Disposing....");
-        }
-    }
-
-    public class GoldPricesClient
-    {
-        public async Task<string> Get()
-        {
-            var client = HttpClientFactory.Create();
-            var httpResponse = await client.GetAsync("https://www.quandl.com/api/v3/datasets/WGC/GOLD_DAILY_AUD.json");
-            var body = await httpResponse.Content.ReadAsStringAsync();
-
-            return body;
         }
     }
 

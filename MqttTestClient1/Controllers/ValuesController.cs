@@ -8,37 +8,37 @@ namespace MqttTestClient1.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        private readonly MqttDoubleChannelClientAsync _mqttDoubleChannelClientAsync;
+        private static string ResponseMessage = "x";
+
+        public ValuesController()
         {
-            return new string[] { "value1", "value2" };
+            _mqttDoubleChannelClientAsync = new MqttDoubleChannelClientAsync(
+                "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic", ResponseReceivedHandler);
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        //Move this to service and use DI
+        public string ResponseReceivedHandler(string message)
         {
-            return "value";
+            ResponseMessage = message;
+
+            return message;
         }
 
         // POST api/values
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            MqttDoubleChannelClient.SendMessage("localhost", 1883, "RequestMqttTopic", value);
+            _mqttDoubleChannelClientAsync.Send(value);
+
+            //return response;
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // GET api/values
+        [HttpGet]
+        public ActionResult<IEnumerable<string>> Get()
         {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return new string[] { ResponseMessage };
         }
     }
 }
