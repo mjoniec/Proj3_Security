@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Data.Services
 {
-    public class GoldPriceService : IGoldPriceService
+    public class GoldService : IGoldService
     {
         //TODO
         //initialize GOLD SERVICE MQTT client here

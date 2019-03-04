@@ -54,8 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="GoldPriceService.cs" />
-    <Compile Include="IGoldPriceService.cs" />
+    <Compile Include="GoldService.cs" />
+    <Compile Include="IGoldService.cs" />
     <Compile Include="IMarkService.cs" />
     <Compile Include="IRequestService.cs" />
     <Compile Include="MarkService.cs" />

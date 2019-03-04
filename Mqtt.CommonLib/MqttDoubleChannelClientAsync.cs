@@ -31,7 +31,6 @@ namespace Mqtt.CommonLib
                 .Build();
 
             await _client.ConnectAsync(options);
-
             await _client.SubscribeAsync(new TopicFilterBuilder().WithTopic(topicReceiver).Build());
         }
 
