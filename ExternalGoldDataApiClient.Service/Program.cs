@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ExternalGoldDataApiClient.Service
+namespace Gold.ExternalApiClient.Service
 {
     class Program
     {
@@ -30,7 +30,7 @@ namespace ExternalGoldDataApiClient.Service
                     //section name the same as in invoke command
                     //TODO - move to config
                     services.Configure<ExternalGoldDataApiClientConfig>(hostContext.Configuration.GetSection("ExternalGoldDataApiClient"));
-                    services.AddSingleton<IHostedService, ExternalGoldDataApiClientService>();
+                    services.AddSingleton<IHostedService, GoldExternalApiClientService>();
                 })
                 .ConfigureLogging((hostingContext, logging) => {
                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));

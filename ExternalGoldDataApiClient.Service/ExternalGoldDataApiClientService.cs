@@ -6,15 +6,15 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Mqtt.CommonLib;
 
-namespace ExternalGoldDataApiClient.Service
+namespace Gold.ExternalApiClient.Service
 {
-    public class ExternalGoldDataApiClientService : IHostedService, IDisposable
+    public class GoldExternalApiClientService : IHostedService, IDisposable
     {
         private readonly ILogger _logger;
         private readonly IOptions<ExternalGoldDataApiClientConfig> _config;
         private readonly MqttDoubleChannelClientAsync _mqttDoubleChannelClientAsync;
 
-        public ExternalGoldDataApiClientService(ILogger<ExternalGoldDataApiClientConfig> logger, IOptions<ExternalGoldDataApiClientConfig> config)
+        public GoldExternalApiClientService(ILogger<ExternalGoldDataApiClientConfig> logger, IOptions<ExternalGoldDataApiClientConfig> config)
         {
             _logger = logger;
             _config = config;

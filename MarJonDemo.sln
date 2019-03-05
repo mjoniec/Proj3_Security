@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mqtt.CommonLib", "Mqtt.Comm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mqtt.Service", "Mqtt.Service\Mqtt.Service.csproj", "{35AB5DC3-EB0F-47FE-A3EA-0DE733710823}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalGoldDataApiClient.Service", "ExternalGoldDataApiClient.Service\ExternalGoldDataApiClient.Service.csproj", "{E1788201-EEC5-4962-954A-E476A592561B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.ExternalApiClient.Service", "ExternalGoldDataApiClient.Service\Gold.ExternalApiClient.Service.csproj", "{E1788201-EEC5-4962-954A-E476A592561B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
