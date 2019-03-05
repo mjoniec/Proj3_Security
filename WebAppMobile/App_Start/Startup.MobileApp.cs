@@ -3,11 +3,10 @@ using Microsoft.Azure.Mobile.Server.Config;
 using Owin;
 using LightInject;
 using System.Web.Http.Cors;
-using WebAppMobile.Swagger;
-using System;
+using Gold.MobileApp.Swagger;
 using Swashbuckle.Application;
 
-namespace WebAppMobile
+namespace Gold.MobileApp
 {
     public partial class Startup
     {

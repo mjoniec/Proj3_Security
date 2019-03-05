@@ -2,7 +2,7 @@
 using Microsoft.Azure.Mobile.Server.Config;
 using System.Web.Http;
 
-namespace WebApp3.Controllers
+namespace Gold.MobileApp.Controllers
 {
     [MobileAppController]
     public class GoldController : ApiController

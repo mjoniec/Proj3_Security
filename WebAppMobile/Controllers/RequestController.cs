@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Web.Http;
 
-namespace WebAppMobile.Controllers
+namespace Gold.MobileApp.Controllers
 {
     [MobileAppController]
     public class RequestController : ApiController

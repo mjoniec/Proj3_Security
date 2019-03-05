@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{249E06A9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Services.Test", "Data.Services.Test\Data.Services.Test.csproj", "{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppMobile", "WebAppMobile\WebAppMobile.csproj", "{1158D8A7-739B-49E2-802F-8DA709D24877}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gold.MobileApp", "WebAppMobile\Gold.MobileApp.csproj", "{1158D8A7-739B-49E2-802F-8DA709D24877}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MQTT", "MQTT", "{3D523A67-0E14-406A-86E1-1CD900DF43BD}"
 EndProject

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(WebAppMobile.Startup))]
+[assembly: OwinStartup(typeof(Gold.MobileApp.Startup))]
 
-namespace WebAppMobile
+namespace Gold.MobileApp
 {
     public partial class Startup
     {
