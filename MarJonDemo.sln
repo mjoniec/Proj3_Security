@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mqtt.CommonLib", "Mqtt.Comm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mqtt.Service", "Mqtt.Service\Mqtt.Service.csproj", "{35AB5DC3-EB0F-47FE-A3EA-0DE733710823}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.ExternalApiClient.Service", "ExternalGoldDataApiClient.Service\Gold.ExternalApiClient.Service.csproj", "{E1788201-EEC5-4962-954A-E476A592561B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.ExternalApiClient.Service", "Gold.ExternalApiClient.Service\Gold.ExternalApiClient.Service.csproj", "{FC05B2B4-D00B-460D-A236-ECE9EC113A2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,10 +57,10 @@ Global
 		{35AB5DC3-EB0F-47FE-A3EA-0DE733710823}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35AB5DC3-EB0F-47FE-A3EA-0DE733710823}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35AB5DC3-EB0F-47FE-A3EA-0DE733710823}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E1788201-EEC5-4962-954A-E476A592561B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E1788201-EEC5-4962-954A-E476A592561B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E1788201-EEC5-4962-954A-E476A592561B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E1788201-EEC5-4962-954A-E476A592561B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC05B2B4-D00B-460D-A236-ECE9EC113A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC05B2B4-D00B-460D-A236-ECE9EC113A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC05B2B4-D00B-460D-A236-ECE9EC113A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC05B2B4-D00B-460D-A236-ECE9EC113A2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
