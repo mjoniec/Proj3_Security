@@ -7,13 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Services", "Data.Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Access", "Data.Access\Data.Access.csproj", "{B2C00868-F98A-4EC8-81BC-0632D499CCB3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{249E06A9-76A3-4D84-95F9-68D7298811C0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Services.Test", "Data.Services.Test\Data.Services.Test.csproj", "{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gold.MobileApp", "Gold.MobileApp\Gold.MobileApp.csproj", "{1158D8A7-739B-49E2-802F-8DA709D24877}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MQTT", "MQTT", "{3D523A67-0E14-406A-86E1-1CD900DF43BD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MqttTestClient1", "MqttTestClient1\MqttTestClient1.csproj", "{FA9781BD-7F4F-42BB-9727-A513534F6F9C}"
 EndProject
@@ -64,12 +60,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{9C2919DC-D65F-4AEA-B931-7AEDD7EF53F6} = {249E06A9-76A3-4D84-95F9-68D7298811C0}
-		{FA9781BD-7F4F-42BB-9727-A513534F6F9C} = {3D523A67-0E14-406A-86E1-1CD900DF43BD}
-		{2FBBAABF-8D52-4BF8-B895-D5AC48B1D39F} = {3D523A67-0E14-406A-86E1-1CD900DF43BD}
-		{35AB5DC3-EB0F-47FE-A3EA-0DE733710823} = {3D523A67-0E14-406A-86E1-1CD900DF43BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4E1E544F-0A5F-400C-81F4-A53A3D05F873}
