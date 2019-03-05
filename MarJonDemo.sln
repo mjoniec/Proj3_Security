@@ -13,11 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gold.MobileApp", "Gold.Mobi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MqttTestClient1", "MqttTestClient1\MqttTestClient1.csproj", "{FA9781BD-7F4F-42BB-9727-A513534F6F9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mqtt.CommonLib", "Mqtt.CommonLib\Mqtt.CommonLib.csproj", "{2FBBAABF-8D52-4BF8-B895-D5AC48B1D39F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mqtt.Service", "Mqtt.Service\Mqtt.Service.csproj", "{35AB5DC3-EB0F-47FE-A3EA-0DE733710823}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.ExternalApiClient.Service", "Gold.ExternalApiClient.Service\Gold.ExternalApiClient.Service.csproj", "{FC05B2B4-D00B-460D-A236-ECE9EC113A2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mqtt.Client", "Mqtt.Client\Mqtt.Client.csproj", "{4A2E339A-0598-4BBF-86AB-F70D06253ED8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +45,6 @@ Global
 		{FA9781BD-7F4F-42BB-9727-A513534F6F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA9781BD-7F4F-42BB-9727-A513534F6F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA9781BD-7F4F-42BB-9727-A513534F6F9C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FBBAABF-8D52-4BF8-B895-D5AC48B1D39F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FBBAABF-8D52-4BF8-B895-D5AC48B1D39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FBBAABF-8D52-4BF8-B895-D5AC48B1D39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FBBAABF-8D52-4BF8-B895-D5AC48B1D39F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{35AB5DC3-EB0F-47FE-A3EA-0DE733710823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{35AB5DC3-EB0F-47FE-A3EA-0DE733710823}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35AB5DC3-EB0F-47FE-A3EA-0DE733710823}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,6 +53,10 @@ Global
 		{FC05B2B4-D00B-460D-A236-ECE9EC113A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC05B2B4-D00B-460D-A236-ECE9EC113A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC05B2B4-D00B-460D-A236-ECE9EC113A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A2E339A-0598-4BBF-86AB-F70D06253ED8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A2E339A-0598-4BBF-86AB-F70D06253ED8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A2E339A-0598-4BBF-86AB-F70D06253ED8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A2E339A-0598-4BBF-86AB-F70D06253ED8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

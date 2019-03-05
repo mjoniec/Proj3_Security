@@ -4,23 +4,23 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Mqtt.CommonLib;
+using Mqtt.Client;
 
 namespace Gold.ExternalApiClient.Service
 {
     public class GoldExternalApiClientService : IHostedService, IDisposable
     {
         private readonly ILogger _logger;
-        private readonly IOptions<ExternalGoldDataApiClientConfig> _config;
-        private readonly MqttDoubleChannelClientAsync _mqttDoubleChannelClientAsync;
+        private readonly IOptions<GoldExternalApiClientConfig> _config;
+        private readonly MqttDualTopicClient _mqttDualTopicClient;
 
-        public GoldExternalApiClientService(ILogger<ExternalGoldDataApiClientConfig> logger, IOptions<ExternalGoldDataApiClientConfig> config)
+        public GoldExternalApiClientService(ILogger<GoldExternalApiClientConfig> logger, IOptions<GoldExternalApiClientConfig> config)
         {
             _logger = logger;
             _config = config;
 
             //field initializer can not reference non static - replace with interface and DI
-            _mqttDoubleChannelClientAsync = new MqttDoubleChannelClientAsync(
+            _mqttDualTopicClient = new MqttDualTopicClient(
                 "localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic", RequestReceivedHandler);
         }
 
@@ -37,7 +37,7 @@ namespace Gold.ExternalApiClient.Service
 
             var goldData = GetGoldData();
 
-            _mqttDoubleChannelClientAsync.Send(goldData);
+            _mqttDualTopicClient.Send(goldData);
 
             return goldData;
         }
@@ -71,7 +71,7 @@ namespace Gold.ExternalApiClient.Service
         }
     }
 
-    public class ExternalGoldDataApiClientConfig
+    public class GoldExternalApiClientConfig
     {
         public string Name { get; set; }
     }

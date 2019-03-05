@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Mqtt.CommonLib;
+using Mqtt.Client;
 
 namespace MqttTestClient1.Controllers
 {
@@ -8,12 +8,12 @@ namespace MqttTestClient1.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private readonly MqttDoubleChannelClientAsync _mqttDoubleChannelClientAsync;
+        private readonly MqttDualTopicClient _mqttDoubleChannelClientAsync;
         private static string ResponseMessage = "x";
 
         public ValuesController()
         {
-            _mqttDoubleChannelClientAsync = new MqttDoubleChannelClientAsync(
+            _mqttDoubleChannelClientAsync = new MqttDualTopicClient(
                 "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic", ResponseReceivedHandler);
         }
 

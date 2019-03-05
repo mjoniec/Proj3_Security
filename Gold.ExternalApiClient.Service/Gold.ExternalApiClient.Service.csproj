@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mqtt.CommonLib\Mqtt.CommonLib.csproj" />
+    <ProjectReference Include="..\Mqtt.Client\Mqtt.Client.csproj" />
   </ItemGroup>
   
 </Project>

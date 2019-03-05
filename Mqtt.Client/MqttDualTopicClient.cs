@@ -4,14 +4,14 @@ using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Extensions.ManagedClient;
 
-namespace Mqtt.CommonLib
+namespace Mqtt.Client
 {
-    public class MqttDoubleChannelClientAsync
+    public class MqttDualTopicClient
     {
         private readonly string _topicSender;
         private readonly IMqttClient _client = new MqttFactory().CreateMqttClient();
 
-        public MqttDoubleChannelClientAsync(string ip, int port, string topicReceiver, string topicSender, Func<string, string> messageReceivedHandler)
+        public MqttDualTopicClient(string ip, int port, string topicReceiver, string topicSender, Func<string, string> messageReceivedHandler)
         {
             _topicSender = topicSender;
             _client.ApplicationMessageReceived += (s, mqttEventArgs) =>

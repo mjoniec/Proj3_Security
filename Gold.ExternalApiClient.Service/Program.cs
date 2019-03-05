@@ -29,7 +29,7 @@ namespace Gold.ExternalApiClient.Service
 
                     //section name the same as in invoke command
                     //TODO - move to config
-                    services.Configure<ExternalGoldDataApiClientConfig>(hostContext.Configuration.GetSection("ExternalGoldDataApiClient"));
+                    services.Configure<GoldExternalApiClientConfig>(hostContext.Configuration.GetSection("GoldExternalApiClient"));
                     services.AddSingleton<IHostedService, GoldExternalApiClientService>();
                 })
                 .ConfigureLogging((hostingContext, logging) => {

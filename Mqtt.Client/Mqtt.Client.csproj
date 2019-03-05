@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>Mqtt.Client</AssemblyName>
+    <RootNamespace>Mqtt.Client</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
