@@ -1,6 +1,6 @@
 ﻿namespace Data.Model
 {
-    public class MarkModel : BaseModel
+    public class MarkModel
     {
         private int _x;
         private int _y;
