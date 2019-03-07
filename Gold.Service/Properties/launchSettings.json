@@ -4,8 +4,8 @@
     "windowsAuthentication": false, 
     "anonymousAuthentication": true, 
     "iisExpress": {
-      "applicationUrl": "http://localhost:49774",
-      "sslPort": 44358
+      "applicationUrl": "http://localhost:50090",
+      "sslPort": 44350
     }
   },
   "profiles": {
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "MqttTestClient1": {
+    "Gold.Service": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",
