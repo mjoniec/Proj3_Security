@@ -1,9 +1,8 @@
-﻿using Data.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Data.Services
+namespace Data.Access
 {
-    public interface IMarkService
+    public interface IMarkRepository
     {
         MarkModel GetById(string id);
         IEnumerable<MarkModel> GetAll();

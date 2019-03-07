@@ -1,9 +1,8 @@
-﻿using Data.Access.Contexts;
-using Data.Access.Model;
+﻿using Data.Model;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Data.Access.Repositories
+namespace Data.Repositories
 {
     /*internal - test avaliability*/
     public class MarkRepository : IMarkRepository

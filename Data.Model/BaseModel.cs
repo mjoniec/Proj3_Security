@@ -1,4 +1,4 @@
-﻿namespace Data.Access.Model
+﻿namespace Data.Model
 {
     public abstract class BaseModel
     {

@@ -1,5 +1,4 @@
-﻿using Data.Access.Contexts;
-using Data.Access.Repositories;
+﻿using Data.Repositories;
 using LightInject;
 
 namespace Data.Services

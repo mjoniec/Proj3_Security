@@ -1,5 +1,5 @@
-﻿using Data.Access.Model;
-using Data.Access.Repositories;
+﻿using Data.Model;
+using Data.Repositories;
 using NSubstitute;
 using System;
 using System.Collections.Generic;

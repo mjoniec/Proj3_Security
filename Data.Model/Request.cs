@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml;
 //using System.Xml.Serialization;
 
-namespace Data.Access.Model
+namespace Data.Model
 {
     /// <summary>
     /// TODO: refactor
@@ -55,8 +55,8 @@ namespace Data.Access.Model
 
             foreach (PropertyDescriptor prop in properties)
             {
-                if (prop.GetValue(this) != null && 
-                    !string.Equals(prop.Name, "Date") && 
+                if (prop.GetValue(this) != null &&
+                    !string.Equals(prop.Name, "Date") &&
                     !string.Equals(prop.Name, "Id"))
                 {
                     childNode = doc.CreateNode(XmlNodeType.Element, GetNameForXmlAttribute(prop.Name), string.Empty);

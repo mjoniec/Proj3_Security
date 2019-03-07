@@ -1,7 +1,7 @@
-﻿using Data.Access.Model;
+﻿using Data.Model;
 using System.Collections.Generic;
 
-namespace Data.Access.Repositories
+namespace Data.Repositories
 {
     public interface IMarkRepository
     {

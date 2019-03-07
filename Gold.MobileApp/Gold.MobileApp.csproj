@@ -213,19 +213,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data.Access\Data.Access.csproj">
-      <Project>{B2C00868-F98A-4EC8-81BC-0632D499CCB3}</Project>
-      <Name>Data.Access</Name>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data.Model\Data.Model.csproj">
+      <Project>{9a7f280e-f388-46aa-8aba-d8851b2bb4f9}</Project>
+      <Name>Data.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Data.Services\Data.Services.csproj">
-      <Project>{bf845a04-802f-444a-b0ee-e0ca0d04ef48}</Project>
+      <Project>{af587274-0062-44b2-8137-320a79f8a312}</Project>
       <Name>Data.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -1,6 +1,4 @@
-﻿using System.Data.Entity;
-
-namespace Data.Access.Model
+﻿namespace Data.Model
 {
     public class MarkModel : BaseModel
     {
