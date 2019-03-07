@@ -34,8 +34,8 @@ namespace Data.Repositories
             {
                 var marks = new List<MarkModel>
                 {
-                    new MarkModel { Id = "1", X = 2, Y = 1 },
-                    new MarkModel { Id = "2", X = 3, Y = 4 }
+                    new MarkModel { X = 2, Y = 1 },
+                    new MarkModel { X = 3, Y = 4 }
                 };
 
                 _markContext.Marks.AddRange(marks);

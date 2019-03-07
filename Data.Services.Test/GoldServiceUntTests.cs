@@ -7,14 +7,14 @@ using Xunit;
 
 namespace Data.Services.Test
 {
-    public class RequestServiceUntTests
+    public class GoldServiceUntTests
     {
         private const string EXPECTED_XML_NULL_FIELD_CASE = "<Request><dateRequested>01.01.2018 00:00:00</dateRequested><content><ix>11</ix><name>aaa</name></content></Request>";
         private const string EXPECTED_XML_NO_NULL_FIELD = "<Request><dateRequested>02.01.2018 00:00:00</dateRequested><content><ix>12</ix><name>bbb</name><visits>7</visits></content></Request>";
         private readonly IRequestRepository _substitute;
         private readonly IRequestService _sut;
 
-        public RequestServiceUntTests()
+        public GoldServiceUntTests()
         {
             _substitute = Substitute.For<IRequestRepository>();
             _substitute.SaveRequests(Arg.Any<IEnumerable<Request>>()).Returns(string.Empty);
