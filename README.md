@@ -4,6 +4,8 @@
 - Core Rest Api
 - Swagger
 
+--------------------------------------------------------
+
 *Data.Services* - Logic between controllers and repositories
 - IOC
 - Autofac
@@ -13,12 +15,13 @@
 - xUnit
 - NSubstitude
 
---------------------------------------------------------
-
-*Data.Access* - Repositories with model
+*Data.Repositories* - Access to DB and example (generated) data 
 - EntityFramework
 - LINQ
-- Model with properties and attributes for XML / JSON / DB
+
+*Data.Model* - (de)serializable Model
+- attributes for JSON 
+- RDB properties 
 
 --------------------------------------------------------
 
