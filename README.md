@@ -6,6 +6,14 @@
 
 --------------------------------------------------------
 
+*Data.Model* - (de)serializable Model
+- attributes for JSON 
+- RDB properties 
+
+*Data.Repositories* - Access to DB and example (generated) data 
+- EntityFramework
+- LINQ
+
 *Data.Services* - Logic between controllers and repositories
 - IOC
 - Autofac
@@ -14,14 +22,6 @@
 *Data.Services.Test* - unit test project
 - xUnit
 - NSubstitude
-
-*Data.Repositories* - Access to DB and example (generated) data 
-- EntityFramework
-- LINQ
-
-*Data.Model* - (de)serializable Model
-- attributes for JSON 
-- RDB properties 
 
 --------------------------------------------------------
 
