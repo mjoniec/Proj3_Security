@@ -1,5 +1,9 @@
 # GoldBackend
 
+*Gold.Service* - service to provide (processed) gold data for frontend client
+- Core Rest Api
+- Swagger
+
 *Data.Services* - Logic between controllers and repositories
 - IOC
 - Autofac
