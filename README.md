@@ -1,16 +1,18 @@
 # GoldBackend
 
-*WebAppMobile* - Azure Mobile App Project 
-- Controllers
+*Gold.Service* - service to provide (processed) gold data for frontend client
+- Core Rest Api
 - Swagger
 
-#GET some Demo data
-http://localhost:54871/api/Mark?ZUMO-API-VERSION=2.0.0
-
-#SWAGGER
-http://localhost:54871/swagger
-
 --------------------------------------------------------
+
+*Data.Model* - (de)serializable Model
+- attributes for JSON 
+- RDB properties 
+
+*Data.Repositories* - Access to DB and example (generated) data 
+- EntityFramework
+- LINQ
 
 *Data.Services* - Logic between controllers and repositories
 - IOC
@@ -20,13 +22,6 @@ http://localhost:54871/swagger
 *Data.Services.Test* - unit test project
 - xUnit
 - NSubstitude
-
---------------------------------------------------------
-
-*Data.Access* - Repositories with model
-- EntityFramework
-- LINQ
-- Model with properties and attributes for XML / JSON / DB
 
 --------------------------------------------------------
 
