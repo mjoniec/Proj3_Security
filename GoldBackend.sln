@@ -15,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Model", "Data.Model\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Repositories", "Data.Repositories\Data.Repositories.csproj", "{6D9AF42E-E724-48C1-8104-11AD63C56ADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Services", "Data.Services\Data.Services.csproj", "{AF587274-0062-44B2-8137-320A79F8A312}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Services", "Data.Services\Data.Services.csproj", "{AF587274-0062-44B2-8137-320A79F8A312}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gold.Service", "Gold.Service\Gold.Service.csproj", "{F402A41C-A269-4622-83B5-F5670CFE1227}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.Service", "Gold.Service\Gold.Service.csproj", "{F402A41C-A269-4622-83B5-F5670CFE1227}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{4D4C7575-980E-49C3-A940-4E148550033E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{F402A41C-A269-4622-83B5-F5670CFE1227}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F402A41C-A269-4622-83B5-F5670CFE1227}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F402A41C-A269-4622-83B5-F5670CFE1227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D4C7575-980E-49C3-A940-4E148550033E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D4C7575-980E-49C3-A940-4E148550033E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D4C7575-980E-49C3-A940-4E148550033E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D4C7575-980E-49C3-A940-4E148550033E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
