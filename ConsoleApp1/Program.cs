@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Data.Model;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -8,31 +9,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public class GoldDataModel
-    {
-        public const string NEWEST_AVAILALE_DATE = "newest_available_date";
-        public const string OLDEST_AVAILABLE_DATE = "oldest_available_date";
-        public const string DATA = "data";
-
-        [JsonProperty(NEWEST_AVAILALE_DATE)]
-        public string NewestAvailaleDate { get; set; }
-
-        [JsonProperty(OLDEST_AVAILABLE_DATE)]
-        public string OldestAvailableDate { get; set; }
-
-        [JsonProperty(DATA)]
-        //public Dictionary<string, double> Data { get; set; }
-        //public List<object> Data { get; set; }
-        //public List<DailyExchangeRate> Data { get; set; }
-        public List<List<object>> Data { get; set; }
-    }
-
-    public class DailyExchangeRate
-    {
-        public DateTime Date { get; set; }
-        public double Value { get; set; }
-    }
-
     class Program
     {
         static void Main(string[] args)
@@ -45,14 +21,13 @@ namespace ConsoleApp1
                 .Children<JObject>()
                 .First();
 
-            var g = JsonConvert.DeserializeObject<GoldDataModel>(goldDataOverview.ToString());
+            var goldData = JsonConvert.DeserializeObject<GoldDataModel>(goldDataOverview.ToString());
+            var today = DateTime.Now.AddDays(-60);
 
-            //foreach(var rrr in rr)
-            //{
-            //    var rrrr = rrr.GetValue("id");
-            //}
-
-            Console.WriteLine("Hello World!");
+            if (goldData.DailyGoldData.TryGetValue(today.Date, out double tst))
+            {
+                Console.WriteLine("Hello World!" + tst);
+            }
         }
 
         public static async Task<string> Get()
