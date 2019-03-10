@@ -27,7 +27,7 @@ namespace Gold.Service
 
             var containerBuilder = new ContainerBuilder();
 
-            containerBuilder.RegisterType<GoldService>().As<IGoldService>();
+            containerBuilder.RegisterType<GoldService>().As<IGoldService>().SingleInstance();
             containerBuilder.RegisterType<GoldRepository>().As<IGoldRepository>();
 
             containerBuilder.Populate(services);

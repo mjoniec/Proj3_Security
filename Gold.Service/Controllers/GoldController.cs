@@ -28,7 +28,7 @@ namespace Gold.Service.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            
+            _goldService.GetOldestDay();
         }
     }
 }

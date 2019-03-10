@@ -17,13 +17,14 @@ namespace Data.Services
             _goldRepository = goldRepository;
             //_mqttDualTopicClient = mqttDualTopicClient;
 
-            ////use DI and app config
+            //use DI and app config
+            //TODO resolwe scope lifetime - 1 request gets executed before constructor is created
             _mqttDualTopicClient = new MqttDualTopicClient(
                 "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic", ResponseReceivedHandler);
         }
 
         //Move this to service and use DI
-        private string ResponseReceivedHandler(string message)
+        public string ResponseReceivedHandler(string message)
         {
             ResponseMessage = message;
 
@@ -39,18 +40,23 @@ namespace Data.Services
 
         public string GetNewestPrice()
         {
-            _mqttDualTopicClient.Send("request");
+            try
+            {
+                _mqttDualTopicClient.Send("request");
 
-            Thread.Sleep(1000);
+                if (!string.IsNullOrEmpty(ResponseMessage)) return ResponseMessage;
 
-            if (!string.IsNullOrEmpty(ResponseMessage)) return ResponseMessage;
+                var goldData = _goldRepository.Get();
+                DateTime.TryParse(goldData.NewestAvailaleDate, out DateTime date);
 
-            var goldData = _goldRepository.Get();
-            DateTime.TryParse(goldData.NewestAvailaleDate, out DateTime date);
+                goldData.DailyGoldData.TryGetValue(date, out double value);
 
-            goldData.DailyGoldData.TryGetValue(date, out double value);
-
-            return value.ToString();
+                return value.ToString();
+            }
+            catch
+            {
+                return "qq";
+            }
         }
 
         public DateTime GetOldestDay()

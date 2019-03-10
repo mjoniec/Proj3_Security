@@ -11,12 +11,12 @@ namespace Data.Repositories
             return new GoldDataModel
             {
                 OldestAvailableDate = DateTime.MinValue.ToLongDateString(),
-                NewestAvailaleDate = DateTime.Now.ToLongDateString(),
+                NewestAvailaleDate = DateTime.Now.Date.ToLongDateString(),
                 DailyGoldDataUnparsed = new List<List<object>>
                 {
                     new List<object>
                     {
-                         DateTime.Now,
+                         DateTime.Now.Date,
                          5.0
                     }
                 }
