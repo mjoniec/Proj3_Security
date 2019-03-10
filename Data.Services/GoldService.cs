@@ -17,9 +17,17 @@ namespace Data.Services
             _goldRepository = goldRepository;
             //_mqttDualTopicClient = mqttDualTopicClient;
 
-            ////use DI
+            ////use DI and app config
             _mqttDualTopicClient = new MqttDualTopicClient(
                 "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic", ResponseReceivedHandler);
+        }
+
+        //Move this to service and use DI
+        private string ResponseReceivedHandler(string message)
+        {
+            ResponseMessage = message;
+
+            return message;
         }
 
         IDictionary<DateTime, double> IGoldService.GetAllPriceData()
@@ -52,14 +60,6 @@ namespace Data.Services
             DateTime.TryParse(goldData.OldestAvailableDate, out DateTime date);
 
             return date;
-        }
-
-        //Move this to service and use DI
-        public string ResponseReceivedHandler(string message)
-        {
-            ResponseMessage = message;
-
-            return message;
         }
     }
 }

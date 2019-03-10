@@ -10,6 +10,7 @@ namespace Data.Services
         {
             serviceRegistry.Register<IGoldRepository, GoldRepository>(new PerRequestLifeTime());
             serviceRegistry.Register<IGoldService, GoldService>(new PerContainerLifetime());
+            //serviceRegistry.RegisterInstance(typeof(IMqttDualTopicClient), new MqttDualTopicClient)
             //serviceRegistry.Register<IMqttDualTopicClient, MqttDualTopicClient>(new PerContainerLifetime());
         }
     }
