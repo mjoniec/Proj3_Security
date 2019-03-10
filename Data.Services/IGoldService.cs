@@ -5,8 +5,8 @@ namespace Data.Services
 {
     public interface IGoldService
     {
-        IEnumerable<string> GetAll();
-        string GetForToday();
-        DateTime GetFirstDate();
+        IDictionary<DateTime, double> GetAllPriceData();
+        double GetNewestPrice();
+        DateTime GetOldestDay();
     }
 }

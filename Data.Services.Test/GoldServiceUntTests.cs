@@ -9,34 +9,37 @@ namespace Data.Services.Test
 {
     public class GoldServiceUntTests
     {
-        private const string EXPECTED_XML_NULL_FIELD_CASE = "<Request><dateRequested>01.01.2018 00:00:00</dateRequested><content><ix>11</ix><name>aaa</name></content></Request>";
-        private const string EXPECTED_XML_NO_NULL_FIELD = "<Request><dateRequested>02.01.2018 00:00:00</dateRequested><content><ix>12</ix><name>bbb</name><visits>7</visits></content></Request>";
-        private readonly IRequestRepository _substitute;
-        private readonly IRequestService _sut;
+        private readonly IGoldRepository _substitute;
+        private readonly IGoldService _sut;
 
         public GoldServiceUntTests()
         {
-            _substitute = Substitute.For<IRequestRepository>();
-            _substitute.SaveRequests(Arg.Any<IEnumerable<Request>>()).Returns(string.Empty);
-            _substitute.GetRequests().Returns(new List<Request> { new Request { Index = 11, Name = "aaa", Visits = null, Date = new DateTime(2018, 1, 1, 0, 0, 0) } });
+            var goldDataModel = new GoldDataModel
+            {
+                OldestAvailableDate = DateTime.MinValue.ToLongDateString(),
+                NewestAvailaleDate = DateTime.Now.ToLongDateString(),
+                DailyGoldDataUnparsed = new List<List<object>>
+                {
+                    new List<object>
+                    {
+                         DateTime.Now,
+                         5.0
+                    }
+                }
+            };
 
-            _sut = new RequestService(_substitute);
+            _substitute = Substitute.For<IGoldRepository>();
+            _substitute.Get().Returns(goldDataModel);
+
+            _sut = new GoldService(_substitute);
         }
 
         [Fact]
         public void GetRequestsTest_ResultXmlEqualsExample()
         {
-            var result = _sut.GetRequests();
+            var result = _sut.GetOldestDay();
 
-            Assert.Equal(result, EXPECTED_XML_NULL_FIELD_CASE);
-        }
-
-        [Fact]
-        public void GetRequestsTest_ResultXmlNotEqualsExample()
-        {
-            var result = _sut.GetRequests();
-
-            Assert.NotEqual(result, EXPECTED_XML_NO_NULL_FIELD);
+            Assert.Equal(DateTime.MinValue.Date, result.Date);
         }
     }
 }

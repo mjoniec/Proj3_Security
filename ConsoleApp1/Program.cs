@@ -14,9 +14,9 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             var s = Get();
-            var r = s.Result;
+            var json = s.Result;
 
-            var goldDataOverview = AllChildren(JObject.Parse(r))
+            var goldDataOverview = AllChildren(JObject.Parse(json))
                 .First(c => c.Path.Contains("dataset"))
                 .Children<JObject>()
                 .First();

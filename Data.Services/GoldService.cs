@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace Data.Services
@@ -8,19 +9,37 @@ namespace Data.Services
         //TODO
         //initialize GOLD SERVICE MQTT client here
 
-        public IEnumerable<string> GetAll()
+        IGoldRepository _goldRepository;
+
+        public GoldService(IGoldRepository goldRepository)
         {
-            return new List<string> { "1", "2" };
+            _goldRepository = goldRepository;
         }
 
-        public DateTime GetFirstDate()
+        IDictionary<DateTime, double> IGoldService.GetAllPriceData()
         {
-            return new DateTime(1971, 05, 24);
+            var goldData = _goldRepository.Get();
+
+            return goldData.DailyGoldData;
         }
 
-        public string GetForToday()
+        public double GetNewestPrice()
         {
-            return "2";
+            var goldData = _goldRepository.Get();
+            DateTime.TryParse(goldData.OldestAvailableDate, out DateTime date);
+
+            goldData.DailyGoldData.TryGetValue(date, out double value);
+
+            return value;
+        }
+
+        public DateTime GetOldestDay()
+        {
+            var goldData = _goldRepository.Get();
+
+            DateTime.TryParse(goldData.OldestAvailableDate, out DateTime date);
+
+            return date;
         }
     }
 }
