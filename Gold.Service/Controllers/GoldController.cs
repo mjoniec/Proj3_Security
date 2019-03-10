@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Data.Services;
 using Microsoft.AspNetCore.Mvc;
-using Mqtt.Client;
 
 namespace Gold.Service.Controllers
 {
@@ -8,35 +8,27 @@ namespace Gold.Service.Controllers
     [ApiController]
     public class GoldController : ControllerBase
     {
-        private readonly MqttDualTopicClient _mqttDoubleChannelClientAsync;
-        private static string ResponseMessage = "x";
+        IGoldService _goldService;
 
-        public GoldController()
+        public GoldController(IGoldService goldService)
         {
-            _mqttDoubleChannelClientAsync = new MqttDualTopicClient(
-                "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic", ResponseReceivedHandler);
+            _goldService = goldService;
         }
 
         // GET: api/Gold
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { ResponseMessage };
+            var price = _goldService.GetNewestPrice();
+
+            return new string[] { price.ToString() };
         }
 
         // POST: api/Gold
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            _mqttDoubleChannelClientAsync.Send(value);
-        }
-
-        //Move this to service and use DI
-        public string ResponseReceivedHandler(string message)
-        {
-            ResponseMessage = message;
-
-            return message;
+            
         }
     }
 }

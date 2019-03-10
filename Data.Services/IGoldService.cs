@@ -6,7 +6,7 @@ namespace Data.Services
     public interface IGoldService
     {
         IDictionary<DateTime, double> GetAllPriceData();
-        double GetNewestPrice();
+        string GetNewestPrice();
         DateTime GetOldestDay();
     }
 }

@@ -1,19 +1,25 @@
 ﻿using Data.Repositories;
+using Mqtt.Client;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Data.Services
 {
     public class GoldService : IGoldService
     {
-        //TODO
-        //initialize GOLD SERVICE MQTT client here
-
+        private static string ResponseMessage = "";
         IGoldRepository _goldRepository;
+        IMqttDualTopicClient _mqttDualTopicClient;
 
-        public GoldService(IGoldRepository goldRepository)
+        public GoldService(IGoldRepository goldRepository/*, IMqttDualTopicClient mqttDualTopicClient*/)
         {
             _goldRepository = goldRepository;
+            //_mqttDualTopicClient = mqttDualTopicClient;
+
+            ////use DI
+            _mqttDualTopicClient = new MqttDualTopicClient(
+                "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic", ResponseReceivedHandler);
         }
 
         IDictionary<DateTime, double> IGoldService.GetAllPriceData()
@@ -23,14 +29,20 @@ namespace Data.Services
             return goldData.DailyGoldData;
         }
 
-        public double GetNewestPrice()
+        public string GetNewestPrice()
         {
+            _mqttDualTopicClient.Send("request");
+
+            Thread.Sleep(1000);
+
+            if (!string.IsNullOrEmpty(ResponseMessage)) return ResponseMessage;
+
             var goldData = _goldRepository.Get();
-            DateTime.TryParse(goldData.OldestAvailableDate, out DateTime date);
+            DateTime.TryParse(goldData.NewestAvailaleDate, out DateTime date);
 
             goldData.DailyGoldData.TryGetValue(date, out double value);
 
-            return value;
+            return value.ToString();
         }
 
         public DateTime GetOldestDay()
@@ -40,6 +52,14 @@ namespace Data.Services
             DateTime.TryParse(goldData.OldestAvailableDate, out DateTime date);
 
             return date;
+        }
+
+        //Move this to service and use DI
+        public string ResponseReceivedHandler(string message)
+        {
+            ResponseMessage = message;
+
+            return message;
         }
     }
 }

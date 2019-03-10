@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Data.Model\Data.Model.csproj" />
     <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
+    <ProjectReference Include="..\Mqtt.Client\Mqtt.Client.csproj" />
   </ItemGroup>
 
 </Project>

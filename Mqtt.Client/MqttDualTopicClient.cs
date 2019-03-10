@@ -6,7 +6,7 @@ using MQTTnet.Extensions.ManagedClient;
 
 namespace Mqtt.Client
 {
-    public class MqttDualTopicClient
+    public class MqttDualTopicClient : IMqttDualTopicClient
     {
         private readonly string _topicSender;
         private readonly IMqttClient _client = new MqttFactory().CreateMqttClient();
