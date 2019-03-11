@@ -7,6 +7,5 @@ namespace Data.Services
     {
         IDictionary<DateTime, double> GetAllPriceData();
         string GetNewestPrice();
-        DateTime GetOldestDay();
     }
 }

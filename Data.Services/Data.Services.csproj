@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Data.Model\Data.Model.csproj" />
     <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
     <ProjectReference Include="..\Mqtt.Client\Mqtt.Client.csproj" />

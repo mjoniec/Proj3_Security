@@ -29,10 +29,10 @@ namespace Gold.Service
 
             containerBuilder.RegisterType<GoldService>().As<IGoldService>().SingleInstance();
             containerBuilder.RegisterType<GoldRepository>().As<IGoldRepository>();
-
             containerBuilder.Populate(services);
 
             var container = containerBuilder.Build();
+
             return container.Resolve<IServiceProvider>();
         }
 

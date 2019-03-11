@@ -1,8 +1,11 @@
-﻿using Data.Repositories;
+﻿using Data.Model;
+using Data.Repositories;
 using Mqtt.Client;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 
 namespace Data.Services
 {
@@ -10,12 +13,11 @@ namespace Data.Services
     {
         private static string ResponseMessage = "";
         IGoldRepository _goldRepository;
-        IMqttDualTopicClient _mqttDualTopicClient;
+        MqttDualTopicClient _mqttDualTopicClient;
 
-        public GoldService(IGoldRepository goldRepository/*, IMqttDualTopicClient mqttDualTopicClient*/)
+        public GoldService(IGoldRepository goldRepository)
         {
             _goldRepository = goldRepository;
-            //_mqttDualTopicClient = mqttDualTopicClient;
 
             //use DI and app config
             //TODO resolwe scope lifetime - 1 request gets executed before constructor is created
@@ -44,7 +46,17 @@ namespace Data.Services
             {
                 _mqttDualTopicClient.Send("request");
 
-                if (!string.IsNullOrEmpty(ResponseMessage)) return ResponseMessage;
+                if (!string.IsNullOrEmpty(ResponseMessage))
+                {
+                    var goldDataOverview = AllChildren(JObject.Parse(ResponseMessage))
+                        .First(c => c.Path.Contains("dataset"))
+                        .Children<JObject>()
+                        .First();
+
+                    var goldDataDeserialized = JsonConvert.DeserializeObject<GoldDataModel>(goldDataOverview.ToString());
+
+                    return goldDataDeserialized.NewestAvailaleDate;
+                }
 
                 var goldData = _goldRepository.Get();
                 DateTime.TryParse(goldData.NewestAvailaleDate, out DateTime date);
@@ -53,19 +65,23 @@ namespace Data.Services
 
                 return value.ToString();
             }
-            catch
+            catch(Exception e)
             {
-                return "qq";
+                return e.Message;
             }
         }
 
-        public DateTime GetOldestDay()
+        private static IEnumerable<JToken> AllChildren(JToken json)
         {
-            var goldData = _goldRepository.Get();
+            foreach (var c in json.Children())
+            {
+                yield return c;
 
-            DateTime.TryParse(goldData.OldestAvailableDate, out DateTime date);
-
-            return date;
+                foreach (var cc in AllChildren(c))
+                {
+                    yield return cc;
+                }
+            }
         }
     }
 }

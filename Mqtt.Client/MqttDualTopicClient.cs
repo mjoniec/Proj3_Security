@@ -6,7 +6,7 @@ using MQTTnet.Extensions.ManagedClient;
 
 namespace Mqtt.Client
 {
-    public class MqttDualTopicClient : IMqttDualTopicClient
+    public class MqttDualTopicClient
     {
         private readonly string _topicSender;
         private readonly IMqttClient _client = new MqttFactory().CreateMqttClient();
@@ -16,7 +16,7 @@ namespace Mqtt.Client
             _topicSender = topicSender;
             _client.ApplicationMessageReceived += (s, mqttEventArgs) =>
             {
-                var message = Encoding.UTF8.GetString(mqttEventArgs.ApplicationMessage.Payload) + " | " + mqttEventArgs.ApplicationMessage.Topic;
+                var message = Encoding.UTF8.GetString(mqttEventArgs.ApplicationMessage.Payload);
 
                 messageReceivedHandler(message);
             };
