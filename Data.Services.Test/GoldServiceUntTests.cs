@@ -35,11 +35,11 @@ namespace Data.Services.Test
         }
 
         [Fact]
-        public void GetRequestsTest_ResultXmlEqualsExample()
+        public void GetNewestPrice_ServiceInstantiated_ReturnsNonEmptyData()
         {
-            var result = _sut.GetOldestDay();
+            var result = _sut.GetNewestPrice();
 
-            Assert.Equal(DateTime.MinValue.Date, result.Date);
+            Assert.NotEqual(string.Empty, result);
         }
     }
 }
