@@ -22,15 +22,14 @@ namespace Data.Services
             //use DI and app config
             //TODO resolwe scope lifetime - 1 request gets executed before constructor is created
             _mqttDualTopicClient = new MqttDualTopicClient(
-                "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic", ResponseReceivedHandler);
+                "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic");
+
+            _mqttDualTopicClient.RaiseMessageReceivedEvent += ResponseReceivedHandler;
         }
 
-        //Move this to service and use DI
-        public string ResponseReceivedHandler(string message)
+        public void ResponseReceivedHandler(object sender, MessageEventArgs e)
         {
-            ResponseMessage = message;
-
-            return message;
+            ResponseMessage = e.Message;
         }
 
         IDictionary<DateTime, double> IGoldService.GetAllPriceData()
@@ -48,7 +47,8 @@ namespace Data.Services
 
                 if (!string.IsNullOrEmpty(ResponseMessage))
                 {
-                    var goldDataOverview = AllChildren(JObject.Parse(ResponseMessage))
+                    var goldDataOverview = 
+                        AllChildren(JObject.Parse(ResponseMessage))
                         .First(c => c.Path.Contains("dataset"))
                         .Children<JObject>()
                         .First();

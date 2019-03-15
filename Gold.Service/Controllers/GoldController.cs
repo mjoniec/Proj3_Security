@@ -19,16 +19,16 @@ namespace Gold.Service.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            var price = _goldService.GetNewestPrice();
-
-            return new string[] { price.ToString() };
+            return new string[] { string.Empty };
         }
 
         // POST: api/Gold
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IEnumerable<string> Post([FromBody] string value)
         {
-            
+            var price = _goldService.GetNewestPrice();
+
+            return new string[] { price.ToString() };
         }
     }
 }

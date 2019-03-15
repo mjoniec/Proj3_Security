@@ -11,17 +11,29 @@ namespace Mqtt.Client
         private readonly string _topicSender;
         private readonly IMqttClient _client = new MqttFactory().CreateMqttClient();
 
-        public MqttDualTopicClient(string ip, int port, string topicReceiver, string topicSender, Func<string, string> messageReceivedHandler)
+        public event EventHandler<MessageEventArgs> RaiseMessageReceivedEvent;
+
+        public MqttDualTopicClient(string ip, int port, string topicReceiver, string topicSender)
         {
             _topicSender = topicSender;
-            _client.ApplicationMessageReceived += (s, mqttEventArgs) =>
+            _client.ApplicationMessageReceived += (o, mqttEventArgs) =>
             {
                 var message = Encoding.UTF8.GetString(mqttEventArgs.ApplicationMessage.Payload);
 
-                messageReceivedHandler(message);
+                OnRaiseMessageReceivedEvent(new MessageEventArgs(message));
             };
 
             Start(ip, port, topicReceiver);
+        }
+
+        private void OnRaiseMessageReceivedEvent(MessageEventArgs e)
+        {
+            EventHandler<MessageEventArgs> handler = RaiseMessageReceivedEvent;
+
+            //no subscribers
+            if (handler == null) return;
+            
+            handler(this, e);            
         }
 
         private async void Start(string ip, int port, string topicReceiver)

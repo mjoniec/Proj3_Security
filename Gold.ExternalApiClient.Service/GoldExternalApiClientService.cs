@@ -21,7 +21,18 @@ namespace Gold.ExternalApiClient.Service
 
             //field initializer can not reference non static - replace with interface and DI
             _mqttDualTopicClient = new MqttDualTopicClient(
-                "localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic", RequestReceivedHandler);
+                "localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic");
+
+            _mqttDualTopicClient.RaiseMessageReceivedEvent += RequestReceivedHandler;
+        }
+
+        public void RequestReceivedHandler(object sender, MessageEventArgs e)
+        {
+            _logger.LogInformation(e.Message);
+
+            var goldData = GetGoldData();
+
+            _mqttDualTopicClient.Send(goldData);
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -29,17 +40,6 @@ namespace Gold.ExternalApiClient.Service
             _logger.LogInformation("Starting external gold data api client service: " + _config.Value.Name);
 
             return Task.CompletedTask;
-        }
-
-        public string RequestReceivedHandler(string message)
-        {
-            _logger.LogInformation(message);
-
-            var goldData = GetGoldData();
-
-            _mqttDualTopicClient.Send(goldData);
-
-            return goldData;
         }
 
         private string GetGoldData()
