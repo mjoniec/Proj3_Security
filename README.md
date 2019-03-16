@@ -1,5 +1,22 @@
 # GoldBackend
 
+1
+dotnet run --MQTT:Port=1883
+C:\C#\MarJonDemo\Mqtt.Service
+
+2
+dotnet run --GoldExternalApiClient:Name="Gold data service"
+C:\C#\MarJonDemo\GoldExternalApiClient.Service
+
+3
+run web api
+
+4
+postman send get request - triggers services creation
+postman send post request - should contain gold data
+
+--------------------------------------------------------
+
 *Gold.Service* - service to provide (processed) gold data for frontend client
 - Autofac
 - Core Rest Api
