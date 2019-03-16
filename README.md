@@ -1,19 +1,17 @@
 # GoldBackend
 
-1
+1 C:\C#\GoldBackend\Mqtt.Service
+
 dotnet run --MQTT:Port=1883
 
-C:\C#\GoldBackend\Mqtt.Service
+2 C:\C#\GoldBackend\GoldExternalApiClient.Service
 
-2
 dotnet run --GoldExternalApiClient:Name="Gold data service"
 
-C:\C#\GoldBackend\GoldExternalApiClient.Service
-
-3
-run Gold.Service web api
+3 run Gold.Service web api
 
 4
+
 postman send get request - triggers services creation
 postman send post request - should contain gold data
 
