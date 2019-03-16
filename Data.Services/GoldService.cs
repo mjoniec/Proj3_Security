@@ -12,8 +12,10 @@ namespace Data.Services
     public class GoldService : IGoldService
     {
         private static string ResponseMessage = "";
-        IGoldRepository _goldRepository;
-        MqttDualTopicClient _mqttDualTopicClient;
+
+        private readonly bool _mqttConnected;
+        private readonly IGoldRepository _goldRepository;
+        private readonly MqttDualTopicClient _mqttDualTopicClient;
 
         public GoldService(IGoldRepository goldRepository)
         {
@@ -21,10 +23,14 @@ namespace Data.Services
 
             //use DI and app config
             //TODO resolwe scope lifetime - 1 request gets executed before constructor is created
-            _mqttDualTopicClient = new MqttDualTopicClient(
-                "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic");
+            _mqttDualTopicClient = new MqttDualTopicClient(new MqttDualTopicData(
+                "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic"));
 
             _mqttDualTopicClient.RaiseMessageReceivedEvent += ResponseReceivedHandler;
+
+            var t = _mqttDualTopicClient.Start();
+
+            _mqttConnected = t.Result;
         }
 
         public void ResponseReceivedHandler(object sender, MessageEventArgs e)
@@ -41,34 +47,37 @@ namespace Data.Services
 
         public string GetNewestPrice()
         {
-            try
+            if (_mqttConnected)
             {
-                _mqttDualTopicClient.Send("request");
-
-                if (!string.IsNullOrEmpty(ResponseMessage))
+                try
                 {
-                    var goldDataOverview = 
-                        AllChildren(JObject.Parse(ResponseMessage))
-                        .First(c => c.Path.Contains("dataset"))
-                        .Children<JObject>()
-                        .First();
+                    _mqttDualTopicClient.Send("request");
 
-                    var goldDataDeserialized = JsonConvert.DeserializeObject<GoldDataModel>(goldDataOverview.ToString());
+                    if (!string.IsNullOrEmpty(ResponseMessage))
+                    {
+                        var goldDataOverview =
+                            AllChildren(JObject.Parse(ResponseMessage))
+                            .First(c => c.Path.Contains("dataset"))
+                            .Children<JObject>()
+                            .First();
 
-                    return goldDataDeserialized.NewestAvailaleDate;
+                        var goldDataDeserialized = JsonConvert.DeserializeObject<GoldDataModel>(goldDataOverview.ToString());
+
+                        return goldDataDeserialized.NewestAvailaleDate;
+                    }
                 }
-
-                var goldData = _goldRepository.Get();
-                DateTime.TryParse(goldData.NewestAvailaleDate, out DateTime date);
-
-                goldData.DailyGoldData.TryGetValue(date, out double value);
-
-                return value.ToString();
+                catch (Exception e)
+                {
+                    return e.Message;
+                }
             }
-            catch(Exception e)
-            {
-                return e.Message;
-            }
+
+            var goldData = _goldRepository.Get();
+            DateTime.TryParse(goldData.NewestAvailaleDate, out DateTime date);
+
+            goldData.DailyGoldData.TryGetValue(date, out double value);
+
+            return value.ToString();
         }
 
         private static IEnumerable<JToken> AllChildren(JToken json)

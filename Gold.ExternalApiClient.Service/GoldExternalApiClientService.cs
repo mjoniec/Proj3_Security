@@ -20,10 +20,14 @@ namespace Gold.ExternalApiClient.Service
             _config = config;
 
             //field initializer can not reference non static - replace with interface and DI
-            _mqttDualTopicClient = new MqttDualTopicClient(
-                "localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic");
+            _mqttDualTopicClient = new MqttDualTopicClient(new MqttDualTopicData(
+                "localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic"));
 
             _mqttDualTopicClient.RaiseMessageReceivedEvent += RequestReceivedHandler;
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            _mqttDualTopicClient.Start();
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
         public void RequestReceivedHandler(object sender, MessageEventArgs e)

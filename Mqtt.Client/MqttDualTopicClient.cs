@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Extensions.ManagedClient;
@@ -8,22 +10,20 @@ namespace Mqtt.Client
 {
     public class MqttDualTopicClient
     {
-        private readonly string _topicSender;
+        private readonly MqttDualTopicData _mqttDualTopicData;
         private readonly IMqttClient _client = new MqttFactory().CreateMqttClient();
 
         public event EventHandler<MessageEventArgs> RaiseMessageReceivedEvent;
 
-        public MqttDualTopicClient(string ip, int port, string topicReceiver, string topicSender)
+        public MqttDualTopicClient(MqttDualTopicData mqttDualTopicData)
         {
-            _topicSender = topicSender;
+            _mqttDualTopicData = mqttDualTopicData;
             _client.ApplicationMessageReceived += (o, mqttEventArgs) =>
             {
                 var message = Encoding.UTF8.GetString(mqttEventArgs.ApplicationMessage.Payload);
 
                 OnRaiseMessageReceivedEvent(new MessageEventArgs(message));
             };
-
-            Start(ip, port, topicReceiver);
         }
 
         private void OnRaiseMessageReceivedEvent(MessageEventArgs e)
@@ -36,20 +36,25 @@ namespace Mqtt.Client
             handler(this, e);            
         }
 
-        private async void Start(string ip, int port, string topicReceiver)
+        public async Task<bool> Start()
         {
             var options = new MqttClientOptionsBuilder()
-                .WithTcpServer(ip, port)
+                .WithTcpServer(_mqttDualTopicData.Ip, _mqttDualTopicData.Port)
                 .Build();
 
             await _client.ConnectAsync(options);
-            await _client.SubscribeAsync(new TopicFilterBuilder().WithTopic(topicReceiver).Build());
+
+            var subscribeResults = await _client.SubscribeAsync(new TopicFilterBuilder().WithTopic(_mqttDualTopicData.TopicReceiver).Build());
+
+            if (subscribeResults.Any(r=>r.ReturnCode == MQTTnet.Protocol.MqttSubscribeReturnCode.Failure)) return false;
+
+            return true;
         }
 
         public async void Send(string message)
         {
             var mqttApplicationMessageBuilder = new MqttApplicationMessageBuilder()
-                .WithTopic(_topicSender)
+                .WithTopic(_mqttDualTopicData.TopicSender)
                 .WithPayload(message)
                 .WithExactlyOnceQoS()
                 .WithRetainFlag()
