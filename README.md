@@ -2,14 +2,16 @@
 
 1
 dotnet run --MQTT:Port=1883
-C:\C#\MarJonDemo\Mqtt.Service
+
+C:\C#\GoldBackend\Mqtt.Service
 
 2
 dotnet run --GoldExternalApiClient:Name="Gold data service"
-C:\C#\MarJonDemo\GoldExternalApiClient.Service
+
+C:\C#\GoldBackend\GoldExternalApiClient.Service
 
 3
-run web api
+run Gold.Service web api
 
 4
 postman send get request - triggers services creation
