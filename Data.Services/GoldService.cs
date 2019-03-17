@@ -12,6 +12,7 @@ namespace Data.Services
     public class GoldService : IGoldService
     {
         private static string ResponseMessage = "";
+        private static Dictionary<ushort, string> GoldData;
 
         private readonly bool _mqttConnected;
         private readonly IGoldRepository _goldRepository;
@@ -19,6 +20,8 @@ namespace Data.Services
 
         public GoldService(IGoldRepository goldRepository)
         {
+            GoldData = new Dictionary<ushort, string>();
+
             _goldRepository = goldRepository;
 
             //use DI and app config
@@ -33,53 +36,77 @@ namespace Data.Services
             _mqttConnected = t.Result;
         }
 
-        public void ResponseReceivedHandler(object sender, MessageEventArgs e)
+        private void ResponseReceivedHandler(object sender, MessageEventArgs e)
         {
+            //TODO use dictionary here, extract dataid 
             ResponseMessage = e.Message;
         }
 
-        IDictionary<DateTime, double> IGoldService.GetAllPriceData()
+        public ushort GetDataPrepared()
         {
-            var goldData = _goldRepository.Get();
+            if (!_mqttConnected) return ushort.MinValue;
 
-            return goldData.DailyGoldData;
-        }
+            var dataId = (ushort) new Random().Next(ushort.MinValue + 1, ushort.MaxValue);
 
-        public string GetNewestPrice()
-        {
-            if (_mqttConnected)
+            try
             {
-                try
-                {
-                    _mqttDualTopicClient.Send("request");
-
-                    if (!string.IsNullOrEmpty(ResponseMessage))
-                    {
-                        var goldDataOverview =
-                            AllChildren(JObject.Parse(ResponseMessage))
-                            .First(c => c.Path.Contains("dataset"))
-                            .Children<JObject>()
-                            .First();
-
-                        var goldDataDeserialized = JsonConvert.DeserializeObject<GoldDataModel>(goldDataOverview.ToString());
-
-                        return goldDataDeserialized.NewestAvailaleDate;
-                    }
-                }
-                catch (Exception e)
-                {
-                    return e.Message;
-                }
+                _mqttDualTopicClient.Send(dataId.ToString());
+                GoldData.Add(dataId, string.Empty);
+            }
+            catch
+            {
+                return ushort.MinValue;
             }
 
-            var goldData = _goldRepository.Get();
-            DateTime.TryParse(goldData.NewestAvailaleDate, out DateTime date);
-
-            goldData.DailyGoldData.TryGetValue(date, out double value);
-
-            return value.ToString();
+            return dataId;
         }
 
+        public string GetNewestPrice(string dataId)
+        {
+            //TODO write a nice unit test for all ushort input case scenario and get coverage percantage
+            if (string.IsNullOrEmpty(dataId)|| !_mqttConnected) return string.Empty;
+
+            var parseResult = ushort.TryParse(dataId, out var dataIdParsed);
+
+            if (!parseResult || dataIdParsed == ushort.MinValue) return string.Empty;
+            
+            //TODO return to dict when implemented
+            //var isDataPresent = GoldData.TryGetValue(dataIdParsed, out var responseMessage);
+
+            //if (!isDataPresent) return string.Empty;
+
+            if (!string.IsNullOrEmpty(ResponseMessage))
+            {
+                var goldDataOverview =
+                    AllChildren(JObject.Parse(ResponseMessage))
+                    .First(c => c.Path.Contains("dataset"))
+                    .Children<JObject>()
+                    .First();
+
+                var goldDataDeserialized = JsonConvert.DeserializeObject<GoldDataModel>(goldDataOverview.ToString());
+
+                return goldDataDeserialized.NewestAvailaleDate;
+            }
+
+            return "empty qqq";
+
+            //var goldData = _goldRepository.Get();
+            //DateTime.TryParse(goldData.NewestAvailaleDate, out DateTime date);
+
+            //goldData.DailyGoldData.TryGetValue(date, out double value);
+
+            //return value.ToString();
+        }
+
+        //IDictionary<DateTime, double> IGoldService.GetAllGoldPriceData(ushort dataId)
+        //{
+        //    var goldData = _goldRepository.Get();
+
+        //    return goldData.DailyGoldData;
+        //}
+
+
+        //TODO refactor this to some JSON parser class
         private static IEnumerable<JToken> AllChildren(JToken json)
         {
             foreach (var c in json.Children())

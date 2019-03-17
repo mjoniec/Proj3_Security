@@ -33,7 +33,7 @@ namespace Mqtt.Client
             //no subscribers
             if (handler == null) return;
             
-            handler(this, e);            
+            handler(this, e);
         }
 
         public async Task<bool> Start()

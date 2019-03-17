@@ -34,12 +34,12 @@ namespace Data.Services.Test
             _sut = new GoldService(_substitute);
         }
 
-        [Fact]
-        public void GetNewestPrice_ServiceInstantiated_ReturnsNonEmptyData()
-        {
-            var result = _sut.GetNewestPrice();
+        //[Fact]
+        //public void GetNewestPrice_ServiceInstantiated_ReturnsNonEmptyData()
+        //{
+        //    var result = _sut.GetNewestPrice();
 
-            Assert.NotEqual(string.Empty, result);
-        }
+        //    Assert.NotEqual(string.Empty, result);
+        //}
     }
 }

@@ -5,7 +5,8 @@ namespace Data.Services
 {
     public interface IGoldService
     {
-        IDictionary<DateTime, double> GetAllPriceData();
-        string GetNewestPrice();
+        ushort GetDataPrepared();
+        string GetNewestPrice(string dataId);
+        //IDictionary<DateTime, double> GetAllGoldPriceData(ushort dataId);
     }
 }

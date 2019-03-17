@@ -35,8 +35,16 @@ namespace Gold.ExternalApiClient.Service
             _logger.LogInformation(e.Message);
 
             var goldData = GetGoldData();
+            var goldDataWithRequestId = WrapResponse(e.Message, goldData);
 
             _mqttDualTopicClient.Send(goldData);
+        }
+
+        private string WrapResponse(string dataId, string responseMessage)
+        {
+            //TODO wrap response with given goldId here in JSON format
+
+            return responseMessage;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

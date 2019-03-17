@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Data.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gold.Service.Controllers
@@ -15,24 +16,34 @@ namespace Gold.Service.Controllers
             _goldService = goldService;
         }
 
+        // GET: api/Gold/dataId
+        [HttpGet("{dataId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult Get(string dataId)
+        {
+            var price = _goldService.GetNewestPrice(dataId);
+
+            return Ok(price);
+        }
+
         // GET: api/Gold
         [HttpGet]
-        public IEnumerable<string> Get()
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        public IActionResult Get()
         {
-            //return new string[] { string.Empty };
+            var dataId = _goldService.GetDataPrepared();
 
-            var price = _goldService.GetNewestPrice();
-
-            return new string[] { price.ToString() };
+            return Accepted(dataId);
         }
 
         // POST: api/Gold
         [HttpPost]
         public IEnumerable<string> Post([FromBody] string value)
         {
-            var price = _goldService.GetNewestPrice();
+            //TODO: remove when not needed for tests
+            var dataId = _goldService.GetDataPrepared();
 
-            return new string[] { price.ToString() };
+            return new string[] { dataId.ToString() };
         }
     }
 }
