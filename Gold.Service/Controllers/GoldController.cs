@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Data.Services;
+﻿using Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,16 +33,6 @@ namespace Gold.Service.Controllers
             var dataId = _goldService.GetDataPrepared();
 
             return Accepted(dataId);
-        }
-
-        // POST: api/Gold
-        [HttpPost]
-        public IEnumerable<string> Post([FromBody] string value)
-        {
-            //TODO: remove when not needed for tests
-            var dataId = _goldService.GetDataPrepared();
-
-            return new string[] { dataId.ToString() };
         }
     }
 }

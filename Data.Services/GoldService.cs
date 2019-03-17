@@ -11,21 +11,17 @@ namespace Data.Services
 {
     public class GoldService : IGoldService
     {
-        private static string ResponseMessage = "";
-        private static Dictionary<ushort, string> GoldData;
-
         private readonly bool _mqttConnected;
         private readonly IGoldRepository _goldRepository;
         private readonly MqttDualTopicClient _mqttDualTopicClient;
+        private readonly Dictionary<ushort, string> _goldData;
 
         public GoldService(IGoldRepository goldRepository)
         {
-            GoldData = new Dictionary<ushort, string>();
-
             _goldRepository = goldRepository;
+            _goldData = new Dictionary<ushort, string>();
 
-            //use DI and app config
-            //TODO resolwe scope lifetime - 1 request gets executed before constructor is created
+            //TODO use DI and app config
             _mqttDualTopicClient = new MqttDualTopicClient(new MqttDualTopicData(
                 "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic"));
 
@@ -36,10 +32,29 @@ namespace Data.Services
             _mqttConnected = t.Result;
         }
 
+        //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
         private void ResponseReceivedHandler(object sender, MessageEventArgs e)
         {
-            //TODO use dictionary here, extract dataid 
-            ResponseMessage = e.Message;
+            var dataId = AllChildren(JObject.Parse(e.Message))
+                .First(c => c.Path.Contains("dataId"))
+                .Values()
+                .First()
+                .ToString();
+
+            var parseResult = ushort.TryParse(dataId, out var dataIdParsed);
+
+            if (!parseResult || dataIdParsed == ushort.MinValue) return;
+
+            var goldDataOverview =
+                AllChildren(JObject.Parse(e.Message))
+                .First(c => c.Path.Contains("dataset"))
+                .Children<JObject>()
+                .First()
+                .ToString();
+
+            if (!_goldData.TryGetValue(dataIdParsed, out var value)) return;
+
+            _goldData[dataIdParsed] = goldDataOverview;
         }
 
         public ushort GetDataPrepared()
@@ -51,7 +66,7 @@ namespace Data.Services
             try
             {
                 _mqttDualTopicClient.Send(dataId.ToString());
-                GoldData.Add(dataId, string.Empty);
+                _goldData.Add(dataId, string.Empty);
             }
             catch
             {
@@ -61,50 +76,29 @@ namespace Data.Services
             return dataId;
         }
 
+        //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
         public string GetNewestPrice(string dataId)
         {
-            //TODO write a nice unit test for all ushort input case scenario and get coverage percantage
+            //TODO write unit tests for all ushort input case scenarios and get coverage percantage
             if (string.IsNullOrEmpty(dataId)|| !_mqttConnected) return string.Empty;
 
             var parseResult = ushort.TryParse(dataId, out var dataIdParsed);
 
             if (!parseResult || dataIdParsed == ushort.MinValue) return string.Empty;
-            
-            //TODO return to dict when implemented
-            //var isDataPresent = GoldData.TryGetValue(dataIdParsed, out var responseMessage);
 
-            //if (!isDataPresent) return string.Empty;
+            var isDataPresent = _goldData.TryGetValue(dataIdParsed, out var responseMessage);
 
-            if (!string.IsNullOrEmpty(ResponseMessage))
-            {
-                var goldDataOverview =
-                    AllChildren(JObject.Parse(ResponseMessage))
-                    .First(c => c.Path.Contains("dataset"))
-                    .Children<JObject>()
-                    .First();
+            if (!isDataPresent) return string.Empty;
 
-                var goldDataDeserialized = JsonConvert.DeserializeObject<GoldDataModel>(goldDataOverview.ToString());
+            //TODO get rid of those newlines where they were generated
+            var responseMessage2 = responseMessage.Replace(Environment.NewLine, string.Empty);
 
-                return goldDataDeserialized.NewestAvailaleDate;
-            }
+            if (string.IsNullOrEmpty(responseMessage2)) return string.Empty;
 
-            return "empty qqq";
+            var goldDataDeserialized = JsonConvert.DeserializeObject<GoldDataModel>(responseMessage2);
 
-            //var goldData = _goldRepository.Get();
-            //DateTime.TryParse(goldData.NewestAvailaleDate, out DateTime date);
-
-            //goldData.DailyGoldData.TryGetValue(date, out double value);
-
-            //return value.ToString();
+            return goldDataDeserialized.NewestAvailaleDate;
         }
-
-        //IDictionary<DateTime, double> IGoldService.GetAllGoldPriceData(ushort dataId)
-        //{
-        //    var goldData = _goldRepository.Get();
-
-        //    return goldData.DailyGoldData;
-        //}
-
 
         //TODO refactor this to some JSON parser class
         private static IEnumerable<JToken> AllChildren(JToken json)

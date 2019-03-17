@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
@@ -32,19 +33,24 @@ namespace Gold.ExternalApiClient.Service
 
         public void RequestReceivedHandler(object sender, MessageEventArgs e)
         {
-            _logger.LogInformation(e.Message);
-
             var goldData = GetGoldData();
             var goldDataWithRequestId = WrapResponse(e.Message, goldData);
 
-            _mqttDualTopicClient.Send(goldData);
+            _logger.LogInformation(goldDataWithRequestId);
+            _logger.LogInformation(e.Message);
+            _mqttDualTopicClient.Send(goldDataWithRequestId);
         }
 
         private string WrapResponse(string dataId, string responseMessage)
         {
-            //TODO wrap response with given goldId here in JSON format
+            //wraps response with given goldId in JSON format
 
-            return responseMessage;
+            var stringBuilder = new StringBuilder(responseMessage);
+
+            stringBuilder.Remove(0, 1);
+            stringBuilder.Insert(0, "{\"dataId\":\"" + dataId + "\",");
+
+            return stringBuilder.ToString();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -64,8 +70,6 @@ namespace Gold.ExternalApiClient.Service
                 goldData = t.Result;
             })
             .Wait();
-
-            _logger.LogInformation(goldData);
 
             return goldData;
         }
