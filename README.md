@@ -10,41 +10,53 @@
 
 --------------------------------------------------------
 
-*Gold.Service* - service to provide (processed) gold data for frontend client
-- Autofac
+*Gold.Service* 
+- service to provide gold price data for frontend client
 - Core Rest Api
-- Swagger
+- Double data request strategy, first accepted, then return if created
+- IOC, DI
+- Autofac
+- Swagger (TODO)
 
 --------------------------------------------------------
 
-*Data.Model* - (de)serializable Model
-- attributes for JSON 
+*Data.Model*
+- (de)serializable Model
+- attributes for JSON
+- attributes for DB (TODO)
 
-*Data.Repositories* - Access to DB and example (generated) data 
+*Data.Repositories*
+- Access to DB (TODO)
 - LINQ
+- Core Entity Framework (TODO)
 
-*Data.Services* - Logic between controllers and repositories
-- IOC
+*Data.Services*
+- Logic between controllers and any data access
+- IOC, DI
 - JSON parsing logic
 - Mqtt client
 
-*Data.Services.Test* - unit test project
+*Data.Services.Test*
+- unit test project for services
 - xUnit
 - NSubstitude
 
 --------------------------------------------------------
 
-*Mqtt.Service* - Logic between controllers and repositories
-- .net core general host custom application type
-- mqtt protocol client only nuget dependent (no 3rd party software installation on host)
+*Mqtt.Service*
+- mqtt protocol service privider
+- Service - core General Host application type
+- only nuget dependent (no 3rd party software installation on host)
 
-*Mqtt.Client* - communicate between components
-- publish messages to topic
-- subscribe to topic, listener for incoming messages 
+*Mqtt.Client* 
+- sends and receives messages between components
+- publis and subscribe as a listener on separate topics (channels) 
+- fully async
 
 --------------------------------------------------------
 
 ExternalGoldDataApiClient.Service
-- .net core general host custom application type
-- sends http request to external service with gold info and receives JSON response
-- client of internal mqtt service
+- sends http request to external service, receives JSON response
+- Service - core General Host application type
+- client of external API service
+- JSON parsing logic, reverse engineered from 3rd pary (to be moved from service)
