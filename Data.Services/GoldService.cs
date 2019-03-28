@@ -114,9 +114,10 @@ namespace Data.Services
             var goldData = _goldRepository.Get();
             var allPrices = new List<string>();
 
+            //Refactor this functionality into model #10
             foreach(var goldPriceDataValue in goldData.DailyGoldData)
             {
-                allPrices.Add(goldPriceDataValue.Key.ToString("yyyy-MM-dd")
+                allPrices.Add(goldPriceDataValue.Key.ToString("yyyy-M-d")
                     + "," 
                     + goldPriceDataValue.Value.ToString(new CultureInfo("en-US")));
             }

@@ -59,7 +59,7 @@ namespace Data.Services.Test
             var allPrices = _sut.GetAllPrices();
 
             Assert.NotEmpty(allPrices);
-            Assert.Equal("2010-06-29,15.7", allPrices.First());
+            Assert.Equal("2010-6-29,15.7", allPrices.First());
         }
     }
 }
