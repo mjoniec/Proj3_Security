@@ -1,8 +1,11 @@
-﻿namespace Data.Services
+﻿using System.Collections.Generic;
+
+namespace Data.Services
 {
     public interface IGoldService
     {
-        ushort GetDataPrepared();
+        ushort StartPreparingData();
         string GetNewestPrice(string dataId);
+        IEnumerable<string> GetAllPrices();
     }
 }

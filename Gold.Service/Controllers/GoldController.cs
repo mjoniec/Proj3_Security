@@ -30,7 +30,7 @@ namespace Gold.Service.Controllers
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         public IActionResult Get()
         {
-            var dataId = _goldService.GetDataPrepared();
+            var dataId = _goldService.StartPreparingData();
 
             return Accepted(dataId);
         }

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Data.Services
@@ -32,6 +33,14 @@ namespace Data.Services
             _mqttConnected = t.Result;
         }
 
+        //#15 task
+        //fuze constructors, use common code that works for application and test
+        public GoldService(IGoldRepository goldRepository, /*TODO Use interface*/ MqttDualTopicClient mqttDualTopicClient)
+        {
+            _goldRepository = goldRepository;
+            _goldData = new Dictionary<ushort, string>();
+        }
+
         //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
         private void ResponseReceivedHandler(object sender, MessageEventArgs e)
         {
@@ -57,7 +66,7 @@ namespace Data.Services
             _goldData[dataIdParsed] = goldDataOverview;
         }
 
-        public ushort GetDataPrepared()
+        public ushort StartPreparingData()
         {
             if (!_mqttConnected) return ushort.MinValue;
 
@@ -98,6 +107,21 @@ namespace Data.Services
             var goldDataDeserialized = JsonConvert.DeserializeObject<GoldDataModel>(responseMessage2);
 
             return goldDataDeserialized.NewestAvailaleDate;
+        }
+
+        public IEnumerable<string> GetAllPrices()
+        {
+            var goldData = _goldRepository.Get();
+            var allPrices = new List<string>();
+
+            foreach(var goldPriceDataValue in goldData.DailyGoldData)
+            {
+                allPrices.Add(goldPriceDataValue.Key.ToString("yyyy-MM-dd")
+                    + "," 
+                    + goldPriceDataValue.Value.ToString(new CultureInfo("en-US")));
+            }
+
+            return allPrices;
         }
 
         //TODO refactor this to some JSON parser class
