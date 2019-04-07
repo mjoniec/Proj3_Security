@@ -109,6 +109,39 @@ namespace Data.Services
             return goldDataDeserialized.NewestAvailaleDate;
         }
 
+        public IEnumerable<string> GetAll(string dataId)
+        {
+            //TODO write unit tests for all ushort input case scenarios and get coverage percantage
+            if (string.IsNullOrEmpty(dataId) || !_mqttConnected) return null;
+
+            var parseResult = ushort.TryParse(dataId, out var dataIdParsed);
+
+            if (!parseResult || dataIdParsed == ushort.MinValue) return null;
+
+            var isDataPresent = _goldData.TryGetValue(dataIdParsed, out var responseMessage);
+
+            if (!isDataPresent) return null;
+
+            //TODO get rid of those newlines where they were generated
+            var responseMessage2 = responseMessage.Replace(Environment.NewLine, string.Empty);
+
+            if (string.IsNullOrEmpty(responseMessage2)) return null;
+
+            var goldData = JsonConvert.DeserializeObject<GoldDataModel>(responseMessage2);
+
+            var allPrices = new List<string>();
+
+            //Refactor this functionality into model #10
+            foreach (var goldPriceDataValue in goldData.DailyGoldData)
+            {
+                allPrices.Add(goldPriceDataValue.Key.ToString("yyyy-M-d")
+                    + ","
+                    + goldPriceDataValue.Value.ToString(new CultureInfo("en-US")));
+            }
+
+            return allPrices;
+        }
+
         public IEnumerable<string> GetAllPrices()
         {
             var goldData = _goldRepository.Get();

@@ -6,6 +6,7 @@ namespace Data.Services
     {
         ushort StartPreparingData();
         string GetNewestPrice(string dataId);
+        IEnumerable<string> GetAll(string dataId);
         IEnumerable<string> GetAllPrices();
     }
 }

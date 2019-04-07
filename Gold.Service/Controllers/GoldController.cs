@@ -15,6 +15,16 @@ namespace Gold.Service.Controllers
             _goldService = goldService;
         }
 
+        // GET: api/Gold/GetAll/dataId
+        [HttpGet("{dataId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult GetAll(string dataId)
+        {
+            var allPrices = _goldService.GetAll(dataId);
+
+            return Ok(allPrices);
+        }
+
         // GET: api/Gold/dataId
         [HttpGet("{dataId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
