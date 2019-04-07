@@ -16,7 +16,7 @@ namespace Gold.Service.Controllers
         }
 
         // GET: api/Gold/GetAll/dataId
-        [HttpGet("{dataId}")]
+        [HttpGet("[action]/{dataId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult GetAll(string dataId)
         {
