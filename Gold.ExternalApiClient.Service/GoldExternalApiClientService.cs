@@ -13,16 +13,13 @@ namespace Gold.ExternalApiClient.Service
     {
         private readonly ILogger _logger;
         private readonly IOptions<GoldExternalApiClientConfig> _config;
-        private readonly MqttDualTopicClient _mqttDualTopicClient;
+        private readonly IMqttDualTopicClient _mqttDualTopicClient;
 
-        public GoldExternalApiClientService(ILogger<GoldExternalApiClientConfig> logger, IOptions<GoldExternalApiClientConfig> config)
+        public GoldExternalApiClientService(ILogger<GoldExternalApiClientConfig> logger, IOptions<GoldExternalApiClientConfig> config, IMqttDualTopicClient mqttDualTopicClient)
         {
             _logger = logger;
             _config = config;
-
-            //field initializer can not reference non static - replace with interface and DI
-            _mqttDualTopicClient = new MqttDualTopicClient(new MqttDualTopicData(
-                "localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic"));
+            _mqttDualTopicClient = mqttDualTopicClient;
 
             _mqttDualTopicClient.RaiseMessageReceivedEvent += RequestReceivedHandler;
 

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Mqtt.Client;
 
 namespace Gold.ExternalApiClient.Service
 {
@@ -26,10 +27,13 @@ namespace Gold.ExternalApiClient.Service
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddOptions();
-
-                    //section name the same as in invoke command
-                    //TODO - move to config
                     services.Configure<GoldExternalApiClientConfig>(hostContext.Configuration.GetSection("GoldExternalApiClient"));
+                    services.AddScoped<IMqttDualTopicClient>(x => 
+                    {
+                        //TODO - use config
+                        return new MqttDualTopicClient(new MqttDualTopicData(
+                            "localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic"));
+                    });
                     services.AddSingleton<IHostedService, GoldExternalApiClientService>();
                 })
                 .ConfigureLogging((hostingContext, logging) => {
