@@ -8,6 +8,7 @@ using Data.Services;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Data.Repositories;
+using Mqtt.Client;
 
 namespace Gold.Service
 {
@@ -29,6 +30,13 @@ namespace Gold.Service
 
             containerBuilder.RegisterType<GoldService>().As<IGoldService>().SingleInstance();
             containerBuilder.RegisterType<GoldRepository>().As<IGoldRepository>();
+
+            containerBuilder.Register(ctx =>
+            {
+                return new MqttDualTopicClient(new MqttDualTopicData(
+                    "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic"));
+            }).As<IMqttDualTopicClient>();
+
             containerBuilder.Populate(services);
 
             var container = containerBuilder.Build();

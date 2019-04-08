@@ -14,24 +14,8 @@ namespace Data.Services
     {
         private readonly bool _mqttConnected;
         private readonly IGoldRepository _goldRepository;
-        private readonly MqttDualTopicClient _mqttDualTopicClient;
+        private readonly IMqttDualTopicClient _mqttDualTopicClient;
         private readonly Dictionary<ushort, string> _goldData;
-
-        public GoldService(IGoldRepository goldRepository)
-        {
-            _goldRepository = goldRepository;
-            _goldData = new Dictionary<ushort, string>();
-
-            //TODO use DI and app config
-            _mqttDualTopicClient = new MqttDualTopicClient(new MqttDualTopicData(
-                "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic"));
-
-            _mqttDualTopicClient.RaiseMessageReceivedEvent += ResponseReceivedHandler;
-
-            var t = _mqttDualTopicClient.Start();
-
-            _mqttConnected = t.Result;
-        }
 
         //#15 task
         //fuze constructors, use common code that works for application and test
@@ -39,6 +23,19 @@ namespace Data.Services
         {
             _goldRepository = goldRepository;
             _goldData = new Dictionary<ushort, string>();
+        }
+
+        public GoldService(IGoldRepository goldRepository, IMqttDualTopicClient mqttDualTopicClient)
+        {
+            _goldRepository = goldRepository;
+            _goldData = new Dictionary<ushort, string>();
+            _mqttDualTopicClient = mqttDualTopicClient;
+
+            _mqttDualTopicClient.RaiseMessageReceivedEvent += ResponseReceivedHandler;
+
+            var t = _mqttDualTopicClient.Start();
+
+            _mqttConnected = t.Result;
         }
 
         //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
@@ -70,7 +67,7 @@ namespace Data.Services
         {
             if (!_mqttConnected) return ushort.MinValue;
 
-            var dataId = (ushort) new Random().Next(ushort.MinValue + 1, ushort.MaxValue);
+            var dataId = (ushort)new Random().Next(ushort.MinValue + 1, ushort.MaxValue);
 
             try
             {
@@ -89,7 +86,7 @@ namespace Data.Services
         public string GetNewestPrice(string dataId)
         {
             //TODO write unit tests for all ushort input case scenarios and get coverage percantage
-            if (string.IsNullOrEmpty(dataId)|| !_mqttConnected) return string.Empty;
+            if (string.IsNullOrEmpty(dataId) || !_mqttConnected) return string.Empty;
 
             var parseResult = ushort.TryParse(dataId, out var dataIdParsed);
 
@@ -148,10 +145,10 @@ namespace Data.Services
             var allPrices = new List<string>();
 
             //Refactor this functionality into model #10
-            foreach(var goldPriceDataValue in goldData.DailyGoldData)
+            foreach (var goldPriceDataValue in goldData.DailyGoldData)
             {
                 allPrices.Add(goldPriceDataValue.Key.ToString("yyyy-M-d")
-                    + "," 
+                    + ","
                     + goldPriceDataValue.Value.ToString(new CultureInfo("en-US")));
             }
 
@@ -173,3 +170,4 @@ namespace Data.Services
         }
     }
 }
+
