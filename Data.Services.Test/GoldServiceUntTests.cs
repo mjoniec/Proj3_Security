@@ -1,6 +1,6 @@
 ﻿using Data.Model;
 using Data.Repositories;
-//using Mqtt.Client;
+using Mqtt.Client;
 using NSubstitute;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,8 @@ namespace Data.Services.Test
 {
     public class GoldServiceUntTests
     {
-        private readonly IGoldRepository _substitute;
+        private readonly IGoldRepository _goldRepository;
+        private readonly IMqttDualTopicClient _mqttDualTopicClient;
         private readonly IGoldService _sut;
 
         public GoldServiceUntTests()
@@ -45,12 +46,13 @@ namespace Data.Services.Test
                 }
             };
 
-            _substitute = Substitute.For<IGoldRepository>();
-            _substitute.Get().Returns(goldDataModel);
+            _goldRepository = Substitute.For<IGoldRepository>();
+            _goldRepository.Get().Returns(goldDataModel);
 
-           // var mqttDualTopicClient = Substitute.For<MqttDualTopicClient>();
+            _mqttDualTopicClient = Substitute.For<IMqttDualTopicClient>();
+            _mqttDualTopicClient.Start().Returns(false);
 
-            _sut = new GoldService(_substitute, null/*, mqttDualTopicClient*/);
+            _sut = new GoldService(_goldRepository, _mqttDualTopicClient);
         }
 
         [Fact]

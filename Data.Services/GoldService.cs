@@ -17,14 +17,6 @@ namespace Data.Services
         private readonly IMqttDualTopicClient _mqttDualTopicClient;
         private readonly Dictionary<ushort, string> _goldData;
 
-        //#15 task
-        //fuze constructors, use common code that works for application and test
-        public GoldService(IGoldRepository goldRepository, /*TODO Use interface*/ MqttDualTopicClient mqttDualTopicClient)
-        {
-            _goldRepository = goldRepository;
-            _goldData = new Dictionary<ushort, string>();
-        }
-
         public GoldService(IGoldRepository goldRepository, IMqttDualTopicClient mqttDualTopicClient)
         {
             _goldRepository = goldRepository;
