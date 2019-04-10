@@ -121,7 +121,7 @@ namespace Data.Services
             var allPrices = new List<string>();
 
             //Refactor this functionality into model #10
-            foreach (var goldPriceDataValue in goldData.DailyGoldData)
+            foreach (var goldPriceDataValue in goldData.DailyGoldPrices)
             {
                 allPrices.Add(goldPriceDataValue.Key.ToString("yyyy-M-d")
                     + ","
@@ -137,7 +137,7 @@ namespace Data.Services
             var allPrices = new List<string>();
 
             //Refactor this functionality into model #10
-            foreach (var goldPriceDataValue in goldData.DailyGoldData)
+            foreach (var goldPriceDataValue in goldData.DailyGoldPrices)
             {
                 allPrices.Add(goldPriceDataValue.Key.ToString("yyyy-M-d")
                     + ","

@@ -21,7 +21,7 @@ namespace Data.Services.Test
             {
                 OldestAvailableDate = DateTime.MinValue.ToLongDateString(),
                 NewestAvailaleDate = DateTime.Now.ToLongDateString(),
-                DailyGoldDataUnparsed = new List<List<object>>
+                DailyGoldPricesUnparsed = new List<List<object>>
                 {
                     new List<object>
                     {
