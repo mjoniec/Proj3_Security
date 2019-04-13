@@ -2,7 +2,7 @@
 
 namespace Data.Model
 {
-    public class GoldDataJsonSerializer : JsonSerializer, ISerializer<GoldDataModel>
+    public class GoldDataJsonSerializer : ISerializer<GoldDataModel>
     {
         public GoldDataModel Deserialize(string json)
         {

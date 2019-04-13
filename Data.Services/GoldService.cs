@@ -15,7 +15,7 @@ namespace Data.Services
         private readonly bool _mqttConnected;
         private readonly IGoldRepository _goldRepository;
         private readonly IMqttDualTopicClient _mqttDualTopicClient;
-        private readonly Dictionary<ushort, string> _goldData;
+        private readonly Dictionary<ushort, string> _goldData;//stores gold data with request key
         private GoldDataJsonSerializer _goldDataJsonSerializer = new GoldDataJsonSerializer();
 
         public GoldService(IGoldRepository goldRepository, IMqttDualTopicClient mqttDualTopicClient)
@@ -34,27 +34,12 @@ namespace Data.Services
         //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
         private void ResponseReceivedHandler(object sender, MessageEventArgs e)
         {
-            var allChildren = _goldDataJsonSerializer.AllChildren(JObject.Parse(e.Message));
+            var dataId = GoldDataJsonModifier.GetGoldDataIdFromResponseMessage(e.Message);
+            var goldData = GoldDataJsonModifier.GetGoldDataFromResponseMessage(e.Message);
 
-            var dataId = allChildren
-                .First(c => c.Path.Contains("dataId"))
-                .Values()
-                .First()
-                .ToString();
+            if (dataId == null || !_goldData.TryGetValue(dataId.Value, out var value)) return;
 
-            var parseResult = ushort.TryParse(dataId, out var dataIdParsed);
-
-            if (!parseResult || dataIdParsed == ushort.MinValue) return;
-
-            var goldDataOverview = allChildren
-                .First(c => c.Path.Contains("dataset"))
-                .Children<JObject>()
-                .First()
-                .ToString();
-
-            if (!_goldData.TryGetValue(dataIdParsed, out var value)) return;
-
-            _goldData[dataIdParsed] = goldDataOverview;
+            _goldData[dataId.Value] = goldData;
         }
 
         public ushort StartPreparingData()

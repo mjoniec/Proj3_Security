@@ -1,0 +1,52 @@
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Data.Model
+{
+    public class GoldDataJsonModifier
+    {
+        public static IEnumerable<JToken> AllChildren(JToken json)
+        {
+            foreach (var c in json.Children())
+            {
+                yield return c;
+
+                foreach (var cc in AllChildren(c))
+                {
+                    yield return cc;
+                }
+            }
+        }
+
+        public static ushort? GetGoldDataIdFromResponseMessage(string message)
+        {
+            var allChildren = AllChildren(JObject.Parse(message));
+
+            var dataIdString = allChildren
+                .First(c => c.Path.Contains("dataId"))
+                .Values()
+                .First()
+                .ToString();
+
+            var parseResult = ushort.TryParse(dataIdString, out var dataId);
+
+            if (!parseResult || dataId == ushort.MinValue) return null;
+
+            return dataId;
+        }
+
+        public static string GetGoldDataFromResponseMessage(string message)
+        {
+            var allChildren = AllChildren(JObject.Parse(message));
+
+            var goldData = allChildren
+                .First(c => c.Path.Contains("dataset"))
+                .Children<JObject>()
+                .First()
+                .ToString();
+
+            return goldData;
+        }
+    }
+}
