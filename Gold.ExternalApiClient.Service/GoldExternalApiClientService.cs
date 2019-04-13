@@ -31,7 +31,7 @@ namespace Gold.ExternalApiClient.Service
         public void RequestReceivedHandler(object sender, MessageEventArgs e)
         {
             var goldData = GetGoldData();
-            var goldDataWithRequestId = GoldDataModel.AddRequestIdToJson(e.Message, goldData);
+            var goldDataWithRequestId = GoldDataJsonModifier.AddRequestIdToJson(e.Message, goldData);
 
             _logger.LogInformation(goldDataWithRequestId);
             _logger.LogInformation(e.Message);

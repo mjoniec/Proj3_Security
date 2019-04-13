@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Data.Model
 {
@@ -54,16 +53,6 @@ namespace Data.Model
 
                 return _dailyGoldPrices;
             }
-        }
-
-        public static string AddRequestIdToJson(string dataId, string responseMessage)
-        {
-            var stringBuilder = new StringBuilder(responseMessage);
-
-            stringBuilder.Remove(0, 1);
-            stringBuilder.Insert(0, "{\"dataId\":\"" + dataId + "\",");
-
-            return stringBuilder.ToString();
         }
     }
 }
