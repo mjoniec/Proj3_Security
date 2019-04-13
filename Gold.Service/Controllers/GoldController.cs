@@ -26,14 +26,14 @@ namespace Gold.Service.Controllers
         }
 
         // GET: api/Gold/dataId
-        [HttpGet("{dataId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult Get(string dataId)
-        {
-            var price = _goldService.GetNewestPrice(dataId);
+        //[HttpGet("{dataId}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public IActionResult Get(string dataId)
+        //{
+        //    var price = _goldService.GetNewestPrice(dataId);
 
-            return Ok(price);
-        }
+        //    return Ok(price);
+        //}
 
         // GET: api/Gold
         [HttpGet]

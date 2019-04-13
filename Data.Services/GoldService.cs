@@ -1,12 +1,9 @@
 ﻿using Data.Model;
 using Data.Repositories;
 using Mqtt.Client;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 
 namespace Data.Services
 {
@@ -62,49 +59,20 @@ namespace Data.Services
         }
 
         //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
-        public string GetNewestPrice(string dataId)
+        public IEnumerable<string> GetAll(string dataIdString)
         {
             //TODO write unit tests for all ushort input case scenarios and get coverage percantage
-            if (string.IsNullOrEmpty(dataId) || !_mqttConnected) return string.Empty;
+            if (string.IsNullOrEmpty(dataIdString) || !_mqttConnected) return null;
 
-            var parseResult = ushort.TryParse(dataId, out var dataIdParsed);
+            var isDataIdValid = ushort.TryParse(dataIdString, out var dataId);
 
-            if (!parseResult || dataIdParsed == ushort.MinValue) return string.Empty;
+            if (!isDataIdValid || dataId == ushort.MinValue) return null;
 
-            var isDataPresent = _goldData.TryGetValue(dataIdParsed, out var responseMessage);
-
-            if (!isDataPresent) return string.Empty;
-
-            //TODO get rid of those newlines where they were generated
-            var responseMessage2 = responseMessage.Replace(Environment.NewLine, string.Empty);
-
-            if (string.IsNullOrEmpty(responseMessage2)) return string.Empty;
-
-            var goldDataDeserialized = JsonConvert.DeserializeObject<GoldDataModel>(responseMessage2);
-
-            return goldDataDeserialized.NewestAvailaleDate;
-        }
-
-        public IEnumerable<string> GetAll(string dataId)
-        {
-            //TODO write unit tests for all ushort input case scenarios and get coverage percantage
-            if (string.IsNullOrEmpty(dataId) || !_mqttConnected) return null;
-
-            var parseResult = ushort.TryParse(dataId, out var dataIdParsed);
-
-            if (!parseResult || dataIdParsed == ushort.MinValue) return null;
-
-            var isDataPresent = _goldData.TryGetValue(dataIdParsed, out var responseMessage);
+            var isDataPresent = _goldData.TryGetValue(dataId, out var responseMessage);
 
             if (!isDataPresent) return null;
 
-            //TODO get rid of those newlines where they were generated
-            var responseMessage2 = responseMessage.Replace(Environment.NewLine, string.Empty);
-
-            if (string.IsNullOrEmpty(responseMessage2)) return null;
-
-            var goldData = JsonConvert.DeserializeObject<GoldDataModel>(responseMessage2);
-
+            var goldData = _goldDataJsonSerializer.Deserialize(responseMessage);
             var allPrices = new List<string>();
 
             //Refactor this functionality into model #10
