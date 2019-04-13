@@ -28,17 +28,6 @@ namespace Data.Services
             _mqttConnected = t.Result;
         }
 
-        //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
-        private void ResponseReceivedHandler(object sender, MessageEventArgs e)
-        {
-            var dataId = GoldDataJsonModifier.GetGoldDataIdFromResponseMessage(e.Message);
-            var goldData = GoldDataJsonModifier.GetGoldDataFromResponseMessage(e.Message);
-
-            if (dataId == null || !_goldData.TryGetValue(dataId.Value, out var value)) return;
-
-            _goldData[dataId.Value] = goldData;
-        }
-
         public ushort StartPreparingData()
         {
             if (!_mqttConnected) return ushort.MinValue;
@@ -73,6 +62,19 @@ namespace Data.Services
             if (!isDataPresent) return null;
 
             var goldData = _goldDataJsonSerializer.Deserialize(responseMessage);
+
+            return GetAllPrices(goldData);
+        }
+
+        public IEnumerable<string> GetAllPrices()
+        {
+            var goldData = _goldRepository.Get();
+
+            return GetAllPrices(goldData);
+        }
+
+        private IEnumerable<string> GetAllPrices(GoldDataModel goldData)
+        {
             var allPrices = new List<string>();
 
             //Refactor this functionality into model #10
@@ -86,20 +88,15 @@ namespace Data.Services
             return allPrices;
         }
 
-        public IEnumerable<string> GetAllPrices()
+        //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
+        private void ResponseReceivedHandler(object sender, MessageEventArgs e)
         {
-            var goldData = _goldRepository.Get();
-            var allPrices = new List<string>();
+            var dataId = GoldDataJsonModifier.GetGoldDataIdFromResponseMessage(e.Message);
+            var goldData = GoldDataJsonModifier.GetGoldDataFromResponseMessage(e.Message);
 
-            //Refactor this functionality into model #10
-            foreach (var goldPriceDataValue in goldData.DailyGoldPrices)
-            {
-                allPrices.Add(goldPriceDataValue.Key.ToString("yyyy-M-d")
-                    + ","
-                    + goldPriceDataValue.Value.ToString(new CultureInfo("en-US")));
-            }
+            if (dataId == null || !_goldData.TryGetValue(dataId.Value, out var value)) return;
 
-            return allPrices;
+            _goldData[dataId.Value] = goldData;
         }
     }
 }
