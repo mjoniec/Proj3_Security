@@ -3,7 +3,6 @@ using Data.Repositories;
 using Mqtt.Client;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace Data.Services
 {
@@ -48,7 +47,7 @@ namespace Data.Services
         }
 
         //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
-        public IEnumerable<string> GetAll(string dataIdString)
+        public Dictionary<DateTime, double> GetDailyGoldPrices(string dataIdString)
         {
             //TODO write unit tests for all ushort input case scenarios and get coverage percantage
             if (string.IsNullOrEmpty(dataIdString) || !_mqttConnected) return null;
@@ -63,29 +62,14 @@ namespace Data.Services
 
             var goldData = _goldDataJsonSerializer.Deserialize(responseMessage);
 
-            return GetAllPrices(goldData);
+            return goldData.DailyGoldPrices;
         }
 
-        public IEnumerable<string> GetAllPrices()
+        public Dictionary<DateTime, double> GetDailyGoldPricesFromDatabase()
         {
             var goldData = _goldRepository.Get();
 
-            return GetAllPrices(goldData);
-        }
-
-        private IEnumerable<string> GetAllPrices(GoldDataModel goldData)
-        {
-            var allPrices = new List<string>();
-
-            //Refactor this functionality into model #10
-            foreach (var goldPriceDataValue in goldData.DailyGoldPrices)
-            {
-                allPrices.Add(goldPriceDataValue.Key.ToString("yyyy-M-d")
-                    + ","
-                    + goldPriceDataValue.Value.ToString(new CultureInfo("en-US")));
-            }
-
-            return allPrices;
+            return goldData.DailyGoldPrices;
         }
 
         //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice

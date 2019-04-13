@@ -58,7 +58,7 @@ namespace Data.Services.Test
         [Fact]
         public void GetNewestPrice_ServiceInstantiated_ReturnsNonEmptyData()
         {
-            var allPrices = _sut.GetAllPrices();
+            var allPrices = _sut.GetDailyGoldPricesFromDatabase();
 
             Assert.NotEmpty(allPrices);
             Assert.Equal("2010-6-29,15.7", allPrices.First());

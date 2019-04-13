@@ -20,7 +20,7 @@ namespace Gold.Service.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult GetAll(string dataId)
         {
-            var allPrices = _goldService.GetAll(dataId);
+            var allPrices = _goldService.GetDailyGoldPrices(dataId);
 
             return Ok(allPrices);
         }
