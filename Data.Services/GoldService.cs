@@ -16,6 +16,7 @@ namespace Data.Services
         private readonly IGoldRepository _goldRepository;
         private readonly IMqttDualTopicClient _mqttDualTopicClient;
         private readonly Dictionary<ushort, string> _goldData;
+        private GoldDataJsonSerializer _goldDataJsonSerializer = new GoldDataJsonSerializer();
 
         public GoldService(IGoldRepository goldRepository, IMqttDualTopicClient mqttDualTopicClient)
         {
@@ -33,7 +34,9 @@ namespace Data.Services
         //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
         private void ResponseReceivedHandler(object sender, MessageEventArgs e)
         {
-            var dataId = AllChildren(JObject.Parse(e.Message))
+            var allChildren = _goldDataJsonSerializer.AllChildren(JObject.Parse(e.Message));
+
+            var dataId = allChildren
                 .First(c => c.Path.Contains("dataId"))
                 .Values()
                 .First()
@@ -43,8 +46,7 @@ namespace Data.Services
 
             if (!parseResult || dataIdParsed == ushort.MinValue) return;
 
-            var goldDataOverview =
-                AllChildren(JObject.Parse(e.Message))
+            var goldDataOverview = allChildren
                 .First(c => c.Path.Contains("dataset"))
                 .Children<JObject>()
                 .First()
@@ -145,20 +147,6 @@ namespace Data.Services
             }
 
             return allPrices;
-        }
-
-        //TODO refactor this to some JSON parser class
-        private static IEnumerable<JToken> AllChildren(JToken json)
-        {
-            foreach (var c in json.Children())
-            {
-                yield return c;
-
-                foreach (var cc in AllChildren(c))
-                {
-                    yield return cc;
-                }
-            }
         }
     }
 }

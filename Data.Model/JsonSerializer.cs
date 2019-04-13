@@ -5,7 +5,7 @@ namespace Data.Model
 {
     public class JsonSerializer
     {
-        private static IEnumerable<JToken> AllChildren(JToken json)
+        public IEnumerable<JToken> AllChildren(JToken json)
         {
             foreach (var c in json.Children())
             {

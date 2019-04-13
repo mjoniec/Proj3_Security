@@ -12,7 +12,7 @@ namespace Data.Repositories
             {
                 OldestAvailableDate = DateTime.MinValue.ToLongDateString(),
                 NewestAvailaleDate = DateTime.Now.Date.ToLongDateString(),
-                DailyGoldPricesUnparsed = new List<List<object>>
+                Data = new List<List<object>>
                 {
                     new List<object>
                     {

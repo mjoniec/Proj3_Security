@@ -7,6 +7,7 @@ namespace Data.Model
 {
     public class GoldDataModel
     {
+        //names comes from external api json structure
         public const string NEWEST_AVAILALE_DATE = "newest_available_date";
         public const string OLDEST_AVAILABLE_DATE = "oldest_available_date";
         public const string DATA = "data";
@@ -21,7 +22,7 @@ namespace Data.Model
         public string OldestAvailableDate { get; set; }
 
         [JsonProperty(DATA)]
-        public List<List<object>> DailyGoldPricesUnparsed
+        public List<List<object>> Data
         {
             get
             {
@@ -42,7 +43,7 @@ namespace Data.Model
 
                 _dailyGoldPrices = new Dictionary<DateTime, double>();
 
-                foreach (var dayData in DailyGoldPricesUnparsed)
+                foreach (var dayData in Data)
                 {
                     if (!DateTime.TryParse(dayData.First().ToString(), out DateTime key) ||
                         !double.TryParse(dayData.Last().ToString(), out double value)) continue;
