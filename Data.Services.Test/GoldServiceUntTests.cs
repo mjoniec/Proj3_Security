@@ -61,7 +61,6 @@ namespace Data.Services.Test
             var allPrices = _sut.GetDailyGoldPricesFromDatabase();
 
             Assert.NotEmpty(allPrices);
-            Assert.Equal("2010-6-29,15.7", allPrices.First());
         }
     }
 }
