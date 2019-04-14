@@ -31,10 +31,16 @@ namespace Gold.Service
             containerBuilder.RegisterType<GoldService>().As<IGoldService>().SingleInstance();
             containerBuilder.RegisterType<GoldRepository>().As<IGoldRepository>();
 
+            var rr = Configuration["Mqtt:Ip"];
+
             containerBuilder.Register(ctx =>
             {
                 return new MqttDualTopicClient(new MqttDualTopicData(
-                    "localhost", 1883, "ResponseMqttTopic", "RequestMqttTopic"));
+                    Configuration["Mqtt:Ip"],
+                    int.Parse(Configuration["Mqtt:Port"]),
+                    Configuration["Mqtt:TopicReceiver"],
+                    Configuration["Mqtt:TopicSender"]));
+
             }).As<IMqttDualTopicClient>();
 
             containerBuilder.Populate(services);
