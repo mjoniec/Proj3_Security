@@ -7,7 +7,7 @@ using Mqtt.Client;
 
 namespace Gold.ExternalApiClient.Service
 {
-    class Program
+    public class Program
     {
         //invoke with cmd
         //dotnet run --ExternalGoldDataApiClient:Name="Gold data service"
@@ -17,6 +17,8 @@ namespace Gold.ExternalApiClient.Service
             var builder = new HostBuilder()
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
+                    //for some reason on debug it acts as in production, see proj/env vars #22
+                    config.AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true);
                     config.AddEnvironmentVariables();
 
                     if (args != null)
@@ -28,11 +30,14 @@ namespace Gold.ExternalApiClient.Service
                 {
                     services.AddOptions();
                     services.Configure<GoldExternalApiClientConfig>(hostContext.Configuration.GetSection("GoldExternalApiClient"));
+                    services.Configure<MqttConfig>(hostContext.Configuration.GetSection("Mqtt"));
                     services.AddScoped<IMqttDualTopicClient>(x => 
                     {
-                        //TODO - use config
                         return new MqttDualTopicClient(new MqttDualTopicData(
-                            "localhost", 1883, "RequestMqttTopic", "ResponseMqttTopic"));
+                            hostContext.Configuration["Mqtt:Ip"],
+                            int.Parse(hostContext.Configuration["Mqtt:Port"]),
+                            hostContext.Configuration["Mqtt:TopicReceiver"],
+                            hostContext.Configuration["Mqtt:TopicSender"]));
                     });
                     services.AddSingleton<IHostedService, GoldExternalApiClientService>();
                 })

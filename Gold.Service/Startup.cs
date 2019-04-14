@@ -30,9 +30,6 @@ namespace Gold.Service
 
             containerBuilder.RegisterType<GoldService>().As<IGoldService>().SingleInstance();
             containerBuilder.RegisterType<GoldRepository>().As<IGoldRepository>();
-
-            var rr = Configuration["Mqtt:Ip"];
-
             containerBuilder.Register(ctx =>
             {
                 return new MqttDualTopicClient(new MqttDualTopicData(

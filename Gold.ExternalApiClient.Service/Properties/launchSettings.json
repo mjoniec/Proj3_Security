@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Gold.ExternalApiClient.Service": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
