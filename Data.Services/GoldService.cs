@@ -14,6 +14,8 @@ namespace Data.Services
         private readonly Dictionary<ushort, string> _goldData;//stores gold data with request key
         private GoldDataJsonSerializer _goldDataJsonSerializer = new GoldDataJsonSerializer();
 
+        public bool IsMqttConnected => _mqttConnected;
+
         public GoldService(IGoldRepository goldRepository, IMqttDualTopicClient mqttDualTopicClient)
         {
             _goldRepository = goldRepository;
@@ -49,8 +51,10 @@ namespace Data.Services
         //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
         public Dictionary<DateTime, double> GetDailyGoldPrices(string dataIdString)
         {
-            //TODO write unit tests for all ushort input case scenarios and get coverage percantage
-            if (string.IsNullOrEmpty(dataIdString) || !_mqttConnected) return null;
+            //TODO improve unit tests for all ushort input case scenarios and get coverage percantage
+            if (string.IsNullOrEmpty(dataIdString) || 
+                string.Equals(dataIdString, "0") ||
+                !_mqttConnected) return GetDailyGoldPricesFromDatabase();
 
             var isDataIdValid = ushort.TryParse(dataIdString, out var dataId);
 
@@ -65,7 +69,7 @@ namespace Data.Services
             return goldData.DailyGoldPrices;
         }
 
-        public Dictionary<DateTime, double> GetDailyGoldPricesFromDatabase()
+        private Dictionary<DateTime, double> GetDailyGoldPricesFromDatabase()
         {
             var goldData = _goldRepository.Get();
 

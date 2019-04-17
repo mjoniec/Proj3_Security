@@ -5,8 +5,8 @@ namespace Data.Services
 {
     public interface IGoldService
     {
+        bool IsMqttConnected { get; }
         ushort StartPreparingData();
         Dictionary<DateTime, double> GetDailyGoldPrices(string dataId);
-        Dictionary<DateTime, double> GetDailyGoldPricesFromDatabase();
     }
 }

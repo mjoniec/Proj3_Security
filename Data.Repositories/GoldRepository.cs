@@ -12,13 +12,40 @@ namespace Data.Repositories
             {
                 OldestAvailableDate = DateTime.MinValue.ToLongDateString(),
                 NewestAvailaleDate = DateTime.Now.Date.ToLongDateString(),
-                Data = new List<List<object>>
+                Data = GetMockData()
+            };
+        }
+
+        public static double ExampleMockValue => 25.0;
+
+        public static List<List<object>> GetMockData()
+        {
+            return new List<List<object>>
+            {
+                new List<object>
                 {
-                    new List<object>
-                    {
-                         DateTime.Now.Date,
-                         5.0
-                    }
+                        new DateTime(2012, 1, 1),
+                        ExampleMockValue
+                },
+                new List<object>
+                {
+                        new DateTime(2012, 1, 2),
+                        35.0
+                },
+                new List<object>
+                {
+                        new DateTime(2012, 1, 3),
+                        45.0
+                },
+                new List<object>
+                {
+                        new DateTime(2012, 1, 4),
+                        45.0
+                },
+                new List<object>
+                {
+                        new DateTime(2012, 1, 5),
+                        29.0
                 }
             };
         }
