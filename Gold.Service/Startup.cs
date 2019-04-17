@@ -41,6 +41,7 @@ namespace Gold.Service
                         Url = @"https://github.com/mjoniec/GoldBackend"
                     }
                 });
+                c.IncludeXmlComments(GetXmlCommentsPath());
             });
 
 
@@ -84,6 +85,13 @@ namespace Gold.Service
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gold API V1");
             });
+        }
+
+        private string GetXmlCommentsPath()
+        {
+            var app = AppContext.BaseDirectory;
+
+            return System.IO.Path.Combine(app, "Gold.Service.xml");
         }
     }
 }
