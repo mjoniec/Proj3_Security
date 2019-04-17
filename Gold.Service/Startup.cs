@@ -13,16 +13,27 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace Gold.Service
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class Startup
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public Startup(IConfiguration configuration)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Config providing related services url's and other data, debug/release version. 
+        /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -66,7 +77,11 @@ namespace Gold.Service
             return container.Resolve<IServiceProvider>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
