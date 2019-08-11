@@ -7,7 +7,7 @@ namespace Gold.Service.Controllers
     /// <summary>
     /// Service for requesting gold data.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class GoldController : ControllerBase
     {

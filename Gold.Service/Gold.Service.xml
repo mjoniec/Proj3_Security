@@ -34,5 +34,23 @@
             </remarks>
             <returns>Request accepted result. Request id to pass in another anction.</returns>
         </member>
+        <member name="P:Gold.Service.Startup.Configuration">
+            <summary>
+            Config providing related services url's and other data, debug/release version. 
+            </summary>
+        </member>
+        <member name="M:Gold.Service.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:Gold.Service.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
     </members>
 </doc>

@@ -1,15 +1,16 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Data.Services;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Data.Repositories;
 using Mqtt.Client;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Gold.Service
 {
@@ -33,48 +34,43 @@ namespace Gold.Service
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "Gold API",
-                    Description = "ASP.NET Core Web API Service providing daily gold prices",
-                    TermsOfService = "None",
-                    Contact = new Contact()
-                    {
-                        Name = "Marcin Joniec",
-                        Email = "marcin_joniec@hotmail.com",
-                        Url = @"https://github.com/mjoniec/GoldBackend"
-                    }
-                });
-                c.IncludeXmlComments(GetXmlCommentsPath());
-            });
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddControllers();
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info
+            //    {
+            //        Version = "v1",
+            //        Title = "Gold API",
+            //        Description = "ASP.NET Core Web API Service providing daily gold prices",
+            //        TermsOfService = "None",
+            //        Contact = new Contact()
+            //        {
+            //            Name = "Marcin Joniec",
+            //            Email = "marcin_joniec@hotmail.com",
+            //            Url = @"https://github.com/mjoniec/GoldBackend"
+            //        }
+            //    });
+            //    c.IncludeXmlComments(GetXmlCommentsPath());
+            //});
 
+            //var containerBuilder = new ContainerBuilder();
 
-            var containerBuilder = new ContainerBuilder();
+            //containerBuilder.RegisterType<GoldService>().As<IGoldService>().SingleInstance();
+            //containerBuilder.RegisterType<GoldRepository>().As<IGoldRepository>();
+            //containerBuilder.Register(ctx =>
+            //{
+            //    return new MqttDualTopicClient(new MqttDualTopicData(
+            //        Configuration["Mqtt:Ip"],
+            //        int.Parse(Configuration["Mqtt:Port"]),
+            //        Configuration["Mqtt:TopicReceiver"],
+            //        Configuration["Mqtt:TopicSender"]));
 
-            containerBuilder.RegisterType<GoldService>().As<IGoldService>().SingleInstance();
-            containerBuilder.RegisterType<GoldRepository>().As<IGoldRepository>();
-            containerBuilder.Register(ctx =>
-            {
-                return new MqttDualTopicClient(new MqttDualTopicData(
-                    Configuration["Mqtt:Ip"],
-                    int.Parse(Configuration["Mqtt:Port"]),
-                    Configuration["Mqtt:TopicReceiver"],
-                    Configuration["Mqtt:TopicSender"]));
+            //}).As<IMqttDualTopicClient>();
 
-            }).As<IMqttDualTopicClient>();
-
-            containerBuilder.Populate(services);
-
-            var container = containerBuilder.Build();
-
-            return container.Resolve<IServiceProvider>();
+            //containerBuilder.Populate(services);
         }
 
         /// <summary>
@@ -82,19 +78,21 @@ namespace Gold.Service
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
