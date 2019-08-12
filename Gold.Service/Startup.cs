@@ -37,23 +37,23 @@ namespace Gold.Service
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "Gold API",
-                    Description = "ASP.NET Core Web API Service providing daily gold prices",
-                    TermsOfService = "None",
-                    Contact = new Contact()
-                    {
-                        Name = "Marcin Joniec",
-                        Email = "marcin_joniec@hotmail.com",
-                        Url = @"https://github.com/mjoniec/GoldBackend"
-                    }
-                });
-                c.IncludeXmlComments(GetXmlCommentsPath());
-            });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info
+            //    {
+            //        Version = "v1",
+            //        Title = "Gold API",
+            //        Description = "ASP.NET Core Web API Service providing daily gold prices",
+            //        TermsOfService = "None",
+            //        Contact = new Contact()
+            //        {
+            //            Name = "Marcin Joniec",
+            //            Email = "marcin_joniec@hotmail.com",
+            //            Url = @"https://github.com/mjoniec/GoldBackend"
+            //        }
+            //    });
+            //    c.IncludeXmlComments(GetXmlCommentsPath());
+            //});
 
 
             var containerBuilder = new ContainerBuilder();
