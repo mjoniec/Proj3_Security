@@ -8,5 +8,6 @@ namespace Data.Services
         bool IsMqttConnected { get; }
         ushort StartPreparingData();
         Dictionary<DateTime, double> GetDailyGoldPrices(string dataId);
+        string GetDailyGoldPricesSerialized(string dataId);
     }
 }
