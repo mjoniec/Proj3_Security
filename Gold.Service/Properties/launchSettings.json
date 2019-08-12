@@ -20,7 +20,7 @@
     "Gold.Service": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/Gold",
+      "launchUrl": "Gold",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -1,12 +1,10 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Data.Services;
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Data.Repositories;
 using Mqtt.Client;
 using Swashbuckle.AspNetCore.Swagger;
@@ -33,10 +31,8 @@ namespace Gold.Service
         /// This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
         /// <param name="services"></param>
-        /// <returns></returns>
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new Info
@@ -55,26 +51,15 @@ namespace Gold.Service
             //    c.IncludeXmlComments(GetXmlCommentsPath());
             //});
 
-
-            var containerBuilder = new ContainerBuilder();
-
-            containerBuilder.RegisterType<GoldService>().As<IGoldService>().SingleInstance();
-            containerBuilder.RegisterType<GoldRepository>().As<IGoldRepository>();
-            containerBuilder.Register(ctx =>
-            {
-                return new MqttDualTopicClient(new MqttDualTopicData(
-                    Configuration["Mqtt:Ip"],
-                    int.Parse(Configuration["Mqtt:Port"]),
-                    Configuration["Mqtt:TopicReceiver"],
-                    Configuration["Mqtt:TopicSender"]));
-
-            }).As<IMqttDualTopicClient>();
-
-            containerBuilder.Populate(services);
-
-            var container = containerBuilder.Build();
-
-            return container.Resolve<IServiceProvider>();
+            services.AddControllers();
+            services.AddSingleton<IGoldService, GoldService>();
+            services.AddSingleton<IGoldRepository, GoldRepository>();
+            services.AddSingleton<IMqttDualTopicClient, MqttDualTopicClient>();
+            services.AddSingleton(s => new MqttDualTopicData(
+                Configuration["Mqtt:Ip"],
+                int.Parse(Configuration["Mqtt:Port"]),
+                Configuration["Mqtt:TopicReceiver"],
+                Configuration["Mqtt:TopicSender"]));
         }
 
         /// <summary>
@@ -82,24 +67,26 @@ namespace Gold.Service
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gold API V1");
+                endpoints.MapControllers();
             });
+
+            //app.UseSwagger();
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gold API V1");
+            //});
         }
 
         private string GetXmlCommentsPath()

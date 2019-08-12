@@ -69,6 +69,11 @@ namespace Data.Services
             return goldData.DailyGoldPrices;
         }
 
+        public string GetDailyGoldPricesSerialized(string dataIdString)
+        {
+            return _goldDataJsonSerializer.Serialize(GetDailyGoldPrices(dataIdString));
+        }
+
         private Dictionary<DateTime, double> GetDailyGoldPricesFromDatabase()
         {
             var goldData = _goldRepository.Get();

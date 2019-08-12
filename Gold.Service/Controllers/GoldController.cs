@@ -1,13 +1,14 @@
 ﻿using Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Gold.Service.Controllers
 {
     /// <summary>
     /// Service for requesting gold data.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class GoldController : ControllerBase
     {
@@ -35,7 +36,7 @@ namespace Gold.Service.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult GetAll(string dataId)
         {
-            var allPrices = _goldService.GetDailyGoldPrices(dataId);
+            var allPrices = _goldService.GetDailyGoldPricesSerialized(dataId);
 
             return Ok(allPrices);
         }
@@ -65,6 +66,17 @@ namespace Gold.Service.Controllers
             var dataId = _goldService.StartPreparingData();
 
             return Accepted(dataId);
+        }
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult Test()
+        {
+            if (_goldService == null) return Ok("no gold service");
+
+            if (!_goldService.IsMqttConnected) return Ok("gold service is not connected to mqtt");
+
+            return Ok("gold service is connected to mqtt");
         }
     }
 }
