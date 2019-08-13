@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Data.Services;
 using Data.Repositories;
+using Microsoft.OpenApi.Models;
 using Mqtt.Client;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -33,25 +34,25 @@ namespace Gold.Service
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new Info
-            //    {
-            //        Version = "v1",
-            //        Title = "Gold API",
-            //        Description = "ASP.NET Core Web API Service providing daily gold prices",
-            //        TermsOfService = "None",
-            //        Contact = new Contact()
-            //        {
-            //            Name = "Marcin Joniec",
-            //            Email = "marcin_joniec@hotmail.com",
-            //            Url = @"https://github.com/mjoniec/GoldBackend"
-            //        }
-            //    });
-            //    c.IncludeXmlComments(GetXmlCommentsPath());
-            //});
-
             services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Gold API",
+                    Description = "ASP.NET Core Web API Service providing daily gold prices",
+                    TermsOfService = new Uri(@"https://github.com/mjoniec/GoldBackend/wiki"),
+                    Contact = new OpenApiContact()
+                    {
+                        Name = "Marcin Joniec",
+                        Email = "marcin_joniec@hotmail.com",
+                        Url = new Uri(@"https://github.com/mjoniec/GoldBackend")
+                    }
+                });
+                c.IncludeXmlComments(GetXmlCommentsPath());
+            });
+
             services.AddSingleton<IGoldService, GoldService>();
             services.AddSingleton<IGoldRepository, GoldRepository>();
             services.AddSingleton<IMqttDualTopicClient, MqttDualTopicClient>();
@@ -82,11 +83,11 @@ namespace Gold.Service
                 endpoints.MapControllers();
             });
 
-            //app.UseSwagger();
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gold API V1");
-            //});
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gold API V1");
+            });
         }
 
         private string GetXmlCommentsPath()

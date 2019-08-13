@@ -1,7 +1,6 @@
 ﻿using Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace Gold.Service.Controllers
 {
@@ -12,7 +11,7 @@ namespace Gold.Service.Controllers
     [ApiController]
     public class GoldController : ControllerBase
     {
-        IGoldService _goldService;
+        private readonly IGoldService _goldService;
 
         /// <summary>
         /// Constructor with gold service data provider (DI instantiated)
@@ -28,7 +27,7 @@ namespace Gold.Service.Controllers
         /// Daily gold prices
         /// </summary>
         /// <remarks>
-        /// Returns collection of paired data: date and gold price in Australlian dollars. 
+        /// Returns collection of paired data: date and gold price in Australian dollars. 
         /// </remarks>
         /// <param name="dataId">Id returned from action initializing data collection. </param>
         /// <returns></returns>
@@ -40,16 +39,6 @@ namespace Gold.Service.Controllers
 
             return Ok(allPrices);
         }
-
-        // GET: api/Gold/dataId
-        //[HttpGet("{dataId}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public IActionResult Get(string dataId)
-        //{
-        //    var price = _goldService.GetNewestPrice(dataId);
-
-        //    return Ok(price);
-        //}
 
         // GET: api/Gold
         /// <summary>
@@ -68,6 +57,10 @@ namespace Gold.Service.Controllers
             return Accepted(dataId);
         }
 
+        /// <summary>
+        /// Checks if Gold service has been instantiated. Gives info on MQTT connection status. 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Test()

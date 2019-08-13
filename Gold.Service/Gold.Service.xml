@@ -20,7 +20,7 @@
             Daily gold prices
             </summary>
             <remarks>
-            Returns collection of paired data: date and gold price in Australlian dollars. 
+            Returns collection of paired data: date and gold price in Australian dollars. 
             </remarks>
             <param name="dataId">Id returned from action initializing data collection. </param>
             <returns></returns>
@@ -33,6 +33,12 @@
             Action triggers gold data collection process in service. Returns id, which should be passed in following requests returning actual data once it has been obtained and allocated in serice.
             </remarks>
             <returns>Request accepted result. Request id to pass in another anction.</returns>
+        </member>
+        <member name="M:Gold.Service.Controllers.GoldController.Test">
+            <summary>
+            Checks if Gold service has been instantiated. Gives info on MQTT connection status. 
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:Gold.Service.Startup.Configuration">
             <summary>
