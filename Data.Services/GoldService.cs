@@ -24,9 +24,16 @@ namespace Data.Services
 
             _mqttDualTopicClient.RaiseMessageReceivedEvent += ResponseReceivedHandler;
 
-            var t = _mqttDualTopicClient.Start();
+            try
+            {
+                var t = _mqttDualTopicClient.Start();
 
-            _mqttConnected = t.Result;
+                _mqttConnected = t.Result;
+            }
+            catch
+            {
+                _mqttConnected = false;
+            }
         }
 
         public ushort StartPreparingData()
