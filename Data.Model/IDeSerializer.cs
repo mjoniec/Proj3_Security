@@ -1,6 +1,6 @@
 ﻿namespace Data.Model
 {
-    public interface ISerializer<T>
+    public interface IDeSerializer<T>
     {
         string Serialize(T t);
         T Deserialize(string json);
