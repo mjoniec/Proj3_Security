@@ -33,8 +33,6 @@ namespace Gold.Service.Controllers
         {
             if (_goldService == null) return Ok("no gold service");
 
-            if (!_goldService.IsMqttConnected) return Ok("gold service is not connected to internal data provider");
-
             return Ok("gold service is ready");
         }
 
@@ -49,9 +47,9 @@ namespace Gold.Service.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult GetDataPrepared()
         {
-            var dataId = _goldService.StartPreparingData();
+            var requestId = _goldService.StartPreparingData();
 
-            return Accepted(dataId);
+            return Accepted(requestId);
         }
 
         // GET: api/Gold/GetData/dataId
@@ -61,16 +59,16 @@ namespace Gold.Service.Controllers
         /// <remarks>
         /// Returns collection of paired data: date and gold price in Australian dollars. 
         /// </remarks>
-        /// <param name="dataId">Id returned from action initializing data collection. </param>
+        /// <param name="requestId">Id returned from action initializing data collection. </param>
         /// <returns>Daily gold prices or no content.</returns>
         [HttpGet("[action]/{dataId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult GetData(string dataId)
+        public IActionResult GetData(ushort requestId)
         {
-            var allPrices = _goldService.GetDailyGoldPricesSerialized(dataId);
+            var allPrices = _goldService.GetDailyGoldPrices(requestId);
 
-            if (string.IsNullOrEmpty(allPrices)) return NoContent();
+            if (allPrices == null) return NoContent();
 
             return Ok(allPrices);
         }

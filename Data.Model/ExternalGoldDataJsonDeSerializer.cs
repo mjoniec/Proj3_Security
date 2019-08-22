@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 
 namespace Data.Model
 {
@@ -23,14 +22,6 @@ namespace Data.Model
         public string Serialize(ExternalGoldDataModel goldDataModel)
         {
             throw new NotImplementedException("currently not required as external api in one way response only communication and frontend application handles reparsing on its own");
-
-            //return JsonConvert.SerializeObject(goldDataModel);
-        }
-
-        //FOR Deletion after refactor
-        public string Serialize(Dictionary<DateTime, double> dailyGoldPrices)
-        {
-            return JsonConvert.SerializeObject(dailyGoldPrices);
         }
     }
 }

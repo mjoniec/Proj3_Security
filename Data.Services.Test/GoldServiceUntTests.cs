@@ -23,43 +23,43 @@ namespace Data.Services.Test
             _mqttDualTopicClient = Substitute.For<IMqttDualTopicClient>();
         }
 
-        [Fact]
-        public void GetDailyGoldPrices_InvokedWithZeroParameterAndMqttClientInstantiated_ReturnsNonEmptyDataFromRepoitory()
-        {
-            _mqttDualTopicClient.Start().Returns(true);
-            _sut = new GoldService(_goldRepository, _mqttDualTopicClient);
+        //[Fact]
+        //public void GetDailyGoldPrices_InvokedWithZeroParameterAndMqttClientInstantiated_ReturnsNonEmptyDataFromRepoitory()
+        //{
+        //    _mqttDualTopicClient.Start().Returns(true);
+        //    _sut = new GoldService(_goldRepository, _mqttDualTopicClient);
 
-            var goldDataDaily = _sut.GetDailyGoldPrices("0");
+        //    var goldDataDaily = _sut.GetDailyGoldPrices("0");
 
-            Assert.True(_sut.IsMqttConnected);
-            Assert.NotEmpty(goldDataDaily);
-            Assert.Contains(goldDataDaily, goldDataDay => goldDataDay.Value == ExampleMockValue);
-        }
+        //    Assert.True(_sut.IsMqttConnected);
+        //    Assert.NotEmpty(goldDataDaily);
+        //    Assert.Contains(goldDataDaily, goldDataDay => goldDataDay.Value == ExampleMockValue);
+        //}
 
-        [Fact]
-        public void GetDailyGoldPrices_InvokedWithEmptyParameterAndMqttClientInstantiated_ReturnsNonEmptyDataFromRepoitory()
-        {
-            _mqttDualTopicClient.Start().Returns(true);
-            _sut = new GoldService(_goldRepository, _mqttDualTopicClient);
+        //[Fact]
+        //public void GetDailyGoldPrices_InvokedWithEmptyParameterAndMqttClientInstantiated_ReturnsNonEmptyDataFromRepoitory()
+        //{
+        //    _mqttDualTopicClient.Start().Returns(true);
+        //    _sut = new GoldService(_goldRepository, _mqttDualTopicClient);
 
-            var goldDataDaily = _sut.GetDailyGoldPrices(string.Empty);
+        //    var goldDataDaily = _sut.GetDailyGoldPrices(string.Empty);
 
-            Assert.True(_sut.IsMqttConnected);
-            Assert.NotEmpty(goldDataDaily);
-            Assert.Contains(goldDataDaily, goldDataDay => goldDataDay.Value == ExampleMockValue);
-        }
+        //    Assert.True(_sut.IsMqttConnected);
+        //    Assert.NotEmpty(goldDataDaily);
+        //    Assert.Contains(goldDataDaily, goldDataDay => goldDataDay.Value == ExampleMockValue);
+        //}
 
-        [Fact]
-        public void GetDailyGoldPrices_InvokedWithNonZeroParameterAndMqttClientNotInstantiated_ReturnsNonEmptyDataFromRepoitory()
-        {
-            _mqttDualTopicClient.Start().Returns(false);
-            _sut = new GoldService(_goldRepository, _mqttDualTopicClient);
+        //[Fact]
+        //public void GetDailyGoldPrices_InvokedWithNonZeroParameterAndMqttClientNotInstantiated_ReturnsNonEmptyDataFromRepoitory()
+        //{
+        //    _mqttDualTopicClient.Start().Returns(false);
+        //    _sut = new GoldService(_goldRepository, _mqttDualTopicClient);
 
-            var goldDataDaily = _sut.GetDailyGoldPrices("1");
+        //    var goldDataDaily = _sut.GetDailyGoldPrices("1");
 
-            Assert.False(_sut.IsMqttConnected);
-            Assert.NotEmpty(goldDataDaily);
-            Assert.Contains(goldDataDaily, goldDataDay => goldDataDay.Value == ExampleMockValue);
-        }
+        //    Assert.False(_sut.IsMqttConnected);
+        //    Assert.NotEmpty(goldDataDaily);
+        //    Assert.Contains(goldDataDaily, goldDataDay => goldDataDay.Value == ExampleMockValue);
+        //}
     }
 }

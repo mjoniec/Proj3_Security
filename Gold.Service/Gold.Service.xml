@@ -15,30 +15,30 @@
             </summary>
             <param name="goldService"></param>
         </member>
-        <member name="M:Gold.Service.Controllers.GoldController.GetAll(System.String)">
+        <member name="M:Gold.Service.Controllers.GoldController.Get">
+            <summary>
+            Checks if Gold service has been instantiated. Gives info on MQTT connection status.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Gold.Service.Controllers.GoldController.GetDataPrepared">
+            <summary>
+            Start gold data collection.
+            </summary>
+            <remarks>
+            Action triggers gold data collection process in service. Returns id, which should be passed in following requests returning actual data once it has been obtained internally.
+            </remarks>
+            <returns>Request accepted result. Request id to pass in another anction for actual data retrieval.</returns>
+        </member>
+        <member name="M:Gold.Service.Controllers.GoldController.GetData(System.UInt16)">
             <summary>
             Daily gold prices
             </summary>
             <remarks>
             Returns collection of paired data: date and gold price in Australian dollars. 
             </remarks>
-            <param name="dataId">Id returned from action initializing data collection. </param>
-            <returns></returns>
-        </member>
-        <member name="M:Gold.Service.Controllers.GoldController.Get">
-            <summary>
-            Start gold data collection.
-            </summary>
-            <remarks>
-            Action triggers gold data collection process in service. Returns id, which should be passed in following requests returning actual data once it has been obtained and allocated in serice.
-            </remarks>
-            <returns>Request accepted result. Request id to pass in another anction.</returns>
-        </member>
-        <member name="M:Gold.Service.Controllers.GoldController.Test">
-            <summary>
-            Checks if Gold service has been instantiated. Gives info on MQTT connection status. 
-            </summary>
-            <returns></returns>
+            <param name="requestId">Id returned from action initializing data collection. </param>
+            <returns>Daily gold prices or no content.</returns>
         </member>
         <member name="P:Gold.Service.Startup.Configuration">
             <summary>

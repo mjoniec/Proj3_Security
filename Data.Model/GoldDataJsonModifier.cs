@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Data.Model.Common;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,17 +39,19 @@ namespace Data.Model
             return dataId;
         }
 
-        public static string GetGoldDataFromResponseMessage(string message)
+        public static GoldPrices GetGoldDataFromResponseMessage(string message)
         {
-            var allChildren = AllChildren(JObject.Parse(message));
+            //var allChildren = AllChildren(JObject.Parse(message));
 
-            var goldData = allChildren
-                .First(c => c.Path.Contains("dataset"))
-                .Children<JObject>()
-                .First()
-                .ToString();
+            //var goldData = allChildren
+            //    .First(c => c.Path.Contains("dataset"))
+            //    .Children<JObject>()
+            //    .First()
+            //    .ToString();
 
-            return goldData;
+            //return goldData;
+
+            return new GoldPrices();
         }
 
         public static string AddRequestIdToJson(string dataId, string responseMessage)

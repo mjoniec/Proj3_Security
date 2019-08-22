@@ -1,5 +1,5 @@
 ﻿using Data.Model;
-using Data.Repositories;
+using Data.Model.Common;
 using Mqtt.Client;
 using System;
 using System.Collections.Generic;
@@ -9,17 +9,14 @@ namespace Data.Services
     public class GoldService : IGoldService
     {
         private readonly bool _mqttConnected;
-        private readonly IGoldRepository _goldRepository;
         private readonly IMqttDualTopicClient _mqttDualTopicClient;
-        private readonly Dictionary<ushort, string> _goldData;//stores gold data with request key
-        private ExternalGoldDataJsonDeSerializer _goldDataJsonSerializer = new ExternalGoldDataJsonDeSerializer();
+        private readonly Dictionary<ushort, GoldPrices> _goldPricesResponsesByRequestId;
 
         public bool IsMqttConnected => _mqttConnected;
 
-        public GoldService(IGoldRepository goldRepository, IMqttDualTopicClient mqttDualTopicClient)
+        public GoldService(IMqttDualTopicClient mqttDualTopicClient)
         {
-            _goldRepository = goldRepository;
-            _goldData = new Dictionary<ushort, string>();
+            _goldPricesResponsesByRequestId = new Dictionary<ushort, GoldPrices>();
             _mqttDualTopicClient = mqttDualTopicClient;
 
             _mqttDualTopicClient.RaiseMessageReceivedEvent += ResponseReceivedHandler;
@@ -40,63 +37,44 @@ namespace Data.Services
         {
             if (!_mqttConnected) return ushort.MinValue;
 
-            var dataId = (ushort)new Random().Next(ushort.MinValue + 1, ushort.MaxValue);
+            //internal logic assuming valid data is not to be ushort min - redo it somehow??
+            var requestId = (ushort)new Random().Next(ushort.MinValue + 1, ushort.MaxValue);
 
             try
             {
-                _mqttDualTopicClient.Send(dataId.ToString());
-                _goldData.Add(dataId, string.Empty);
+                _mqttDualTopicClient.Send(requestId.ToString());
+                _goldPricesResponsesByRequestId.Add(requestId, null);
             }
             catch
             {
                 return ushort.MinValue;
             }
 
-            return dataId;
+            return requestId;
         }
 
-        //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
-        public Dictionary<DateTime, double> GetDailyGoldPrices(string dataIdString)
+        public GoldPrices GetDailyGoldPrices(ushort requestId)
         {
-            //TODO improve unit tests for all ushort input case scenarios and get coverage percantage
-            if (string.IsNullOrEmpty(dataIdString) || 
-                string.Equals(dataIdString, "0") ||
-                !_mqttConnected) return GetDailyGoldPricesFromDatabase();
+            //internal logic assuming valid data is not to be ushort min - redo it somehow??
+            if (requestId == ushort.MinValue) return null;
 
-            var isDataIdValid = ushort.TryParse(dataIdString, out var dataId);
-
-            if (!isDataIdValid || dataId == ushort.MinValue) return null;
-
-            var isDataPresent = _goldData.TryGetValue(dataId, out var responseMessage);
+            var isDataPresent = _goldPricesResponsesByRequestId.TryGetValue(requestId, out var goldPrices);
 
             if (!isDataPresent) return null;
 
-            var goldData = _goldDataJsonSerializer.Deserialize(responseMessage);
-
-            return goldData.DailyGoldPrices;
-        }
-
-        public string GetDailyGoldPricesSerialized(string dataIdString)
-        {
-            return _goldDataJsonSerializer.Serialize(GetDailyGoldPrices(dataIdString));
-        }
-
-        private Dictionary<DateTime, double> GetDailyGoldPricesFromDatabase()
-        {
-            var goldData = _goldRepository.Get();
-
-            return goldData.DailyGoldPrices;
+            return goldPrices;
         }
 
         //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
         private void ResponseReceivedHandler(object sender, MessageEventArgs e)
         {
-            var dataId = GoldDataJsonModifier.GetGoldDataIdFromResponseMessage(e.Message);
-            var goldData = GoldDataJsonModifier.GetGoldDataFromResponseMessage(e.Message);
+            //TODO - get rid of these here
+            var requestId = GoldDataJsonModifier.GetGoldDataIdFromResponseMessage(e.Message);
+            var goldPrices = GoldDataJsonModifier.GetGoldDataFromResponseMessage(e.Message);
 
-            if (dataId == null || !_goldData.TryGetValue(dataId.Value, out var value)) return;
+            if (requestId == null || !_goldPricesResponsesByRequestId.ContainsKey(requestId.Value)) return;
 
-            _goldData[dataId.Value] = goldData;
+            _goldPricesResponsesByRequestId[requestId.Value] = goldPrices;
         }
     }
 }
