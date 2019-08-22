@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Data.Model
 {
-    public class GoldDataModel
+    public class ExternalGoldDataModel
     {
         //names comes from external api json structure
         public const string NEWEST_AVAILALE_DATE = "newest_available_date";

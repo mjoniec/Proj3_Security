@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Data.Model
 {
-    public class GoldDataJsonSerializer : ISerializer<GoldDataModel>
+    public class GoldDataJsonSerializer : ISerializer<ExternalGoldDataModel>
     {
-        public GoldDataModel Deserialize(string json)
+        public ExternalGoldDataModel Deserialize(string json)
         {
             if (string.IsNullOrEmpty(json)) return null;
 
@@ -15,12 +15,12 @@ namespace Data.Model
                 json = json.Replace(Environment.NewLine, string.Empty);
             }
 
-            var goldData = JsonConvert.DeserializeObject<GoldDataModel>(json);
+            var goldData = JsonConvert.DeserializeObject<ExternalGoldDataModel>(json);
 
             return goldData;
         }
 
-        public string Serialize(GoldDataModel goldDataModel)
+        public string Serialize(ExternalGoldDataModel goldDataModel)
         {
             throw new NotImplementedException("currently not required as external api in one way response only communication and frontend application handles reparsing on its own");
 

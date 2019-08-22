@@ -6,9 +6,9 @@ namespace Data.Repositories
 {
     public class GoldRepository : IGoldRepository
     {
-        public GoldDataModel Get()
+        public ExternalGoldDataModel Get()
         {
-            return new GoldDataModel
+            return new ExternalGoldDataModel
             {
                 OldestAvailableDate = DateTime.MinValue.ToLongDateString(),
                 NewestAvailaleDate = DateTime.Now.Date.ToLongDateString(),

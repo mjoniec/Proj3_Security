@@ -4,6 +4,6 @@ namespace Data.Repositories
 {
     public interface IGoldRepository
     {
-        GoldDataModel Get();
+        ExternalGoldDataModel Get();
     }
 }
