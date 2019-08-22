@@ -8,17 +8,12 @@ using Data.Services;
 using Data.Repositories;
 using Microsoft.OpenApi.Models;
 using Mqtt.Client;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Gold.Service
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public class Startup
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public Startup(IConfiguration configuration)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         {
             Configuration = configuration;
         }
