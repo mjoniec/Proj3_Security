@@ -12,9 +12,6 @@ namespace Data.Model
         public const string OLDEST_AVAILABLE_DATE = "oldest_available_date";
         public const string DATA = "data";
 
-        private List<List<object>> _dailyGoldPricesUnparsed;
-        private Dictionary<DateTime, double> _dailyGoldPrices;
-
         [JsonProperty(NEWEST_AVAILALE_DATE)]
         public string NewestAvailaleDate { get; set; }
 
@@ -22,36 +19,23 @@ namespace Data.Model
         public string OldestAvailableDate { get; set; }
 
         [JsonProperty(DATA)]
-        public List<List<object>> Data
-        {
-            get
-            {
-                return _dailyGoldPricesUnparsed;
-            }
-            set
-            {
-                _dailyGoldPricesUnparsed = value;
-                _dailyGoldPrices = null;
-            }
-        }
+        public List<List<object>> Data { get; set; }
 
         public Dictionary<DateTime, double> DailyGoldPrices
         {
             get
             {
-                if (_dailyGoldPrices != null) return _dailyGoldPrices;
-
-                _dailyGoldPrices = new Dictionary<DateTime, double>();
+                var dailyGoldPrices = new Dictionary<DateTime, double>();
 
                 foreach (var dayData in Data)
                 {
                     if (!DateTime.TryParse(dayData.First().ToString(), out DateTime key) ||
                         !double.TryParse(dayData.Last().ToString(), out double value)) continue;
 
-                    _dailyGoldPrices.Add(key, value);
+                    dailyGoldPrices.Add(key, value);
                 }
 
-                return _dailyGoldPrices;
+                return dailyGoldPrices;
             }
         }
     }
