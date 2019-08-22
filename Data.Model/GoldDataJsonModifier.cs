@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,6 +59,21 @@ namespace Data.Model
             stringBuilder.Insert(0, "{\"dataId\":\"" + dataId + "\",");
 
             return stringBuilder.ToString();
+        }
+
+        public static Dictionary<DateTime, double> GetDailyGoldDataFromUnparsedExternalJson(List<List<object>> data)
+        {
+            var dailyGoldPrices = new Dictionary<DateTime, double>();
+
+            foreach (var dayData in data)
+            {
+                if (!DateTime.TryParse(dayData.First().ToString(), out DateTime key) ||
+                    !double.TryParse(dayData.Last().ToString(), out double value)) continue;
+
+                dailyGoldPrices.Add(key, value);
+            }
+
+            return dailyGoldPrices;
         }
     }
 }
