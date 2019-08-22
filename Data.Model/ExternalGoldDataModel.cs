@@ -21,22 +21,6 @@ namespace Data.Model
         [JsonProperty(DATA)]
         public List<List<object>> Data { get; set; }
 
-        public Dictionary<DateTime, double> DailyGoldPrices
-        {
-            get
-            {
-                var dailyGoldPrices = new Dictionary<DateTime, double>();
-
-                foreach (var dayData in Data)
-                {
-                    if (!DateTime.TryParse(dayData.First().ToString(), out DateTime key) ||
-                        !double.TryParse(dayData.Last().ToString(), out double value)) continue;
-
-                    dailyGoldPrices.Add(key, value);
-                }
-
-                return dailyGoldPrices;
-            }
-        }
+        public Dictionary<DateTime, double> DailyGoldPrices => ExternalGoldDataJsonDeSerializer.GetDailyGoldDataFromUnparsedExternalJson(Data);
     }
 }
