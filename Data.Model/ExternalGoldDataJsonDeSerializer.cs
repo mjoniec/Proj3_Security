@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Data.Model
 {
-    public class GoldDataJsonSerializer : ISerializer<ExternalGoldDataModel>
+    public class ExternalGoldDataJsonDeSerializer : ISerializer<ExternalGoldDataModel>
     {
         public ExternalGoldDataModel Deserialize(string json)
         {

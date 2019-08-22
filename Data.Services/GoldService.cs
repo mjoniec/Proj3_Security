@@ -12,7 +12,7 @@ namespace Data.Services
         private readonly IGoldRepository _goldRepository;
         private readonly IMqttDualTopicClient _mqttDualTopicClient;
         private readonly Dictionary<ushort, string> _goldData;//stores gold data with request key
-        private GoldDataJsonSerializer _goldDataJsonSerializer = new GoldDataJsonSerializer();
+        private ExternalGoldDataJsonDeSerializer _goldDataJsonSerializer = new ExternalGoldDataJsonDeSerializer();
 
         public bool IsMqttConnected => _mqttConnected;
 
