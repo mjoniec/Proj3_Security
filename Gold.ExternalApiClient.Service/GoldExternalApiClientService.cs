@@ -15,6 +15,7 @@ namespace Gold.ExternalApiClient.Service
         private readonly ILogger _logger;
         private readonly IOptions<GoldExternalApiClientConfig> _config;
         private readonly IMqttDualTopicClient _mqttDualTopicClient;
+        private ExternalGoldDataJsonDeSerializer _externalGoldDataJsonDeSerializer = new ExternalGoldDataJsonDeSerializer();
 
         public GoldExternalApiClientService(ILogger<GoldExternalApiClientConfig> logger, IOptions<GoldExternalApiClientConfig> config, IMqttDualTopicClient mqttDualTopicClient)
         {
@@ -29,10 +30,12 @@ namespace Gold.ExternalApiClient.Service
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         }
 
+        //TODO how do we know that in e .essage means data id?????
         public void RequestReceivedHandler(object sender, MessageEventArgs e)
         {
-            var goldData = GetGoldData();
-            var goldDataWithRequestId = GoldDataJsonModifier.AddRequestIdToJson(e.Message, goldData);
+            var goldDataResponseMessage = GetGoldData();
+            var externalGoldDataModel = _externalGoldDataJsonDeSerializer.Deserialize(goldDataResponseMessage);
+            var goldDataWithRequestId = GoldDataJsonModifier.AddRequestIdToJson(e.Message, externalGoldDataModel.GoldPrices);
 
             _logger.LogInformation(goldDataWithRequestId);
             _logger.LogInformation(e.Message);

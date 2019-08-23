@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Data.Model.Common;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Data.Model
 {
@@ -20,6 +22,17 @@ namespace Data.Model
         [JsonProperty(DATA)]
         public List<List<object>> Data { get; set; }
 
-        public Dictionary<DateTime, double> DailyGoldPrices => GoldDataJsonModifier.GetDailyGoldDataFromUnparsedExternalJson(Data);
+        public Dictionary<DateTime, double> DailyGoldPrices => 
+            GoldDataJsonModifier.GetDailyGoldDataFromUnparsedExternalJson(Data);
+
+        public GoldPrices GoldPrices => new GoldPrices
+        {
+            Prices = GoldDataJsonModifier.GetDailyGoldDataFromUnparsedExternalJson(Data)
+                .Select(d => new GoldPriceDay
+                {
+                    Date = d.Key,
+                    Price = d.Value
+                }).ToList()
+        };
     }
 }

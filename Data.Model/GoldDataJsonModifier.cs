@@ -9,7 +9,7 @@ namespace Data.Model
 {
     public class GoldDataJsonModifier
     {
-        public static IEnumerable<JToken> AllChildren(JToken json)
+        private static IEnumerable<JToken> AllChildren(JToken json)
         {
             foreach (var c in json.Children())
             {
@@ -39,18 +39,21 @@ namespace Data.Model
             return dataId;
         }
 
+        public string OldGet(string message)
+        {
+            var allChildren = AllChildren(JObject.Parse(message));
+
+            var goldData = allChildren
+                .First(c => c.Path.Contains("dataset"))
+                .Children<JObject>()
+                .First()
+                .ToString();
+
+            return goldData;
+        }
+
         public static GoldPrices GetGoldDataFromResponseMessage(string message)
         {
-            //var allChildren = AllChildren(JObject.Parse(message));
-
-            //var goldData = allChildren
-            //    .First(c => c.Path.Contains("dataset"))
-            //    .Children<JObject>()
-            //    .First()
-            //    .ToString();
-
-            //return goldData;
-
             return new GoldPrices();
         }
 
