@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Gold.ExternalApiClient.Service.Config.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

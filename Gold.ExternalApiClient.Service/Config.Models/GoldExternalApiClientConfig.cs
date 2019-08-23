@@ -1,4 +1,4 @@
-﻿namespace Gold.ExternalApiClient.Service
+﻿namespace Gold.ExternalApiClient.Service.Config.Models
 {
     public class GoldExternalApiClientConfig
     {

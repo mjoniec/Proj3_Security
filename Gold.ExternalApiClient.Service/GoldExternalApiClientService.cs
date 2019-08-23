@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Data.Model;
+using Gold.ExternalApiClient.Service.Config.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
