@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Data.Model;
+using Data.Model.Common;
 using Gold.ExternalApiClient.Service.Config.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,7 @@ namespace Gold.ExternalApiClient.Service
         private readonly ILogger _logger;
         private readonly IOptions<GoldExternalApiClientConfig> _config;
         private readonly IMqttDualTopicClient _mqttDualTopicClient;
-        private ExternalGoldDataJsonDeSerializer _externalGoldDataJsonDeSerializer = new ExternalGoldDataJsonDeSerializer();
+        private ExternalGoldDataJsonDeserializer _externalGoldDataJsonDeSerializer = new ExternalGoldDataJsonDeserializer();
 
         public GoldExternalApiClientService(ILogger<GoldExternalApiClientConfig> logger, IOptions<GoldExternalApiClientConfig> config, IMqttDualTopicClient mqttDualTopicClient)
         {
@@ -34,8 +35,8 @@ namespace Gold.ExternalApiClient.Service
         public void RequestReceivedHandler(object sender, MessageEventArgs e)
         {
             var goldDataResponseMessage = GetGoldData();
-            var externalGoldDataModel = _externalGoldDataJsonDeSerializer.Deserialize(goldDataResponseMessage);
-            var goldPrices = externalGoldDataModel.GoldPrices.ToString();
+            var externalGoldDataModel = _externalGoldDataJsonDeSerializer.DeserializeDataFromMessage(goldDataResponseMessage);
+            var goldPrices = GoldPricesSerializer.Serialize(externalGoldDataModel.GoldPrices);
 
             _logger.LogInformation(goldPrices);
             _logger.LogInformation(e.Message);

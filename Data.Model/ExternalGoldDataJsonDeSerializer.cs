@@ -6,8 +6,22 @@ using System.Linq;
 
 namespace Data.Model
 {
-    public class ExternalGoldDataJsonDeSerializer : IDeSerializer<ExternalGoldDataModel>
+    public class ExternalGoldDataJsonDeserializer
     {
+        public ExternalGoldDataModel DeserializeDataFromMessage(string message)
+        {
+            //if (json.Contains(Environment.NewLine)) //TODO get rid of those newlines where they were generated
+            //{
+            //    json = json.Replace(Environment.NewLine, string.Empty);
+            //}
+
+            string goldDataJson = ExtractDailyGoldPricesFromExternalJson(message);
+
+            var goldData = JsonConvert.DeserializeObject<ExternalGoldDataModel>(goldDataJson);
+
+            return goldData;
+        }
+
         private static IEnumerable<JToken> AllChildren(JToken json)
         {
             foreach (var c in json.Children())
@@ -30,20 +44,6 @@ namespace Data.Model
                 .Children<JObject>()
                 .First()
                 .ToString();
-
-            return goldData;
-        }
-
-        public ExternalGoldDataModel Deserialize(string json)
-        {
-            if (string.IsNullOrEmpty(json)) return null;
-
-            //if (json.Contains(Environment.NewLine)) //TODO get rid of those newlines where they were generated
-            //{
-            //    json = json.Replace(Environment.NewLine, string.Empty);
-            //}
-
-            var goldData = JsonConvert.DeserializeObject<ExternalGoldDataModel>(json);
 
             return goldData;
         }

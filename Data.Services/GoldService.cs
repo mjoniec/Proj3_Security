@@ -1,5 +1,4 @@
-﻿using Data.Model;
-using Data.Model.Common;
+﻿using Data.Model.Common;
 using Mqtt.Client;
 using System;
 
@@ -58,14 +57,11 @@ namespace Data.Services
             return _goldPrices;
         }
 
-        //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
         private void ResponseReceivedHandler(object sender, MessageEventArgs e)
         {
-            //TODO - get rid of these here
-            var goldPrices = GoldDataJsonModifier.GetGoldDataFromResponseMessage(e.Message);
+            var goldPrices = GoldPricesDeserializer.Deserialize(e.Message);
 
             if (goldPrices != null) _goldPrices = goldPrices;
         }
     }
 }
-
