@@ -35,11 +35,12 @@ namespace Gold.ExternalApiClient.Service
         {
             var goldDataResponseMessage = GetGoldData();
             var externalGoldDataModel = _externalGoldDataJsonDeSerializer.Deserialize(goldDataResponseMessage);
-            var goldDataWithRequestId = GoldDataJsonModifier.AddRequestIdToJson(e.Message, externalGoldDataModel.GoldPrices);
+            var goldPrices = externalGoldDataModel.GoldPrices.ToString();
 
-            _logger.LogInformation(goldDataWithRequestId);
+            _logger.LogInformation(goldPrices);
             _logger.LogInformation(e.Message);
-            _mqttDualTopicClient.Send(goldDataWithRequestId);
+
+            _mqttDualTopicClient.Send(goldPrices);
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

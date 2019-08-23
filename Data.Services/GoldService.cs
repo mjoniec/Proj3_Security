@@ -2,7 +2,6 @@
 using Data.Model.Common;
 using Mqtt.Client;
 using System;
-using System.Collections.Generic;
 
 namespace Data.Services
 {
@@ -10,22 +9,21 @@ namespace Data.Services
     {
         private readonly bool _mqttConnected;
         private readonly IMqttDualTopicClient _mqttDualTopicClient;
-        private readonly Dictionary<ushort, GoldPrices> _goldPricesResponsesByRequestId;
+        private GoldPrices _goldPrices;
 
         public bool IsMqttConnected => _mqttConnected;
 
         public GoldService(IMqttDualTopicClient mqttDualTopicClient)
         {
-            _goldPricesResponsesByRequestId = new Dictionary<ushort, GoldPrices>();
             _mqttDualTopicClient = mqttDualTopicClient;
 
             _mqttDualTopicClient.RaiseMessageReceivedEvent += ResponseReceivedHandler;
 
             try
             {
-                var t = _mqttDualTopicClient.Start();
+                var task = _mqttDualTopicClient.Start();
 
-                _mqttConnected = t.Result;
+                _mqttConnected = task.Result;
             }
             catch
             {
@@ -43,7 +41,6 @@ namespace Data.Services
             try
             {
                 _mqttDualTopicClient.Send(requestId.ToString());
-                _goldPricesResponsesByRequestId.Add(requestId, null);
             }
             catch
             {
@@ -55,26 +52,19 @@ namespace Data.Services
 
         public GoldPrices GetDailyGoldPrices(ushort requestId)
         {
-            //internal logic assuming valid data is not to be ushort min - redo it somehow??
+            //internal logic assuming valid requestId is not to be ushort min - redo it somehow??
             if (requestId == ushort.MinValue) return null;
 
-            var isDataPresent = _goldPricesResponsesByRequestId.TryGetValue(requestId, out var goldPrices);
-
-            if (!isDataPresent) return null;
-
-            return goldPrices;
+            return _goldPrices;
         }
 
         //TODO issue #19 create logger and custom Exception for all erroneous cases in ResponseReceivedHandler and GetNewestPrice
         private void ResponseReceivedHandler(object sender, MessageEventArgs e)
         {
             //TODO - get rid of these here
-            var requestId = GoldDataJsonModifier.GetGoldDataIdFromResponseMessage(e.Message);
             var goldPrices = GoldDataJsonModifier.GetGoldDataFromResponseMessage(e.Message);
 
-            if (requestId == null || !_goldPricesResponsesByRequestId.ContainsKey(requestId.Value)) return;
-
-            _goldPricesResponsesByRequestId[requestId.Value] = goldPrices;
+            if (goldPrices != null) _goldPrices = goldPrices;
         }
     }
 }
