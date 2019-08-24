@@ -61,7 +61,7 @@ namespace Gold.Service.Controllers
         /// </remarks>
         /// <param name="requestId">Id returned from action initializing data collection. </param>
         /// <returns>Daily gold prices or no content.</returns>
-        [HttpGet("[action]/{dataId}")]
+        [HttpGet("[action]/{requestId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetData(ushort requestId)
