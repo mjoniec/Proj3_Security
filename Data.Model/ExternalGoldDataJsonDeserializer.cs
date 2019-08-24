@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,29 +9,10 @@ namespace Data.Model
     {
         public ExternalGoldDataModel DeserializeDataFromMessage(string message)
         {
-            //if (json.Contains(Environment.NewLine)) //TODO get rid of those newlines where they were generated
-            //{
-            //    json = json.Replace(Environment.NewLine, string.Empty);
-            //}
-
-            string goldDataJson = ExtractDailyGoldPricesFromExternalJson(message);
-
+            var goldDataJson = ExtractDailyGoldPricesFromExternalJson(message);
             var goldData = JsonConvert.DeserializeObject<ExternalGoldDataModel>(goldDataJson);
 
             return goldData;
-        }
-
-        private static IEnumerable<JToken> AllChildren(JToken json)
-        {
-            foreach (var c in json.Children())
-            {
-                yield return c;
-
-                foreach (var cc in AllChildren(c))
-                {
-                    yield return cc;
-                }
-            }
         }
 
         private string ExtractDailyGoldPricesFromExternalJson(string message)
@@ -48,9 +28,17 @@ namespace Data.Model
             return goldData;
         }
 
-        public string Serialize(ExternalGoldDataModel goldDataModel)
+        private static IEnumerable<JToken> AllChildren(JToken json)
         {
-            throw new NotImplementedException("currently not required as external api in one way response only communication and frontend application handles reparsing on its own");
+            foreach (var c in json.Children())
+            {
+                yield return c;
+
+                foreach (var cc in AllChildren(c))
+                {
+                    yield return cc;
+                }
+            }
         }
     }
 }
