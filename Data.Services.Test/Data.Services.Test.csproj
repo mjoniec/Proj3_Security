@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Data.Model.External\Data.Model.External.csproj" />
-    <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
     <ProjectReference Include="..\Data.Services\Data.Services.csproj" />
   </ItemGroup>
 
