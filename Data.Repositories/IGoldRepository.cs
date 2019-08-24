@@ -1,6 +1,4 @@
-﻿using Data.Model;
-
-namespace Data.Repositories
+﻿namespace Data.Repositories
 {
     public interface IGoldRepository
     {
