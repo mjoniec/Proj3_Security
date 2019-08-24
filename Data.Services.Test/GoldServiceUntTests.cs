@@ -1,5 +1,4 @@
-﻿using Data.Repositories;
-using Mqtt.Client;
+﻿using Mqtt.Client;
 using NSubstitute;
 using Xunit;
 
@@ -9,7 +8,6 @@ namespace Data.Services.Test
     {
         private readonly IMqttDualTopicClient _mqttDualTopicClient;
         private IGoldService _sut;
-        private double ExampleMockValue => GoldRepository.ExampleMockValue;
 
         public GoldServiceUntTests()
         {

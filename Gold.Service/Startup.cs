@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Data.Services;
-using Data.Repositories;
 using Microsoft.OpenApi.Models;
 using Mqtt.Client;
 
@@ -49,7 +48,6 @@ namespace Gold.Service
             });
 
             services.AddSingleton<IGoldService, GoldService>();
-            services.AddSingleton<IGoldRepository, GoldRepository>();
             services.AddSingleton<IMqttDualTopicClient, MqttDualTopicClient>();
             services.AddSingleton(s => new MqttDualTopicData(
                 Configuration["Mqtt:Ip"],
