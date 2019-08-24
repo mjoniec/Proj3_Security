@@ -36,7 +36,7 @@ namespace Gold.ExternalApiClient.Service
         {
             var goldDataResponseMessage = GetGoldData();
             var externalGoldDataModel = _externalGoldDataJsonDeSerializer.DeserializeDataFromMessage(goldDataResponseMessage);
-            var goldPrices = GoldPricesSerializer.Serialize(externalGoldDataModel.GoldPrices);
+            var goldPrices = GoldPricesSerializer.Serialize((GoldPrices)externalGoldDataModel);
 
             _logger.LogInformation(goldPrices);
             _logger.LogInformation(e.Message);

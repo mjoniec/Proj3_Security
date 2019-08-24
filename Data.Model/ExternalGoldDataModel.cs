@@ -22,15 +22,18 @@ namespace Data.Model
         [JsonProperty(DATA)]
         public List<List<object>> Data { get; set; }
 
-        public GoldPrices GoldPrices => new GoldPrices
+        public static explicit operator GoldPrices(ExternalGoldDataModel externalGoldDataModel)
         {
-            Prices = GetDailyGoldPricesFromExternalData(Data)
+            return new GoldPrices
+            {
+                Prices = GetDailyGoldPricesFromExternalData(externalGoldDataModel.Data)
                 .Select(d => new GoldPriceDay
                 {
                     Date = d.Key,
                     Price = d.Value
                 }).ToList()
-        };
+            };
+        }
 
         private static Dictionary<DateTime, double> GetDailyGoldPricesFromExternalData(List<List<object>> data)
         {
