@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Data.Model
+namespace Data.Model.External
 {
     public class ExternalGoldDataJsonDeserializer
     {

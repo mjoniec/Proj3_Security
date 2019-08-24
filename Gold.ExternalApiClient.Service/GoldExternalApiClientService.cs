@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Data.Model;
 using Data.Model.Common;
+using Data.Model.External;
 using Gold.ExternalApiClient.Service.Config.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

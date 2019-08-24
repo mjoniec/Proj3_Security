@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Data.Model\Data.Model.csproj" />
+    <ProjectReference Include="..\Data.Model\Data.Model.External.csproj" />
     <ProjectReference Include="..\Data.Repositories\Data.Repositories.csproj" />
     <ProjectReference Include="..\Data.Services\Data.Services.csproj" />
   </ItemGroup>

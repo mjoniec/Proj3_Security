@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.ExternalApiClient.Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mqtt.Client", "Mqtt.Client\Mqtt.Client.csproj", "{4A2E339A-0598-4BBF-86AB-F70D06253ED8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Model", "Data.Model\Data.Model.csproj", "{9A7F280E-F388-46AA-8ABA-D8851B2BB4F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Model.External", "Data.Model\Data.Model.External.csproj", "{9A7F280E-F388-46AA-8ABA-D8851B2BB4F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Repositories", "Data.Repositories\Data.Repositories.csproj", "{6D9AF42E-E724-48C1-8104-11AD63C56ADE}"
 EndProject
@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Services", "Data.Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gold.Service", "Gold.Service\Gold.Service.csproj", "{F402A41C-A269-4622-83B5-F5670CFE1227}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Model.Common", "Data.Model.Common\Data.Model.Common.csproj", "{17676CF8-6213-48EF-BDF1-728D47C36FA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Model.Common", "Data.Model.Common\Data.Model.Common.csproj", "{17676CF8-6213-48EF-BDF1-728D47C36FA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
