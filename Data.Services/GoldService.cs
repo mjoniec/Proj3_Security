@@ -6,6 +6,7 @@ namespace Data.Services
 {
     public class GoldService : IGoldService
     {
+        //this can not be readonly, must be assigned if mqtt connection is lost and back again todo #32
         private readonly bool _mqttConnected;
         private readonly IMqttDualTopicClient _mqttDualTopicClient;
         private GoldPrices _goldPrices;
@@ -53,6 +54,10 @@ namespace Data.Services
         {
             //internal logic assuming valid requestId is not to be ushort min - redo it somehow??
             if (requestId == ushort.MinValue) return null;
+
+            //we may check if requestId has been posted in start preparing data or remove the request id entirely // todo # 
+
+            //if requestId is valid but mqtt is not connected add fallback here todo #32
 
             return _goldPrices;
         }
