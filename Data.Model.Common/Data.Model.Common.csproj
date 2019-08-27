@@ -2,8 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
+    <PackageId>GoldPrices.Data.Model.Common</PackageId>
+    <Authors>Marcin Joniec</Authors>
+    <Company>Marcin Joniec</Company>
+    <PackageTags>gold prices</PackageTags>
+    <Description>Model and serialization logic for gold prices. Holding date and price.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/mjoniec/GoldBackend/tree/master/Data.Model.Common</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
