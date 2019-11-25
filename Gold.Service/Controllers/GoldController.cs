@@ -44,7 +44,7 @@ namespace Gold.Service.Controllers
         /// </remarks>
         /// <returns>Request accepted result. Request id to pass in another anction for actual data retrieval.</returns>
         [HttpGet("[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         public IActionResult GetDataPrepared()
         {
             var requestId = _goldService.StartPreparingData();
