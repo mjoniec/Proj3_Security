@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Model.Common", "Data.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Model.External", "Data.Model.External\Data.Model.External.csproj", "{DA1B3A68-4ECC-4FCA-BBE1-D514E6AAF050}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetalPrices.Model.Serialization", "MetalPrices.Model.Serialization\MetalPrices.Model.Serialization.csproj", "{AF8F9F65-5259-4603-AD5A-5E9D6F6868C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{DA1B3A68-4ECC-4FCA-BBE1-D514E6AAF050}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA1B3A68-4ECC-4FCA-BBE1-D514E6AAF050}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA1B3A68-4ECC-4FCA-BBE1-D514E6AAF050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF8F9F65-5259-4603-AD5A-5E9D6F6868C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF8F9F65-5259-4603-AD5A-5E9D6F6868C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF8F9F65-5259-4603-AD5A-5E9D6F6868C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF8F9F65-5259-4603-AD5A-5E9D6F6868C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
