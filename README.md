@@ -1,5 +1,6 @@
 # Security:
 
+-	net core
 -	JWT, Jwt bearer
 -	SSO – Single sign-on
 -	OIDC - Open ID Connect
