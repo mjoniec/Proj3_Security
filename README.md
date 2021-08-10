@@ -1,4 +1,17 @@
-# Gold Backend
+# Security:
+
+-	JWT, Jwt bearer
+-	SSO – Single sign-on
+-	OIDC - Open ID Connect
+-	Auth, OAuth 2.0
+-	Two way authentication ?
+-	Federated security ?
+-	RSA, SHA 256, private public key ...
+- Cookies
+
+# remove all below after cleanum of repo
+
+## Gold Backend 
 
 Services and libraries that obtain gold prices daily data from external service, (de)serializes, changes and exposes it through API. 
 
