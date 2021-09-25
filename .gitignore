@@ -5,3 +5,4 @@
 /.vs
 /JwtApi/obj/Debug/netcoreapp3.1
 /JwtApi/obj
+/JwtApi/bin/Debug/netcoreapp3.1
