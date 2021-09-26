@@ -11,9 +11,9 @@ namespace JwtApi.Controllers
     {
         private readonly UserService _userService;
 
-        public UserController()
+        public UserController(UserService userService)
         {
-            _userService = new UserService();
+            _userService = userService;
         }
 
         [HttpGet]
@@ -24,8 +24,8 @@ namespace JwtApi.Controllers
             return Ok(users);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateUserAsync([FromBody] User user)
+        [HttpPost("CreateUser")]
+        public async Task<IActionResult> CreateUser([FromBody] User user)
         {
             var result = await _userService.CreateUserAsync(user);
 
