@@ -16,6 +16,14 @@ namespace JwtApi.Controllers
             _userService = new UserService();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var users = await _userService.GetAsync();
+
+            return Ok(users);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync([FromBody] User user)
         {

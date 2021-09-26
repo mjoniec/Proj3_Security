@@ -27,6 +27,11 @@ namespace JwtApi.Services
             };
         }
 
+        public async Task<List<User>> GetAsync()
+        {
+            return _users;
+        }
+
         public async Task<bool> CreateUserAsync(User user)
         {
             _users.Add(user);
