@@ -10,10 +10,12 @@ namespace JwtApi.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly AuthenticationService _authenticationService;
 
-        public UserController(UserService userService)
+        public UserController(UserService userService, AuthenticationService authenticationService)
         {
             _userService = userService;
+            _authenticationService = authenticationService;
         }
 
         [HttpGet]
@@ -24,10 +26,10 @@ namespace JwtApi.Controllers
             return Ok(users);
         }
 
-        [HttpPost("CreateUser")]
-        public async Task<IActionResult> CreateUser([FromBody] User user)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromBody] User user)
         {
-            var result = await _userService.CreateUserAsync(user);
+            var result = await _userService.CreateAsync(user);
 
             if (result)
             {
@@ -37,6 +39,15 @@ namespace JwtApi.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] User user)
+        {
+            var userInSystemToVerifyAgainst = await _userService.GetByNameAsync(user.Name);
+            var accessToken = await _authenticationService.CreateAccessTokenAsync(userInSystemToVerifyAgainst, user.Password);
+            
+            return Ok(accessToken);
         }
     }
 }

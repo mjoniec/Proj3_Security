@@ -1,5 +1,6 @@
 ﻿using JwtApi.Model;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace JwtApi.Services
@@ -15,12 +16,12 @@ namespace JwtApi.Services
                 new User
                 {
                     Name = "normal",
-                    Password = "normal"
+                    Password = Utils.PasswordHasher.HashPassword("normal")
                 },
                 new User
                 {
                     Name = "admin",
-                    Password = "admin"
+                    Password = Utils.PasswordHasher.HashPassword("admin")
                 }
             };
         }
@@ -30,8 +31,15 @@ namespace JwtApi.Services
             return _users;
         }
 
-        public async Task<bool> CreateUserAsync(User user)
+        public async Task<User> GetByNameAsync(string name)
         {
+            return _users.FirstOrDefault(u => u.Name == name);
+        }
+
+        public async Task<bool> CreateAsync(User user)
+        {
+            user.Password = Utils.PasswordHasher.HashPassword(user.Password);
+
             _users.Add(user);
 
             return true;
