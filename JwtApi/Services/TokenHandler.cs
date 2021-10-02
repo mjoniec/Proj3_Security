@@ -10,12 +10,14 @@ namespace JwtApi.Services
     {
         private readonly TokenOptions _tokenOptions;
         private readonly SigningConfigurations _signingConfigurations;
+        private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
         //private readonly ISet<RefreshToken> _refreshTokens = new HashSet<RefreshToken>();
 
         public TokenHandler()
         {
             _tokenOptions = TokenOptions.GetDefault();
             _signingConfigurations = new SigningConfigurations(_tokenOptions.Secret);
+            _jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
         }
 
         public AccessToken CreateAccessToken(User user)
@@ -32,8 +34,7 @@ namespace JwtApi.Services
                 signingCredentials: _signingConfigurations.SigningCredentials
             );
 
-            var handler = new JwtSecurityTokenHandler();
-            var accessToken = handler.WriteToken(securityToken);
+            var accessToken = _jwtSecurityTokenHandler.WriteToken(securityToken);
 
             return new AccessToken(accessToken, accessTokenExpiration.Ticks);
         }
@@ -43,13 +44,10 @@ namespace JwtApi.Services
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub, user.Name)
+                new Claim(JwtRegisteredClaimNames.Sub, user.Name),
+                //new Claim(ClaimTypes.Role, "user")
+                new Claim(ClaimTypes.Role, user.Name)
             };
-
-            //foreach (var userRole in user.UserRoles)
-            //{
-                claims.Add(new Claim(ClaimTypes.Role, "user"));
-            //}
 
             return claims;
         }

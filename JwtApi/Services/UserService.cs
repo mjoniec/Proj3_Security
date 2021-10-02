@@ -26,9 +26,9 @@ namespace JwtApi.Services
             };
         }
 
-        public async Task<List<User>> GetAsync()
+        public async Task<IEnumerable<string>> GetAsync()
         {
-            return _users;
+            return _users.Select(u => u.Name);
         }
 
         public async Task<User> GetByNameAsync(string name)
