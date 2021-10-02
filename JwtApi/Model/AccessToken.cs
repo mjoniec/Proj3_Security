@@ -2,14 +2,24 @@
 
 namespace JwtApi.Model
 {
-    public class AccessToken : RefreshToken
+    public class AccessToken
     {
-        public RefreshToken RefreshToken { get; private set; }
+        public string Token { get; protected set; }
+        public long Expiration { get; protected set; }
 
-        public AccessToken(string token, long expiration, RefreshToken refreshToken)
-            : base(token, expiration)
+        public AccessToken(string token, long expiration)
         {
-            RefreshToken = refreshToken ?? throw new ArgumentException("Specify a valid refresh token.");
+            if (string.IsNullOrWhiteSpace(token))
+                throw new ArgumentException("Invalid token.");
+
+            Token = token;
+
+            if (expiration <= 0)
+                throw new ArgumentException("Invalid expiration.");
+
+            Expiration = expiration;
         }
+
+        public bool IsExpired() => DateTime.UtcNow.Ticks > Expiration;
     }
 }

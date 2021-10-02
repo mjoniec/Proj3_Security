@@ -21,6 +21,7 @@ namespace JwtApi
         {
             services.AddControllers();
             services.AddSingleton<UserService>();
+            services.AddSingleton<TokenHandler>();
             services.AddScoped<AuthenticationService>();
         }
 

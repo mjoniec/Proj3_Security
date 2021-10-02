@@ -11,11 +11,15 @@ namespace JwtApi.Controllers
     {
         private readonly UserService _userService;
         private readonly AuthenticationService _authenticationService;
+        private readonly TokenHandler _tokenHandler;
 
-        public UserController(UserService userService, AuthenticationService authenticationService)
+        public UserController(UserService userService, 
+            AuthenticationService authenticationService,
+            TokenHandler tokenHandler)
         {
             _userService = userService;
             _authenticationService = authenticationService;
+            _tokenHandler = tokenHandler;
         }
 
         [HttpGet]
@@ -26,6 +30,11 @@ namespace JwtApi.Controllers
             return Ok(users);
         }
 
+        /// <summary>
+        /// Creates user with password
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] User user)
         {
@@ -41,12 +50,24 @@ namespace JwtApi.Controllers
             }
         }
 
+        /// <summary>
+        /// If the login successfull returns ok with access token
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] User user)
         {
             var userInSystemToVerifyAgainst = await _userService.GetByNameAsync(user.Name);
-            var accessToken = await _authenticationService.CreateAccessTokenAsync(userInSystemToVerifyAgainst, user.Password);
-            
+            var loginOk = _authenticationService.CheckUserLogin(userInSystemToVerifyAgainst, user.Password);
+
+            if (!loginOk)
+            {
+                return Unauthorized();
+            }
+
+            var accessToken = _tokenHandler.CreateAccessToken(userInSystemToVerifyAgainst);
+
             return Ok(accessToken);
         }
     }

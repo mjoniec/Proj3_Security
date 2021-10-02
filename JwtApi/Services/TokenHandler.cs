@@ -10,7 +10,7 @@ namespace JwtApi.Services
     {
         private readonly TokenOptions _tokenOptions;
         private readonly SigningConfigurations _signingConfigurations;
-        private readonly ISet<RefreshToken> _refreshTokens = new HashSet<RefreshToken>();
+        //private readonly ISet<RefreshToken> _refreshTokens = new HashSet<RefreshToken>();
 
         public TokenHandler()
         {
@@ -19,27 +19,6 @@ namespace JwtApi.Services
         }
 
         public AccessToken CreateAccessToken(User user)
-        {
-            var refreshToken = BuildRefreshToken();
-            var accessToken = BuildAccessToken(user, refreshToken);
-            
-            _refreshTokens.Add(refreshToken);
-
-            return accessToken;
-        }
-
-        private RefreshToken BuildRefreshToken()
-        {
-            var refreshToken = new RefreshToken
-            (
-                token: Utils.PasswordHasher.HashPassword(Guid.NewGuid().ToString()),
-                expiration: DateTime.UtcNow.AddSeconds(_tokenOptions.RefreshTokenExpiration).Ticks
-            );
-
-            return refreshToken;
-        }
-
-        private AccessToken BuildAccessToken(User user, RefreshToken refreshToken)
         {
             var accessTokenExpiration = DateTime.UtcNow.AddSeconds(_tokenOptions.AccessTokenExpiration);
 
@@ -56,7 +35,7 @@ namespace JwtApi.Services
             var handler = new JwtSecurityTokenHandler();
             var accessToken = handler.WriteToken(securityToken);
 
-            return new AccessToken(accessToken, accessTokenExpiration.Ticks, refreshToken);
+            return new AccessToken(accessToken, accessTokenExpiration.Ticks);
         }
 
         private IEnumerable<Claim> GetClaims(User user)
