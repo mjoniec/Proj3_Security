@@ -1,6 +1,6 @@
 # Security - net core with JWT
 
-Demo API for accessing protected endpoints with token based authosisation and authentication for users. Screenshots in documentation.
+Demo API for accessing protected endpoints with token based authosisation and authentication for users. Screenshots in documentation https://github.com/mjoniec/Security/wiki.
 
 User management controller, no authorisation
 - list users https://localhost:44370/user
