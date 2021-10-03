@@ -11,7 +11,6 @@ namespace JwtApi.Services
         private readonly TokenOptions _tokenOptions;
         private readonly SigningConfigurations _signingConfigurations;
         private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
-        //private readonly ISet<RefreshToken> _refreshTokens = new HashSet<RefreshToken>();
 
         public TokenHandler()
         {
@@ -45,8 +44,7 @@ namespace JwtApi.Services
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, user.Name),
-                //new Claim(ClaimTypes.Role, "user")
-                new Claim(ClaimTypes.Role, user.Name)
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             return claims;

@@ -7,14 +7,21 @@ namespace JwtApi.Controllers
     [Route("[controller]")]
     public class ProtectedController : ControllerBase
     {
-        [HttpGet("GetProtectedDataForAnyUser")]
-        [Authorize]
+        [HttpGet("[action]")]
+        [Authorize]//any user no matter what role will get authorised
         public IActionResult GetProtectedDataForAnyUser()
         {
-            return Ok("Hello world from protected controller.");
+            return Ok("Hello world from protected controller for any role logged user.");
         }
 
-        [HttpGet("GetProtectedDataForAdmin")]
+        [HttpGet("[action]")]
+        [Authorize(Roles = "admin, normal")]
+        public IActionResult GetProtectedDataForAdminOrNormalUser()
+        {
+            return Ok("Hello user with role!.");
+        }
+
+        [HttpGet("[action]")]
         [Authorize(Roles = "admin")]
         public IActionResult GetProtectedDataForAdmin()
         {

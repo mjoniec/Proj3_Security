@@ -35,7 +35,7 @@ namespace JwtApi.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        [HttpPost("Create")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Create([FromBody] User user)
         {
             var result = await _userService.CreateAsync(user);
@@ -55,7 +55,7 @@ namespace JwtApi.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        [HttpPost("Login")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Login([FromBody] User user)
         {
             var userInSystemToVerifyAgainst = await _userService.GetByNameAsync(user.Name);

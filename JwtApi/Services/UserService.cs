@@ -16,12 +16,14 @@ namespace JwtApi.Services
                 new User
                 {
                     Name = "normal",
-                    Password = Utils.PasswordHasher.HashPassword("normal")
+                    Password = Utils.PasswordHasher.HashPassword("normal"),
+                    Role = Role.normal.ToString()
                 },
                 new User
                 {
                     Name = "admin",
-                    Password = Utils.PasswordHasher.HashPassword("admin")
+                    Password = Utils.PasswordHasher.HashPassword("admin"),
+                    Role = Role.admin.ToString()
                 }
             };
         }
@@ -39,6 +41,7 @@ namespace JwtApi.Services
         public async Task<bool> CreateAsync(User user)
         {
             user.Password = Utils.PasswordHasher.HashPassword(user.Password);
+            user.Role = Role.normal.ToString();
 
             _users.Add(user);
 
