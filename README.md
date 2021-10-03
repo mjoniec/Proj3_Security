@@ -1,21 +1,17 @@
-# Security:
+# Security - net core with JWT
 
--	net core
--	JWT, Jwt bearer
--	SSO – Single sign-on
--	OIDC - Open ID Connect
--	Auth, OAuth 2.0
--	Two way authentication ?
--	Federated security ?
--	RSA, SHA 256, private public key ...
--	Cookies
--	CORS
+Demo API for accessing protected endpoints with token based authosisation and authentication for users. Screenshots in documentation.
 
-JWT authentication in net core
-https://medium.com/@evandro.ggomes/json-web-token-authentication-with-asp-net-core-2-0-b074b0cfc870
+User management controller, no authorisation
+- list users https://localhost:44370/user
+- create a new user, always sets a normal Role https://localhost:44370/user/Create
+- login with the user, valid for 5 minutes - returns token https://localhost:44370/user/Login
 
-ASP.NET Identity
-https://docs.microsoft.com/en-us/aspnet/identity/overview/getting-started/introduction-to-aspnet-identity.
+Protected data controller, Token beared authorisation
 
-KATANA OWIN
-https://docs.microsoft.com/en-us/aspnet/aspnet/overview/owin-and-katana/an-overview-of-project-katana
+- requires authorisation with bearer token - any user any role https://localhost:44370/protected/GetProtectedDataForAnyUser
+- requires authorisation with bearer token - user with normal or admin role https://localhost:44370/protected/GetProtectedDataForAdminOrNormalUser
+- requires authorisation with bearer token - only admin https://localhost:44370/protected/GetProtectedDataForAdmin
+
+based on this tutorial 
+- https://medium.com/@evandro.ggomes/json-web-token-authentication-with-asp-net-core-2-0-b074b0cfc870
