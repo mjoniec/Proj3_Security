@@ -8,3 +8,13 @@
 /JwtApi/bin/Debug/netcoreapp3.1
 /Utils/obj
 /Utils/bin/Debug/netcoreapp3.1
+/SearchApi/bin/Debug/net6.0
+/SearchApi/obj
+/WebApiTestNonMinimal/bin/Debug/net6.0
+/WebApiTestNonMinimal/obj/Debug/net6.0
+/WebApiTestNonMinimal/obj
+/WebApiTestNonMinimalHttps/obj
+/WebApiTestNonMinimalNoSwagger
+/WebApiTestNonMinimalNet5
+/WebApiTestNonMinimalHttps
+/WebApiTestNonMinimal
