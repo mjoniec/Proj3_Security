@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using SearchApi.Model;
 using SearchApi.Services;
 using System.Text;
 
@@ -18,50 +20,32 @@ namespace SearchApi.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    //[Route("[controller]/[action]")] enforce get in url for the first endpoint also
+    //[Route("[controller]/[action]")] GIT #4 - enforce get in url for the first endpoint also
     public class SearchController : ControllerBase //Controller
     {
-        // GET: SearchController
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //any default attribute[method] to not duplicate Search
-        //in method name and route name ? routing reserved names - action, controller ...
-
-        //nazwy tras i parametr Name - niepotrzebne na ten moment
-
-        //[HttpGet(Name = "")] // not needed
+        //[HttpGet(Name = "")] // GIT #3 - routing 'Name' not needed
         [HttpGet]
         public ActionResult Get()
         {
             return Ok("ok text");
         }
 
-        //[HttpGet("{query}", Name = "[action]")]//-nie dziala, pomija akcje i ustawia na //http://localhost:5283/Search/abc        
-        //[HttpGet("{query}", Name = "Test")]//nie dziala nie widzi name nie ma test w url
-        //[HttpGet("{query}")]//efekt jak wyzej, nie ma Test w url, ale nie ma niepotrzebnego name
-        [HttpGet("[action]/{query}")]//ok
-        public ActionResult Test(string query)
+        [HttpGet("[action]/{query}")]//GIT #5 routing special words
+        public async Task<IActionResult> Test(string query)
         {
             var googleSearchService = new GoogleSearchService();
+            var result = new List<SearchResult>();
 
-            var list = googleSearchService.Search(query);
-
-            //var s = String.Join(", ", list.SelectMany(o => o.Title))
-
-            var sb = new StringBuilder();
-            
-            foreach (var item in list)
+            //var result = await googleSearchService.Search(query);
+            await foreach (var item in googleSearchService.Search(query))
             {
-                sb.Append(item.Title);
-                sb.Append(" ");
-                sb.Append(item.Url);
-                sb.AppendLine();
+                result.Add(item);
             }
 
-            return Ok($"Search for text: {query} {sb}");
+            //GIT #2 - one liner instead of string builder spagetti code
+            var json = JsonConvert.SerializeObject(result);
+
+            return Ok($"Search result for text: {query} {json}");
         }
     }
 }

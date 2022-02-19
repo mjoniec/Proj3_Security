@@ -10,7 +10,7 @@ namespace SearchApi.Services
         private const string apiKey = "AIzaSyDqDB - Fg8ulgOuaFQV2OsobvJ4XHehgc7Q";
         private const string searchEngineId = "001075345664802480471:zfuroutomnu";
         
-        private const long PageSize = 10;//refactor to async
+        private const long PageSize = 10;
         private readonly CustomsearchService _service;
 
         public GoogleSearchService()
@@ -21,27 +21,28 @@ namespace SearchApi.Services
                 });
         }
 
-        //redo this method
-        public List<SearchResult> Search(string query)
+        //GIT #1 - full async but how with rest http?
+        //public List<SearchResult> Search(string query)
+        //public async Task<List<SearchResult>> Search(string query)
+        public async IAsyncEnumerable<SearchResult> Search(string query)
         {
-            var listRequest = _service.Cse.List(query);
+            var request = _service.Cse.List(query);
 
-            listRequest.Cx = searchEngineId;
-            listRequest.Start = 1;
-            listRequest.Num = PageSize;
+            request.Cx = searchEngineId;
+            request.Start = 1;
+            request.Num = PageSize;
 
-            var list = new List<SearchResult>();
+            //var list = new List<SearchResult>();
+            //var search = request.Execute();
+            var search = await request.ExecuteAsync();
 
-            //yeld return maybe?? async somehow...
-            Google.Apis.Customsearch.v1.Data.Search search = listRequest.Execute();
-            //var search = listRequest.ExecuteAsync(); //TODO async in asp core http rest api
-
-            foreach (Google.Apis.Customsearch.v1.Data.Result result in search.Items)
+            foreach (var result in search.Items)
             {
-                list.Add(new SearchResult(result.Title, result.Link));
+                //list.Add(new SearchResult(result.Title, result.Link));
+                yield return new SearchResult(result.Title, result.Link);
             }
 
-            return list;
+            //return list;
         }
     }
 }
