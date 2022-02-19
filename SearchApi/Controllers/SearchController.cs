@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SearchApi.Services;
+using System.Text;
 
 namespace SearchApi.Controllers
 {
@@ -43,7 +45,23 @@ namespace SearchApi.Controllers
         [HttpGet("[action]/{query}")]//ok
         public ActionResult Test(string query)
         {
-            return Ok($"Search for text: {query}");
+            var googleSearchService = new GoogleSearchService();
+
+            var list = googleSearchService.Search(query);
+
+            //var s = String.Join(", ", list.SelectMany(o => o.Title))
+
+            var sb = new StringBuilder();
+            
+            foreach (var item in list)
+            {
+                sb.Append(item.Title);
+                sb.Append(" ");
+                sb.Append(item.Url);
+                sb.AppendLine();
+            }
+
+            return Ok($"Search for text: {query} {sb}");
         }
     }
 }

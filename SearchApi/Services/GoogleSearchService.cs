@@ -1,4 +1,6 @@
 ﻿using SearchApi.Model;
+using Google.Apis.Customsearch.v1;
+using Google.Apis.Services;
 
 namespace SearchApi.Services
 {
@@ -9,47 +11,34 @@ namespace SearchApi.Services
         private const string searchEngineId = "001075345664802480471:zfuroutomnu";
         
         private const long PageSize = 10;//refactor to async
-        private readonly Google.Apis.Customsearch.v1.CustomsearchService _service;
+        private readonly CustomsearchService _service;
 
         public GoogleSearchService()
         {
-            _service = new Google.Apis.Customsearch.v1.CustomsearchService(
-                new Google.Apis.Services.BaseClientService.Initializer { ApiKey = apiKey });
+            _service = new CustomsearchService(
+                new BaseClientService.Initializer { 
+                    ApiKey = apiKey 
+                });
         }
 
         //redo this method
-        public List<SearchResult> Search(string query, long maxResults = 12)
+        public List<SearchResult> Search(string query)
         {
-            //var listRequest = _service.Cse.List(query);
-
             var listRequest = _service.Cse.List(query);
 
             listRequest.Cx = searchEngineId;
+            listRequest.Start = 1;
+            listRequest.Num = PageSize;
 
-            long pageNumber = 1;
-            bool takeNextPage = true;
             var list = new List<SearchResult>();
 
-            while (takeNextPage)
+            //yeld return maybe?? async somehow...
+            Google.Apis.Customsearch.v1.Data.Search search = listRequest.Execute();
+            //var search = listRequest.ExecuteAsync(); //TODO async in asp core http rest api
+
+            foreach (Google.Apis.Customsearch.v1.Data.Result result in search.Items)
             {
-                listRequest.Start = (pageNumber++ - 1) * PageSize + 1;
-
-                if (listRequest.Start + PageSize > maxResults)
-                {
-                    listRequest.Num = maxResults - listRequest.Start + 1;
-                    takeNextPage = false;
-                }
-                else
-                {
-                    listRequest.Num = PageSize;
-                }
-
-                Google.Apis.Customsearch.v1.Data.Search search = listRequest.Execute();
-
-                foreach (Google.Apis.Customsearch.v1.Data.Result result in search.Items)
-                {
-                    list.Add(new SearchResult(result.Title, result.Link));
-                }
+                list.Add(new SearchResult(result.Title, result.Link));
             }
 
             return list;
