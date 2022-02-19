@@ -16,6 +16,7 @@ namespace SearchApi.Controllers
 
     [ApiController]
     [Route("[controller]")]
+    //[Route("[controller]/[action]")] enforce get in url for the first endpoint also
     public class SearchController : ControllerBase //Controller
     {
         // GET: SearchController
@@ -24,10 +25,25 @@ namespace SearchApi.Controllers
         //    return View();
         //}
 
-        [HttpGet(Name = "")]
-        public ActionResult<int> Get()
+        //any default attribute[method] to not duplicate Search
+        //in method name and route name ? routing reserved names - action, controller ...
+
+        //nazwy tras i parametr Name - niepotrzebne na ten moment
+
+        //[HttpGet(Name = "")] // not needed
+        [HttpGet]
+        public ActionResult Get()
         {
             return Ok("ok text");
+        }
+
+        //[HttpGet("{query}", Name = "[action]")]//-nie dziala, pomija akcje i ustawia na //http://localhost:5283/Search/abc        
+        //[HttpGet("{query}", Name = "Test")]//nie dziala nie widzi name nie ma test w url
+        //[HttpGet("{query}")]//efekt jak wyzej, nie ma Test w url, ale nie ma niepotrzebnego name
+        [HttpGet("[action]/{query}")]//ok
+        public ActionResult Test(string query)
+        {
+            return Ok($"Search for text: {query}");
         }
     }
 }

@@ -29,6 +29,12 @@ app.Run();
  * ?? () => {}
  * ?? .WithName()
  * ?? record
+
+ * roznica dodawanie swagger screen
+ * roznica dodawanie https
+ * roznica dodawanie minimal controllers vs standardowo
+ * nie ma startup 
+ * nie ma definicji using ani klasy w projekt.cs - to jest funkcja c# czy szablonu asp ... co dokladnie daje core 6.0?
   
 app.MapGet("/weatherforecast", () =>
 {
