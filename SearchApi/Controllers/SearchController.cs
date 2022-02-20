@@ -16,8 +16,7 @@ namespace SearchApi.Controllers
     // ?? Microsoft.AspNetCore.Mvc vs Microsoft.AspNetCore.Http
     // ?? [HttpGet(Name = "GetWeatherForecast")] vs no attribute - potrzebne bo wywala swaggera, aczkolwiek http://localhost:5283/Search dziala
     // ?? [Route("[controller]")] vs no attribute - runtime (it builds fine) error screenshot api must have an attribute route
-
-
+    
     [ApiController]
     [Route("[controller]")]
     //[Route("[controller]/[action]")] GIT #4 - enforce get in url for the first endpoint also
@@ -31,7 +30,7 @@ namespace SearchApi.Controllers
         }
 
         [HttpGet("[action]/{query}")]//GIT #5 routing special words
-        public async Task<IActionResult> Test(string query)
+        public async Task<IActionResult> Test(string query)//GIT #7 diff IActionResult vs ActionResult GIT #8 diff IActionResult vs IActionResult<CustomModel>
         {
             var googleSearchService = new GoogleSearchService();
             var result = new List<SearchResult>();
@@ -47,5 +46,12 @@ namespace SearchApi.Controllers
 
             return Ok($"Search result for text: {query} {json}");
         }
+
+        // performance and async related https://docs.microsoft.com/pl-pl/aspnet/core/performance/performance-best-practices?view=aspnetcore-6.0#minimize-exceptions
+        // what to focus on from the menu inside:
+        // - blocking with Task.Result ...
+        // - ltListAsync, enumerable vs async enumerable and System.Text.Json vs Newtonsoft.Json in async
+        // - long going tasks in http request - whet to awoid http
+        // - minimize exceptions
     }
 }

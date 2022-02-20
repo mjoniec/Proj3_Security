@@ -7,6 +7,7 @@ namespace SearchApi.Services
     public class GoogleSearchService
     {
         //refactor to at least config (wut better?)
+        //GIT #6 securing api keys ...
         private const string apiKey = "AIzaSyDqDB - Fg8ulgOuaFQV2OsobvJ4XHehgc7Q";
         private const string searchEngineId = "001075345664802480471:zfuroutomnu";
         
