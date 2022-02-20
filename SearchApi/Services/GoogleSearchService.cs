@@ -4,7 +4,7 @@ using Google.Apis.Services;
 
 namespace SearchApi.Services
 {
-    public class GoogleSearchService
+    public class GoogleSearchService : IGoogleSearchService
     {
         //refactor to at least config (wut better?)
         //GIT #6 securing api keys ...
@@ -40,7 +40,7 @@ namespace SearchApi.Services
             foreach (var result in search.Items)
             {
                 //list.Add(new SearchResult(result.Title, result.Link));
-                yield return new SearchResult(result.Title, result.Link);
+                yield return new SearchResult(result.Title, result.Link);//not worth to use automapper for this one line ... 
             }
 
             //return list;

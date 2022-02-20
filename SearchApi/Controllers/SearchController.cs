@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SearchApi.Model;
 using SearchApi.Services;
-using System.Text;
 
 namespace SearchApi.Controllers
 {
@@ -22,6 +21,13 @@ namespace SearchApi.Controllers
     //[Route("[controller]/[action]")] GIT #4 - enforce get in url for the first endpoint also
     public class SearchController : ControllerBase //Controller
     {
+        private readonly IGoogleSearchService _googleSearchService;
+
+        public SearchController(IGoogleSearchService googleSearchService)
+        {
+            _googleSearchService = googleSearchService;
+        }
+
         //[HttpGet(Name = "")] // GIT #3 - routing 'Name' not needed
         [HttpGet]
         public ActionResult Get()
@@ -32,11 +38,10 @@ namespace SearchApi.Controllers
         [HttpGet("[action]/{query}")]//GIT #5 routing special words
         public async Task<IActionResult> Test(string query)//GIT #7 diff IActionResult vs ActionResult GIT #8 diff IActionResult vs IActionResult<CustomModel>
         {
-            var googleSearchService = new GoogleSearchService();
             var result = new List<SearchResult>();
 
             //var result = await googleSearchService.Search(query);
-            await foreach (var item in googleSearchService.Search(query))
+            await foreach (var item in _googleSearchService.Search(query))
             {
                 result.Add(item);
             }
