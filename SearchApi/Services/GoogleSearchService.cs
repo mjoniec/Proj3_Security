@@ -6,19 +6,19 @@ namespace SearchApi.Services
 {
     public class GoogleSearchService : IGoogleSearchService
     {
-        //refactor to at least config (wut better?)
-        //GIT #6 securing api keys ...
-        private const string apiKey = "AIzaSyDqDB - Fg8ulgOuaFQV2OsobvJ4XHehgc7Q";
-        private const string searchEngineId = "001075345664802480471:zfuroutomnu";
-        
         private const long PageSize = 10;
         private readonly CustomsearchService _service;
+        private readonly GoogleSearchOptions _googleSearchOptions = new();// ?? on this this shotened structure ... Core 6 ?
 
-        public GoogleSearchService()
+        public GoogleSearchService(IConfiguration configuration)
         {
+            //GIT #6 securing api keys ... read recommendation on storing and encrypting api keys in configs
+            configuration.GetSection(GoogleSearchOptions.GoogleSearch)
+                .Bind(_googleSearchOptions);
+
             _service = new CustomsearchService(
                 new BaseClientService.Initializer { 
-                    ApiKey = apiKey 
+                    ApiKey = _googleSearchOptions.ApiKey
                 });
         }
 
@@ -29,7 +29,7 @@ namespace SearchApi.Services
         {
             var request = _service.Cse.List(query);
 
-            request.Cx = searchEngineId;
+            request.Cx = _googleSearchOptions.SearchEngineId;
             request.Start = 1;
             request.Num = PageSize;
 

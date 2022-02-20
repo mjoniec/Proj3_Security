@@ -17,7 +17,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseAuthorization();
+//app.UseAuthorization(); // ?? why not needed?
 app.MapControllers();
 app.Run();
 
