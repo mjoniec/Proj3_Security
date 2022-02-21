@@ -7,15 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtApi", "JwtApi\JwtApi.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "Utils\Utils.csproj", "{CE3FE7AF-2036-420C-8E12-15BFF6BC4087}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchApi", "SearchApi\SearchApi.csproj", "{F71EF1E8-8765-4CEC-9F47-D8738CA9B65D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchApi", "SearchApi\SearchApi.csproj", "{F71EF1E8-8765-4CEC-9F47-D8738CA9B65D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiTestNonMinimal", "WebApiTestNonMinimal\WebApiTestNonMinimal.csproj", "{B12690D8-0723-4886-9E96-0FEE76498C53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiTestNonMinimalHttps", "WebApiTestNonMinimalHttps\WebApiTestNonMinimalHttps.csproj", "{ED97FDA3-4075-413C-96AA-CDD752F5F834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiTestNonMinimalHttps", "WebApiTestNonMinimalHttps\WebApiTestNonMinimalHttps.csproj", "{ED97FDA3-4075-413C-96AA-CDD752F5F834}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiTestNonMinimalNoSwagger", "WebApiTestNonMinimalNoSwagger\WebApiTestNonMinimalNoSwagger.csproj", "{F58B5B7D-EDF5-43E4-B425-B4E136F85607}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiTestNonMinimalNet5", "WebApiTestNonMinimalNet5\WebApiTestNonMinimalNet5.csproj", "{27E3FB72-8FDC-4D4D-BEA0-EF48F82CF293}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiTestNonMinimalNet5", "WebApiTestNonMinimalNet5\WebApiTestNonMinimalNet5.csproj", "{27E3FB72-8FDC-4D4D-BEA0-EF48F82CF293}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,18 +31,10 @@ Global
 		{F71EF1E8-8765-4CEC-9F47-D8738CA9B65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F71EF1E8-8765-4CEC-9F47-D8738CA9B65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F71EF1E8-8765-4CEC-9F47-D8738CA9B65D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B12690D8-0723-4886-9E96-0FEE76498C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B12690D8-0723-4886-9E96-0FEE76498C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B12690D8-0723-4886-9E96-0FEE76498C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B12690D8-0723-4886-9E96-0FEE76498C53}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED97FDA3-4075-413C-96AA-CDD752F5F834}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED97FDA3-4075-413C-96AA-CDD752F5F834}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED97FDA3-4075-413C-96AA-CDD752F5F834}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED97FDA3-4075-413C-96AA-CDD752F5F834}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F58B5B7D-EDF5-43E4-B425-B4E136F85607}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F58B5B7D-EDF5-43E4-B425-B4E136F85607}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F58B5B7D-EDF5-43E4-B425-B4E136F85607}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F58B5B7D-EDF5-43E4-B425-B4E136F85607}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27E3FB72-8FDC-4D4D-BEA0-EF48F82CF293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27E3FB72-8FDC-4D4D-BEA0-EF48F82CF293}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27E3FB72-8FDC-4D4D-BEA0-EF48F82CF293}.Release|Any CPU.ActiveCfg = Release|Any CPU

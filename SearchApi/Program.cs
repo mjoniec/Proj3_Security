@@ -1,63 +1,41 @@
+//??#1 diff Core 6 with project, startup, missing methods, how come defining services and pipeline isn't separated ...
+
 // services
-using SearchApi.Services;
+using SearchApi.Services;//#2 custom using, some good practice on nesting & visibility, default usings not visible how...
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);//#3 a word or two on asp core 6 builder top usages and responsibilities
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();//??#3
+builder.Services.AddEndpointsApiExplorer();//#4 swagger - how is AddEndpointsApiExplorer needed with swagger
+builder.Services.AddSwaggerGen(); //??#4 - read on default swagger and open api in core6, how come no xml (generated?) / attributes in controllers are needed?
 builder.Services.AddScoped<IGoogleSearchService, GoogleSearchService>();
 
 // pipeline
-var app = builder.Build();
+var app = builder.Build(); //??#3
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment()) //??#4 good practices in enabling on production
 {
-    app.UseSwagger();
+    app.UseSwagger(); //??#4 diff swagger / swaggerUI 
     app.UseSwaggerUI();
 }
 
-//app.UseAuthorization(); // ?? why not needed?
-app.MapControllers();
-app.Run();
+//app.UseHttpsRedirection(); // ??#5 read on enabling https with core 6, diff in launchSettings.json comparison
+//app.UseAuthorization(); // ??#6 if not needed & no https why added by default?
+app.MapControllers();//??#7 - read on web application in core 6 + pipeline changes, how does MapControllers() know what folder and classes to map to?
+app.Run();//??#7
 
-/*
- * ?? struktura launchsettings.json kazda linijka co robi, czym jest profiles, 
- * czemu jest 2 raz iis na poziomie obok profiles i w srodku profiles... 
- * iis nie ma na linuxie trzeba dac w tedy jakiegos odpowiednika iis
+//??#8 - launchsettings.json
+//structure
+//double iis definition on 2 separate layers
+//what is profiles
+//linux equvalent of IIS possible to define there?
+//how to select kestrel ? from cmd/ azure deployed ...
 
-// ?? what is a container and sth on ASP build in IServiceCollection / IServiceProvider 
- * ?? how to select kestrel ? from cmd/ azure deployed ...
- * ?? how does MapControllers() know what folder and classes to map to?
- * ?? what app.UseAuthorization(); is needed for ?
- * ?? () => {}
- * ?? .WithName()
- * ?? record
+//??#9 - DI
+//what is a container (DI not docker) 
+//diff to a default DI container that comes withASP
+//some input on usages in IServiceCollection / IServiceProvider - anything new with core 6?
 
- * roznica dodawanie swagger screen
- * roznica dodawanie https
- * roznica dodawanie minimal controllers vs standardowo
- * nie ma startup 
- * nie ma definicji using ani klasy w projekt.cs - to jest funkcja c# czy szablonu asp ... co dokladnie daje core 6.0?
-  
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-       new WeatherForecast
-       (
-           DateTime.Now.AddDays(index),
-           Random.Shared.Next(-20, 55),
-           summaries[Random.Shared.Next(summaries.Length)]
-       ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+//??#10 inline (?) controllers
+//any good code practice on defining controllers in project.cs ?
 
-app.Run();
-
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
-*/

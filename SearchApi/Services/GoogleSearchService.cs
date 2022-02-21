@@ -8,11 +8,14 @@ namespace SearchApi.Services
     {
         private const long PageSize = 10;
         private readonly CustomsearchService _service;
-        private readonly GoogleSearchOptions _googleSearchOptions = new();// ?? on this this shotened structure ... Core 6 ?
+        private readonly GoogleSearchOptions _googleSearchOptions = new();// ??#22 on this this shotened structure ... Core 6 ?
 
         public GoogleSearchService(IConfiguration configuration)
         {
-            //GIT #6 securing api keys ... read recommendation on storing and encrypting api keys in configs
+            // ??#19 - Options pattern in ASP.NET Core https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-6.0
+            // ??#20 - storing and securing api keys ... read recommendation on storing and encrypting api keys in configs
+            // ??#21 - automapper in core 6
+            // ??#22 - new() in core 6
             configuration.GetSection(GoogleSearchOptions.GoogleSearch)
                 .Bind(_googleSearchOptions);
 
@@ -22,7 +25,7 @@ namespace SearchApi.Services
                 });
         }
 
-        //GIT #1 - full async but how with rest http?
+        // ??#18 - full async but how with rest http?
         //public List<SearchResult> Search(string query)
         //public async Task<List<SearchResult>> Search(string query)
         public async IAsyncEnumerable<SearchResult> Search(string query)
@@ -33,6 +36,7 @@ namespace SearchApi.Services
             request.Start = 1;
             request.Num = PageSize;
 
+            // ??#18
             //var list = new List<SearchResult>();
             //var search = request.Execute();
             var search = await request.ExecuteAsync();
@@ -40,7 +44,7 @@ namespace SearchApi.Services
             foreach (var result in search.Items)
             {
                 //list.Add(new SearchResult(result.Title, result.Link));
-                yield return new SearchResult(result.Title, result.Link);//not worth to use automapper for this one line ... 
+                yield return new SearchResult(result.Title, result.Link);// ??#21 not worth to use automapper for this one line ... 
             }
 
             //return list;
