@@ -9,10 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "Utils\Utils.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchApi", "SearchApi\SearchApi.csproj", "{F71EF1E8-8765-4CEC-9F47-D8738CA9B65D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiTestNonMinimalHttps", "WebApiTestNonMinimalHttps\WebApiTestNonMinimalHttps.csproj", "{ED97FDA3-4075-413C-96AA-CDD752F5F834}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiTestNonMinimalNet5", "WebApiTestNonMinimalNet5\WebApiTestNonMinimalNet5.csproj", "{27E3FB72-8FDC-4D4D-BEA0-EF48F82CF293}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,14 +27,6 @@ Global
 		{F71EF1E8-8765-4CEC-9F47-D8738CA9B65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F71EF1E8-8765-4CEC-9F47-D8738CA9B65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F71EF1E8-8765-4CEC-9F47-D8738CA9B65D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED97FDA3-4075-413C-96AA-CDD752F5F834}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED97FDA3-4075-413C-96AA-CDD752F5F834}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED97FDA3-4075-413C-96AA-CDD752F5F834}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED97FDA3-4075-413C-96AA-CDD752F5F834}.Release|Any CPU.Build.0 = Release|Any CPU
-		{27E3FB72-8FDC-4D4D-BEA0-EF48F82CF293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27E3FB72-8FDC-4D4D-BEA0-EF48F82CF293}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27E3FB72-8FDC-4D4D-BEA0-EF48F82CF293}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27E3FB72-8FDC-4D4D-BEA0-EF48F82CF293}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
