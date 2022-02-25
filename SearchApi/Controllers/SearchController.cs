@@ -7,21 +7,17 @@ using SearchApi.Services;
 namespace SearchApi.Controllers
 {
     // ??#11 Controller vs ControllerBase
-    // ??#12 ActionResult vs string vs ActionResult<string>
+    // ??#12 string vs IActionResult vs ActionResult<string>
     // ??#13 return View();
     // ??#14 [ValidateAntiForgeryToken]
-    // ??#15 [ApiController]
+    // ??#15 [ApiController] vs [Controller]
     // ??#16 Microsoft.AspNetCore.Mvc vs Microsoft.AspNetCore.Http
-    
     // ??#17 routing
-    // [HttpGet(Name = "GetWeatherForecast")] vs no attribute - potrzebne bo wywala swaggera, aczkolwiek http://localhost:5283/Search dziala
-    // [Route("[controller]")] vs no attribute - runtime (it builds fine) error screenshot api must have an attribute route
-
     // ??#18 - async practices with http in general and core 6
 
     [ApiController]
     [Route("[controller]")]
-    //[Route("[controller]/[action]")] GIT #17 - enforce get in url for the first endpoint also
+    //[Route("[controller]/[action]")] #??17 - action enforce 'get' action name in url also, no attribute - runtime error (it builds fine)
     public class SearchController : ControllerBase //#11 Controller
     {
         private readonly IGoogleSearchService _googleSearchService;
@@ -31,7 +27,7 @@ namespace SearchApi.Controllers
             _googleSearchService = googleSearchService;
         }
 
-        //[HttpGet(Name = "")] // ??#17 - routing 'Name' not needed
+        //[HttpGet(Name = "")] // ??#17 - routing 'Name' not needed, no attribute crashes swagger, url itself still works http://localhost:5283/Search
         [HttpGet]
         public ActionResult Get()
         {
@@ -39,7 +35,7 @@ namespace SearchApi.Controllers
         }
 
         [HttpGet("[action]/{query}")]// ??#17 routing special words
-        public async Task<IActionResult> Test(string query)// ??#12 diff IActionResult vs ActionResult GIT #8 diff IActionResult vs IActionResult<CustomModel>
+        public async Task<IActionResult> Test(string query)// ??#12
         {
             var result = new List<SearchResult>();
 
