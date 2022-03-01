@@ -18,3 +18,5 @@
 /WebApiTestNonMinimalNet5
 /WebApiTestNonMinimalHttps
 /WebApiTestNonMinimal
+/MiddlewareTest/obj
+/MiddlewareTest/bin/Debug/net6.0
