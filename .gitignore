@@ -20,3 +20,6 @@
 /WebApiTestNonMinimal
 /MiddlewareTest/obj
 /MiddlewareTest/bin/Debug/net6.0
+/LoginCookieApp/bin/Debug/net6.0
+/LoginCookieApp/obj
+/LoginCookieApp/wwwroot
