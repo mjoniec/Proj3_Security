@@ -23,3 +23,5 @@
 /LoginCookieApp/bin/Debug/net6.0
 /LoginCookieApp/obj
 /LoginCookieApp/wwwroot
+/HttpsTestApi/obj
+/HttpsTestApi/bin/Debug/net6.0

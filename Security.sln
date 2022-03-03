@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddlewareTest", "Middlewar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginCookieApp", "LoginCookieApp\LoginCookieApp.csproj", "{5C6311C3-F3B1-4C9B-A3D2-23101D4ADD25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpsTestApi", "HttpsTestApi\HttpsTestApi.csproj", "{F35861E2-B068-4630-A1DB-A1F7D0D3198E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5C6311C3-F3B1-4C9B-A3D2-23101D4ADD25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C6311C3-F3B1-4C9B-A3D2-23101D4ADD25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C6311C3-F3B1-4C9B-A3D2-23101D4ADD25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F35861E2-B068-4630-A1DB-A1F7D0D3198E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F35861E2-B068-4630-A1DB-A1F7D0D3198E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F35861E2-B068-4630-A1DB-A1F7D0D3198E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F35861E2-B068-4630-A1DB-A1F7D0D3198E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
